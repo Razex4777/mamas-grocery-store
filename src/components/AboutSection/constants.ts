@@ -27,6 +27,24 @@ export const SPECIAL_OFFERS: SpecialOfferCard[] = [
     imageSrc: "/about/basket-tunisian.png", // The NEW foreground image (basket)
     backgroundImageSrc: "/about/flag-tunisian.png", // The NEW background image (flag)
     imageAlt: "Panier de produits tunisiens"
+  },
+  {
+    id: 4,
+    title: "Produits Orientaux",
+    price: "Vaste Sélection",
+    backgroundColor: "bg-blue-600",
+    imageSrc: "/about/basket-oriental.png", // Oriental basket
+    backgroundImageSrc: "/about/orient-map.png", // Orient map as background
+    imageAlt: "Panier de produits orientaux"
+  },
+  {
+    id: 5,
+    title: "Produits Africains",
+    price: "Vaste Sélection",
+    backgroundColor: "bg-green-600",
+    imageSrc: "/about/basket-african.png", // African basket
+    backgroundImageSrc: "/about/africa-map.png", // Africa map as background
+    imageAlt: "Panier de produits africains"
   }
 ];
 
