@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CONTACT_FORM_BG, CONTACT_FORM_DECOR, SERVICE_TYPES } from './constants';
+import { CONTACT_FORM_BG } from './constants';
 import { motion } from 'framer-motion';
 
 export default function ContactForm() {
