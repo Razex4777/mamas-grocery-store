@@ -4,12 +4,9 @@ import type { AboutUsBlockProps } from './types';
 import { ABOUT_CONTENT, FEATURE_BOXES } from './constants';
 
 const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
-
   return (
     <section className={`py-20 bg-gray-50 relative overflow-hidden ${className}`}>
-
       <div className="block md:hidden px-6 py-8 space-y-6">
-
         <motion.div
           className="text-left"
           initial={{ y: 20, opacity: 0 }}
@@ -24,7 +21,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
             {ABOUT_CONTENT.subtitle}
           </h3>
         </motion.div>
-
 
         <motion.div
           className="relative w-full max-w-md mx-auto h-48 overflow-hidden rounded-xl shadow-lg"
@@ -43,7 +39,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
           />
         </motion.div>
 
-        {/* Main Title - Left aligned, larger text */}
         <motion.h2
           className="text-2xl font-bold text-gray-900 leading-tight text-left px-2"
           initial={{ y: 30, opacity: 0 }}
@@ -57,7 +52,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
           {ABOUT_CONTENT.title}
         </motion.h2>
 
-        {/* Description - Left aligned */}
         <motion.p
           className="text-gray-600 text-base leading-relaxed text-left px-2"
           initial={{ y: 30, opacity: 0 }}
@@ -71,7 +65,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
           {ABOUT_CONTENT.description}
         </motion.p>
 
-        {/* Feature Cards - Simple stack for mobile */}
         <div className="space-y-4 px-2 mt-8">
           {FEATURE_BOXES.map((feature, index) => (
             <motion.div
@@ -110,14 +103,12 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
             viewport={{ once: true }}
           >
             <div className="relative">
-
               <div
                 className="relative w-full h-96 lg:h-[500px] overflow-hidden"
                 style={{
                   clipPath: 'polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%)'
                 }}
               >
-                {/* Single Image Layer */}
                 <motion.img
                   src={ABOUT_CONTENT.imageSrc}
                   alt={ABOUT_CONTENT.imageAlt}
@@ -137,9 +128,8 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
             </div>
           </motion.div>
 
-          {/* Right Column - Text Content */}
           <motion.div
-            className="w-1/2 lg:w-1/2 px-8 lg:px-16 space-y-8" // Proper spacing from image
+            className="w-1/2 lg:w-1/2 px-8 lg:px-16 space-y-8"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{
               opacity: 1,
@@ -148,7 +138,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
             }}
             viewport={{ once: true }}
           >
-            {/* Subtitle with Decorative Icons */}
             <motion.div
               className="flex items-center gap-4"
               initial={{ y: 20, opacity: 0 }}
@@ -170,7 +159,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
               </div>
             </motion.div>
 
-            {/* Main Title */}
             <motion.h2
               className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight"
               initial={{ y: 30, opacity: 0 }}
@@ -184,7 +172,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
               {ABOUT_CONTENT.title}
             </motion.h2>
 
-            {/* Description */}
             <motion.p
               className="text-gray-600 text-lg leading-relaxed"
               initial={{ y: 30, opacity: 0 }}
@@ -198,7 +185,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
               {ABOUT_CONTENT.description}
             </motion.p>
 
-            {/* Feature Boxes - Side by Side with Vertical Separator */}
             <motion.div
               className="flex items-start gap-8 pt-8"
               initial={{ y: 40, opacity: 0 }}
@@ -225,7 +211,6 @@ const AboutUsBlock: React.FC<AboutUsBlockProps> = ({ className = '' }) => {
                     </p>
                   </motion.div>
 
-                  {/* Vertical Separator Line */}
                   {index === 0 && (
                     <div className="w-px bg-gray-300 self-stretch mx-4" />
                   )}

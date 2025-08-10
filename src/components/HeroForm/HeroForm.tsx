@@ -184,28 +184,7 @@ const HeroForm: React.FC<HeroFormProps> = ({
       {/* Floating Decorative Shapes */}
       <FloatingShapes />
 
-      {/* Brand Logo - Left Side */}
-      <motion.div
-        className="absolute top-8 left-1/3 transform -translate-x-1/2 z-20"
-        initial={{ opacity: 0, y: -30, scale: 0.8 }}
-        animate={{ 
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          transition: { delay: 0.5, duration: 1, ease: "easeOut" }
-        }}
-        whileHover={{ 
-          scale: 1.1,
-          y: -5,
-          transition: { duration: 0.3 }
-        }}
-      >
-        <img 
-          src="/logos/logo.png" 
-          alt="Brand Logo" 
-          className="h-32 lg:h-40 w-auto object-contain filter drop-shadow-2xl"
-        />
-      </motion.div>
+
       
       {/* Main Content Container */}
       <div className="relative z-10 h-full flex items-center">

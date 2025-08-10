@@ -22,7 +22,7 @@ const SlideContent: React.FC<SlideContentProps> = ({
         duration: prefersReducedMotion ? 0 : 0.6,
         ease: "easeInOut"
       }}
-      className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-16 items-center h-full max-w-7xl mx-auto"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-16 items-center h-full max-w-7xl mx-auto"
     >
       {/* Left Column - Text Content */}
       <motion.div
@@ -162,9 +162,9 @@ const SlideContent: React.FC<SlideContentProps> = ({
         </motion.button>
       </motion.div>
 
-      {/* Right Column - Image (Hidden on Mobile/Tablet) */}
+      {/* Right Column - Image (Now visible on all devices) */}
       <motion.div
-        className="hidden lg:block"
+        className="flex justify-center lg:block"
         initial={prefersReducedMotion ? { opacity: 1, scale: 1 } : { opacity: 0, x: 100, scale: 0.9 }}
         animate={{
           opacity: 1,
@@ -206,7 +206,7 @@ const SlideContent: React.FC<SlideContentProps> = ({
               <motion.img
                 src={slide.imageSrc}
                 alt={slide.imageAlt}
-                className="w-full h-auto max-w-lg mx-auto object-contain drop-shadow-2xl"
+                className="w-full h-auto max-w-xs sm:max-w-sm lg:max-w-lg mx-auto object-contain drop-shadow-2xl"
                 loading="lazy"
                 style={{
                   willChange: 'transform',
