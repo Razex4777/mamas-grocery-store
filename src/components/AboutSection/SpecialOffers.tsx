@@ -21,67 +21,9 @@ const DesktopCard: React.FC<{ offer: any; index: number }> = ({ offer, index }) 
         className="w-full h-full object-cover"
       />
       {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-500 rounded-full" />
+      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500 rounded-full" />
       {/* Hover brightness effect */}
       <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors duration-500 rounded-full" />
-
-      {/* Content Layer inside circle */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4">
-        {/* Main Title */}
-        <motion.h3 
-          className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold leading-tight text-center mb-3"
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ 
-            y: 0, 
-            opacity: 1,
-            transition: { delay: index * 0.2 + 0.4, duration: 0.6 }
-          }}
-          viewport={{ once: true }}
-          style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
-        >
-          {offer.title}
-        </motion.h3>
-        
-        {/* Subtitle */}
-        <motion.p 
-          className="text-sm sm:text-base lg:text-lg font-semibold opacity-90 text-center mb-4"
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ 
-            y: 0, 
-            opacity: 0.9,
-            transition: { delay: index * 0.2 + 0.5, duration: 0.6 }
-          }}
-          viewport={{ once: true }}
-          style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
-        >
-          {offer.price}
-        </motion.p>
-
-        {/* Discover Button */}
-        <motion.button
-          className="inline-flex items-center gap-2 bg-white/95 backdrop-blur-sm text-gray-900 px-4 py-2 rounded-lg font-bold uppercase tracking-wide hover:bg-white hover:scale-105 transition-all duration-300 shadow-2xl text-xs"
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ 
-            y: 0, 
-            opacity: 1,
-            transition: { delay: index * 0.2 + 0.6, duration: 0.6 }
-          }}
-          whileHover={{ 
-            scale: 1.05,
-            boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
-          }}
-          whileTap={{ scale: 0.95 }}
-          viewport={{ once: true }}
-        >
-          DÉCOUVRIR
-          <motion.div
-            whileHover={{ x: 5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <ArrowRight size={14} />
-          </motion.div>
-        </motion.button>
-      </div>
 
       {/* Hover overlay effect */}
       <motion.div
@@ -89,7 +31,38 @@ const DesktopCard: React.FC<{ offer: any; index: number }> = ({ offer, index }) 
       />
     </motion.div>
 
-    {/* Product Image Below Circle */}
+    {/* Text Content Below Circle */}
+    <div className="mt-4 text-center">
+      {/* Main Title */}
+      <motion.h3 
+        className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold leading-tight text-white mb-2"
+        initial={{ y: 30, opacity: 0 }}
+        whileInView={{ 
+          y: 0, 
+          opacity: 1,
+          transition: { delay: index * 0.2 + 0.4, duration: 0.6 }
+        }}
+        viewport={{ once: true }}
+      >
+        {offer.title}
+      </motion.h3>
+      
+      {/* Subtitle */}
+      <motion.p 
+        className="text-sm sm:text-base lg:text-lg font-semibold text-gray-300"
+        initial={{ y: 30, opacity: 0 }}
+        whileInView={{ 
+          y: 0, 
+          opacity: 1,
+          transition: { delay: index * 0.2 + 0.5, duration: 0.6 }
+        }}
+        viewport={{ once: true }}
+      >
+        {offer.price}
+      </motion.p>
+    </div>
+
+    {/* Product Image Below Text */}
     <motion.div
       className="mt-4 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28"
       initial={{ 
@@ -156,38 +129,28 @@ const MobileCard: React.FC<{ offer: any; index: number }> = ({ offer, index }) =
         alt={`${offer.title} flag background`}
         className="w-full h-full object-cover"
       />
-      {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-black/50 rounded-full" />
-
-      {/* Content Layer inside circle */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-3">
-        {/* Main Title */}
-        <h3 
-          className="text-sm font-bold leading-tight text-center mb-2"
-          style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
-        >
-          {offer.title}
-        </h3>
-        
-        {/* Subtitle */}
-        <p 
-          className="text-xs font-semibold opacity-90 text-center mb-3"
-          style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}
-        >
-          {offer.price}
-        </p>
-
-        {/* Discover Button */}
-        <button
-          className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-sm text-gray-900 px-3 py-1.5 rounded-lg font-bold uppercase tracking-wide text-xs"
-        >
-          DÉCOUVRIR
-          <ArrowRight size={12} />
-        </button>
-      </div>
+      {/* Light overlay for better visibility */}
+      <div className="absolute inset-0 bg-black/30 rounded-full" />
     </motion.div>
 
-    {/* Product Image Below Circle - Mobile size */}
+    {/* Text Content Below Circle */}
+    <div className="mt-3 text-center">
+      {/* Main Title */}
+      <h3 
+        className="text-sm font-bold leading-tight text-white mb-1"
+      >
+        {offer.title}
+      </h3>
+      
+      {/* Subtitle */}
+      <p 
+        className="text-xs font-semibold text-gray-300"
+      >
+        {offer.price}
+      </p>
+    </div>
+
+    {/* Product Image Below Text - Mobile size */}
     <motion.div
       className="mt-3 w-12 h-12"
       style={{ 
