@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import type { HeroFormProps } from './types';
 import { SLIDES, DEFAULT_AUTO_PLAY_INTERVAL } from './constants';
 import SlideContent from './SlideContent';
