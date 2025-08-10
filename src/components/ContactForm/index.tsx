@@ -24,69 +24,65 @@ export default function ContactForm() {
     >
       <div className="absolute inset-0 bg-black opacity-30"></div>
       <div className="relative flex items-center h-full">
-        {/* Red half-circle form - starts from left edge and extends to middle */}
+        {/* Desktop: Red half-circle form - Mobile: Centered transparent form */}
         <motion.div
           initial={{ x: -100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative bg-gradient-to-br from-rose-600/95 to-red-600/95 text-white shadow-2xl backdrop-blur-sm"
-          style={{
-            width: '50vw', // Half the viewport width
-            height: '800px', // Increased height to fit all fields
-            borderRadius: '0 400px 400px 0', // Larger radius for bigger form
-            marginLeft: '0', // Start from the very left edge
-          }}
+          className="relative text-white shadow-2xl backdrop-blur-sm
+                     w-full md:w-[50vw] h-[800px]
+                     md:bg-gradient-to-br md:from-rose-600/95 md:to-red-600/95
+                     flex justify-center md:justify-start
+                     rounded-none md:rounded-r-[400px]"
         >
-          {/* Inner fade-to-dark border effect */}
-          <div 
-            className="absolute inset-0 rounded-r-full"
+          {/* Desktop only: Inner fade-to-dark border effect */}
+          <div
+            className="absolute inset-0 hidden md:block md:rounded-r-[400px]"
             style={{
               background: 'linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%)',
-              borderRadius: '0 400px 400px 0',
-            }}
-          />
-          
-          {/* Inner shadow for depth */}
-          <div 
-            className="absolute inset-2 rounded-r-full"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%)',
-              borderRadius: '0 398px 398px 0',
             }}
           />
 
-          <div className="relative px-8 md:px-12 h-full flex flex-col justify-center z-10">
-            <div className="space-y-5 max-w-md">
+          {/* Desktop only: Inner shadow for depth */}
+          <div
+            className="absolute inset-2 hidden md:block md:rounded-r-[398px]"
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%)',
+            }}
+          />
+
+          <div className="relative px-4 md:px-8 lg:px-12 h-full flex flex-col justify-center z-10 w-full max-w-md mx-auto md:mx-0">
+            <div className="space-y-5">
               <label className="block">
                 <span className="text-sm font-medium mb-2 block">Full Name*</span>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="Enter your full name"
-                  className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50" 
-                  value={form.fullName} 
-                  onChange={(e)=>setForm({...form,fullName:e.target.value})} 
+                  className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50"
+                  value={form.fullName}
+                  onChange={(e) => setForm({ ...form, fullName: e.target.value })}
                 />
               </label>
 
               <label className="block">
                 <span className="text-sm font-medium mb-2 block">Email Address*</span>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   placeholder="your@email.com"
-                  className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50" 
-                  value={form.email} 
-                  onChange={(e)=>setForm({...form,email:e.target.value})} 
+                  className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                 />
               </label>
 
               <div className="grid grid-cols-4 gap-3">
                 <label className="block">
                   <span className="text-sm font-medium mb-2 block">Code</span>
-                  <select 
-                    className="w-full rounded-xl border-0 px-2 py-3 text-black text-sm focus:ring-2 focus:ring-white/50" 
-                    value={form.countryCode} 
-                    onChange={(e)=>setForm({...form,countryCode:e.target.value})}
+                  <select
+                    className="w-full rounded-xl border-0 px-2 py-3 text-black text-sm focus:ring-2 focus:ring-white/50"
+                    value={form.countryCode}
+                    onChange={(e) => setForm({ ...form, countryCode: e.target.value })}
                   >
                     <option value="+1">+1</option>
                     <option value="+33">+33</option>
@@ -99,35 +95,35 @@ export default function ContactForm() {
                 </label>
                 <label className="block col-span-3">
                   <span className="text-sm font-medium mb-2 block">Phone Number*</span>
-                  <input 
-                    type="tel" 
+                  <input
+                    type="tel"
                     placeholder="123 456 7890"
-                    className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50" 
-                    value={form.phone} 
-                    onChange={(e)=>setForm({...form,phone:e.target.value})} 
+                    className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50"
+                    value={form.phone}
+                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   />
                 </label>
               </div>
 
               <label className="block">
                 <span className="text-sm font-medium mb-2 block">Subject*</span>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="What is this about?"
-                  className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50" 
-                  value={form.subject} 
-                  onChange={(e)=>setForm({...form,subject:e.target.value})} 
+                  className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50"
+                  value={form.subject}
+                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
                 />
               </label>
 
               <label className="block">
                 <span className="text-sm font-medium mb-2 block">Message / Description</span>
-                <textarea 
-                  rows={4} 
-                  placeholder="Tell us more about your inquiry..." 
-                  className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50 resize-none" 
-                  value={form.message} 
-                  onChange={(e)=>setForm({...form,message:e.target.value})} 
+                <textarea
+                  rows={4}
+                  placeholder="Tell us more about your inquiry..."
+                  className="w-full rounded-xl border-0 px-3 py-3 text-black text-sm focus:ring-2 focus:ring-white/50 resize-none"
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
                 />
               </label>
 
@@ -140,13 +136,11 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Enhanced glow effect for half-circle */}
-          <div className="absolute -inset-2 bg-gradient-to-r from-red-600/60 to-rose-600/60 blur-xl opacity-40 -z-10" 
-               style={{ borderRadius: '0 402px 402px 0' }} />
-          
-          {/* Additional inner glow */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-red-500/30 to-rose-500/30 blur opacity-50 -z-10" 
-               style={{ borderRadius: '0 401px 401px 0' }} />
+          {/* Desktop only: Enhanced glow effect for half-circle */}
+          <div className="absolute -inset-2 bg-gradient-to-r from-red-600/60 to-rose-600/60 blur-xl opacity-40 -z-10 hidden md:block md:rounded-r-[402px]" />
+
+          {/* Desktop only: Additional inner glow */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-red-500/30 to-rose-500/30 blur opacity-50 -z-10 hidden md:block md:rounded-r-[401px]" />
         </motion.div>
       </div>
     </section>
