@@ -1,0 +1,296 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Prevent horizontal scrolling globally */
+html, body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Simple keyframes for mobile drawer */
+@keyframes slide-in-left {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-slide-in-left { animation: slide-in-left 0.35s ease forwards; }
+.animate-fade-in { animation: fade-in 0.35s ease forwards; }
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Notre Marché Hero Banner Animations */
+@keyframes floatBob-X {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes floatBob-Y {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes cirRotate-36 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Animation classes */
+.floatBob-X {
+  animation: floatBob-X 5s ease-in-out infinite;
+}
+
+.floatBob-Y {
+  animation: floatBob-Y 6s ease-in-out infinite;
+}
+
+.cirRotate-36 {
+  animation: cirRotate-36 40s linear infinite;
+}
+
+/* Notre Marché Brand Colors */
+:root {
+  --nm-deep-green: #1a4d3a;
+  --nm-gold: #d4af37;
+  --nm-orange: #ff8c00;
+  --nm-red-cta: #E60028;
+}
+
+/* Custom Swiper styles for Notre Marché */
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--nm-gold);
+}
+
+/* Notre Marché Brand Theme */
+:root {
+  /* Notre Marché Brand Colors */
+  --color-deep-green: #1B4332;
+  --color-gold: #FFD700;
+  --color-orange: #FF8500;
+  --color-cta-red: #E60028;
+  --color-overlay-green: rgba(27, 67, 50, 0.6);
+  --color-overlay-green-mobile: rgba(27, 67, 50, 0.4);
+  
+  /* Typography */
+  --font-family-primary: 'Inter', sans-serif;
+  --font-weight-bold: 700;
+  --font-weight-medium: 500;
+  
+  /* Spacing */
+  --spacing-container: 1.5rem;
+  --spacing-section: 2rem;
+  
+  /* Transitions */
+  --transition-smooth: 0.25s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Shadows */
+  --shadow-navbar: rgba(0, 0, 0, 0.07);
+}
+
+/* Animation keyframes */
+@keyframes floatBob-X {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+@keyframes floatBob-Y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@keyframes cirRotate-36 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animation classes */
+.float-x {
+  animation: floatBob-X 5s ease-in-out infinite;
+}
+
+.float-y {
+  animation: floatBob-Y 6s ease-in-out infinite;
+}
+
+.rotate-360 {
+  animation: cirRotate-36 40s linear infinite;
+}
+
+/* Hero banner specific styles */
+.banner-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 680px;
+}
+
+@media (max-width: 1200px) {
+  .banner-wrapper {
+    height: 520px;
+  }
+}
+
+@media (max-width: 767px) {
+  .banner-wrapper {
+    height: 380px;
+  }
+}
+
+/* CTA Button styles */
+.cta-button {
+  background-color: var(--color-cta-red);
+  height: 44px;
+  padding: 0 34px;
+  transition: var(--transition-smooth);
+}
+
+.cta-button:hover {
+  background-color: var(--color-gold);
+  color: var(--color-deep-green);
+}
+
+/* Swiper custom styles */
+.swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* 3D Parallax Styles for Hero Section */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-gpu {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Gradient utilities */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+/* Text shadow utilities for better readability */
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* FeaturedProducts utilities */
+@keyframes carousel-progress {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+.carousel-progress-bar {
+  animation: carousel-progress 4s linear infinite;
+}
+
+/* Simple line clamp utilities (no plugin) */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Modern dark gradient background for Featured Products */
+.featured-bg {
+  position: relative;
+  background: #fac7c7;
+  background-image: radial-gradient(circle, rgb(179, 255, 205) 0%, rgba(181, 245, 208, 1) 100%);
+}
+
+.featured-grid {
+  pointer-events: none;
+  background-size: 48px 48px;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 60%, transparent 120%);
+  mask-image: radial-gradient(ellipse at center, black 60%, transparent 120%);
+}
+
+/* Hide horizontal scrollbars for chip scrollers and product carousels */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Shine animation for navbar white block */
+@keyframes shine {
+  0%, 10% {
+    background-position: -200px 0;
+  }
+  20% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+/* Banner animations */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out forwards;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}

@@ -1,0 +1,99 @@
+import { useState } from 'react';
+
+export default function NewsletterSection() {
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Newsletter subscription:', email);
+    // Handle newsletter subscription
+    setEmail('');
+  };
+
+  return (
+    <section 
+      className="relative py-16 overflow-hidden"
+      data-aos="fade-up"
+      data-aos-duration="1200"
+    >
+      <div className="container mx-auto px-4 lg:px-8">
+        <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+          {/* Background Pattern */}
+          <div 
+            className="absolute inset-0 z-0 opacity-10"
+            style={{
+              backgroundImage: "url('https://wowtheme7.com/tailwind/marketpro/images/newsletter-bg.png')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          
+          {/* Dark Navy Gradient Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1e2139] via-[#2a2d4a] to-[#1e2139] z-0" />
+          
+          {/* Decorative Diagonal Stripes */}
+          <div className="absolute inset-0 z-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,0.1) 35px, rgba(255,255,255,0.1) 70px)',
+            }} />
+          </div>
+
+          <div className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-8 items-center p-8 md:p-12 lg:p-16">
+            {/* Left Content */}
+            <div className="space-y-6">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
+                Don't Miss Out on<br />
+                Grocery Deals
+              </h2>
+              
+              <p className="text-xl md:text-2xl font-heading font-semibold text-white/90 tracking-wide uppercase">
+                Sign Up For The Update Newsletter
+              </p>
+
+              <form onSubmit={handleSubmit} className="relative mt-8">
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email address..."
+                    required
+                    className="w-full py-5 px-6 pr-40 rounded-full text-gray-800 font-sans placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all shadow-lg"
+                  />
+                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-heading font-semibold px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                  >
+                    Subscribe
+                  </button>
+                </div>
+              </form>
+
+              <p className="text-white/60 text-sm font-sans">
+                🔒 Your email is safe with us. We respect your privacy.
+              </p>
+            </div>
+
+            {/* Right Image */}
+            <div className="hidden xl:flex items-center justify-center relative">
+              <div className="relative">
+                {/* Glow effect behind image */}
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-yellow-500/20 blur-3xl rounded-full" />
+                
+                <img
+                  src="https://wowtheme7.com/tailwind/marketpro/images/newsletter-img.png"
+                  alt="Fresh Grocery Basket"
+                  className="relative z-10 w-full max-w-lg drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Decorative Wave */}
+          <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-orange-500 via-yellow-500 to-orange-500" />
+        </div>
+      </div>
+    </section>
+  );
+}
