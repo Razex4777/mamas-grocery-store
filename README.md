@@ -1,5 +1,7 @@
 # Mama's Grocery & Charcoal BBQ – React Storefront
 
+<!-- Last deployment: 2025-10-29 -->
+
 <p align="center">
   <img src="/logos/logo2.png" alt="Mama's Grocery Logo" width="160" />
 </p>
