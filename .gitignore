@@ -15,6 +15,9 @@ dist-ssr
 # Templates
 templates/
 
+# Documentation
+docs/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
