@@ -8,4 +8,16 @@ export default defineConfig({
     host: true, // This enables --host by default
     port: 5173, // Optional: specify port (default is 5173)
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'animation': ['framer-motion', 'gsap'],
+        }
+      }
+    }
+  }
 })
