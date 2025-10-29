@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Facebook, Twitter, Instagram, Menu, X, MapPin, Mail, Phone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -11,16 +10,6 @@ const navLinks = [
 ];
 
 const FullNavbar = () => {
-=======
-import { Search, ShoppingCart, Facebook, Twitter, Instagram, Menu, X, MapPin, Mail, Phone } from 'lucide-react';
-import { useEffect, useState } from 'react';
-
-const navLinks = ['Home', 'About Us', 'Shop', 'Contact Us'];
-
-const FullNavbar = () => {
-  const [cartCount] = useState(0);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
->>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -126,11 +115,7 @@ const FullNavbar = () => {
           />
           <div className="flex items-center justify-center w-full h-full">
             <img 
-<<<<<<< HEAD
               src="/logos/mamas-grocery-2.png" 
-=======
-              src="/logos/logo2.png" 
->>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
               alt="Company Logo" 
               className="w-auto object-contain transform transition-transform duration-500 group-hover:scale-105"
               style={{ height: `${Math.round(lerp(isMobile ? 70 : 140, isMobile ? 55 : 90, scrollProgress))}px` }}
@@ -188,7 +173,6 @@ const FullNavbar = () => {
             >
               {/* Desktop nav links */}
               <nav className="hidden lg:flex items-center space-x-8 text-base">
-<<<<<<< HEAD
                 {navLinks.map((link, i) => {
                   const isRoute = link.href.startsWith('/');
                   const commonClasses = "relative text-white hover:text-orange-500 transition-all duration-300 font-medium group py-2";
@@ -215,56 +199,12 @@ const FullNavbar = () => {
                     </a>
                   );
                 })}
-=======
-                {navLinks.map((link, i) => (
-                  <a 
-                    key={i} 
-                    href="#" 
-                    className="relative text-white hover:text-orange-500 transition-all duration-300 font-medium group py-2"
-                  >
-                    {link}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-                    <span className="absolute inset-0 bg-orange-500/10 rounded-md scale-0 group-hover:scale-100 transition-transform duration-300 -z-10"></span>
-                  </a>
-                ))}
->>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
               </nav>
 
               {/* Desktop actions */}
               <div className="hidden lg:flex items-center space-x-6">
-<<<<<<< HEAD
                 <button className="bg-red-600 text-white px-6 py-3 font-bold text-base tracking-wide hover:bg-red-700 transform hover:scale-105 hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
                   <span className="relative z-10">VISIT NOW</span>
-=======
-                <div className="relative">
-                <button 
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                    className="text-white hover:text-orange-500 transform hover:scale-110 transition-all duration-300"
-                  >
-                    <Search size={22} strokeWidth={1.5} />
-                  </button>
-                  {isSearchOpen && (
-                    <div className="absolute top-12 right-0 bg-white rounded-lg shadow-xl p-4 w-80 z-50 animate-in slide-in-from-top-2 duration-300">
-                      <input 
-                        type="text" 
-                        placeholder="Search for food..." 
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-black"
-                        autoFocus
-                      />
-                    </div>
-                  )}
-                </div>
-                
-                <button 
-                  onClick={() => window.dispatchEvent(new Event('app:cart:open'))}
-                  className="relative text-white hover:text-orange-500 transform hover:scale-110 transition-all duration-300"
-                >
-                  <ShoppingCart size={22} strokeWidth={1.5} />
-                </button>
-                
-                <button className="bg-red-600 text-white px-6 py-3 font-bold text-base tracking-wide hover:bg-red-700 transform hover:scale-105 hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
-                  <span className="relative z-10">ORDER NOW</span>
->>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                 </button>
               </div>
@@ -292,17 +232,12 @@ const FullNavbar = () => {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 animate-fade-in" onClick={() => setIsMobileMenuOpen(false)} />
           <div className="absolute top-0 left-0 h-full w-80 max-w-[85vw] bg-white text-gray-900 shadow-2xl p-6 overflow-y-auto animate-slide-in-left">
             <div className="flex items-center justify-between mb-6">
-<<<<<<< HEAD
               <img src="/logos/mamas-grocery-2.png" alt="Logo" className="h-8 w-auto" />
-=======
-              <img src="/logos/logo2.png" alt="Logo" className="h-8 w-auto" />
->>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
               <button aria-label="Close menu" onClick={() => setIsMobileMenuOpen(false)} className="p-2 rounded-md hover:bg-black/5">
                 <X size={22} />
               </button>
             </div>
             <nav className="space-y-1">
-<<<<<<< HEAD
               {navLinks.map((link, i) => {
                 const isRoute = link.href.startsWith('/');
                 const commonClasses = "block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100";
@@ -336,38 +271,6 @@ const FullNavbar = () => {
                 <Facebook size={16} />
                 <Twitter size={16} />
                 <Instagram size={16} />
-=======
-              {navLinks.map((link, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="block px-3 py-3 rounded-md text-base font-medium hover:bg-gray-100"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.replace(' +', '')}
-                </a>
-              ))}
-            </nav>
-            <div className="mt-6 border-t pt-6 space-y-4">
-              <button className="w-full bg-red-600 text-white px-6 py-3 font-bold text-base tracking-wide hover:bg-red-700 transition rounded-md">
-                ORDER NOW
-              </button>
-              <div className="flex items-center gap-4">
-                <button className="p-2 rounded-md border border-gray-200">
-                  <Search size={18} />
-                </button>
-                <button className="p-2 rounded-md border border-gray-200 relative">
-                  <ShoppingCart size={18} />
-                  <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-bold">
-                    {cartCount}
-                  </span>
-                </button>
-                <div className="ml-auto flex items-center gap-2 text-gray-600">
-                  <Facebook size={16} />
-                  <Twitter size={16} />
-                  <Instagram size={16} />
-                </div>
->>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
               </div>
             </div>
           </div>

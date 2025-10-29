@@ -35,15 +35,9 @@ export default function Footer() {
           <div className="space-y-5">
             <div className="flex items-center gap-3">
               <div className="bg-white rounded-md p-2 w-12 h-12 grid place-items-center">
-<<<<<<< HEAD
                 <img src="/logos/mamas-grocery-2.png" alt="Logo" className="h-8 w-auto" />
               </div>
               <div className="text-xl font-semibold tracking-wide">Mama's Grocery & Charcoal BBQ</div>
-=======
-                <img src="/logos/logo2.png" alt="Logo" className="h-8 w-auto" />
-              </div>
-              <div className="text-xl font-semibold tracking-wide">Creativa</div>
->>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
             </div>
             <p className="text-neutral-400 leading-relaxed">
               Distributeur premium d’ingrédients orientaux et internationaux. Qualité,
@@ -136,11 +130,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 lg:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-neutral-400">
-<<<<<<< HEAD
           <div>© All Copyright {new Date().getFullYear()} by Mama's Grocery & Charcoal BBQ</div>
-=======
-          <div>© All Copyright {new Date().getFullYear()} by Creativa</div>
->>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
           <div className="flex items-center gap-4">
             <a href="#terms" className="hover:text-white">Terms & Condition</a>
             <a href="#privacy" className="hover:text-white">Privacy Policy</a>
