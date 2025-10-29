@@ -255,6 +255,7 @@ html, body {
   mask-image: radial-gradient(ellipse at center, black 60%, transparent 120%);
 }
 
+<<<<<<< HEAD
 /* Hide horizontal scrollbars for chip scrollers and product carousels */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -262,6 +263,12 @@ html, body {
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
+=======
+/* Hide horizontal scrollbars for chip scrollers */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+>>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
 /* Shine animation for navbar white block */
 @keyframes shine {
   0%, 10% {
@@ -273,6 +280,7 @@ html, body {
   100% {
     background-position: 200px 0;
   }
+<<<<<<< HEAD
 }
 
 /* Banner animations */
@@ -293,4 +301,6 @@ html, body {
 
 .delay-200 {
   animation-delay: 0.2s;
+=======
+>>>>>>> f364477e1bf411dd22665f5070bbf41d1f473208
 }
