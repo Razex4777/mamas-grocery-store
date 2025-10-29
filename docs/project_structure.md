@@ -127,6 +127,8 @@ Mamas-Grocery-react/
 │
 ├── 📁 node_modules/                  # Dependencies (not tracked)
 │
+├── 📁 templates/                     # Archived UI templates and design references (ignored in git)
+│
 ├── 📄 index.html                     # HTML entry point
 ├── 📄 package.json                   # NPM dependencies & scripts
 ├── 📄 package-lock.json              # Locked dependency versions

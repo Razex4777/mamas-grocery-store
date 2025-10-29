@@ -1,69 +1,48 @@
-# React + TypeScript + Vite
+# Mama's Grocery & Charcoal BBQ – React Storefront
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <img src="/logos/logo2.png" alt="Mama's Grocery Logo" width="160" />
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <img src="https://img.shields.io/badge/Vite%20%2B%20React%20%2B%20TS-1b1b38?style=for-the-badge&logo=vite&logoColor=ffd62e&labelColor=282B43" alt="Vite + React + TS Badge" />
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack Badge
 
-## Expanding the ESLint configuration
+The **"Vite + React + TS"** badge highlights the core technology powering the storefront experience:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Vite** delivers lightning-fast dev tooling and optimized production builds.
+- **React** enables modular UI composition for the hero, product, FAQ, and contact sections.
+- **TypeScript** keeps the component library type-safe and predictable as the catalogue grows.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Overview
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Mama's Grocery & Charcoal BBQ is a modern React + Tailwind storefront showcasing wholesale grocery and catering products. The application features an animated hero section, product drawers with cart interactions, marquee brand showcases, and a responsive navigation system with dynamic scroll behavior.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Key Features
+
+- Home page with animated hero, origin story, featured products, categories, FAQs, and contact form.
+- Dedicated products page with search, filters, GSAP-powered marquees, and drawer-based product details.
+- Reusable animation wrappers (`RevealOnScroll`, `ScrollFloat`) and Tailwind utility classes for motion and layout.
+- Comprehensive documentation in `docs/` with architecture and change history.
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open `http://localhost:5173` to view the storefront locally. The dev server supports hot-module replacement for rapid UI updates.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Available Scripts
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `npm run dev` – Start the Vite development server.
+- `npm run build` – Create an optimized production build in `dist/`.
+- `npm run preview` – Preview the production build locally.
+- `npm run lint` – Run ESLint with the TypeScript-aware configuration.
+
+## Project Structure
+
+Refer to `docs/project_structure.md` for a full, continuously updated architectural breakdown covering components, pages, assets, and configuration files.

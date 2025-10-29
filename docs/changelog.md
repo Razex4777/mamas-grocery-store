@@ -4,6 +4,30 @@ All notable changes to this project are documented here.
 
 ---
 
+## 2025-10-29 11:20
+
+### **Added Branding Logo and Tech Badge Documentation**
+- **Modified**: `README.md`
+  - Embedded `/logos/logo2.png` hero logo at top of project README
+  - Added badge showcasing Vite + React + TypeScript stack with descriptive copy
+  - Documented storefront overview, key features, scripts, and structure reference
+- **Modified**: `docs/project_structure.md`
+  - Documented root-level `templates/` directory as archived assets (git ignored)
+
+**Reason**: Provide branded README presentation using supplied logo and describe technology stack badge.
+
+## 2025-10-29 11:15
+
+### **Removed Templates Directory from Git Tracking**
+- **Modified**: `.gitignore`
+  - Added `templates/` directory to ignore list
+- **Removed**: `templates/` directory from repository
+  - Used `git rm -r --cached templates/` to remove from tracking
+  - Templates folder now excluded from version control
+- **Committed**: Changes pushed to GitHub repository
+
+**Reason**: User requested to exclude templates directory from GitHub repository tracking
+
 ## 2025-10-29 10:40
 
 ### **Fixed Infinite Marquee Animation**
