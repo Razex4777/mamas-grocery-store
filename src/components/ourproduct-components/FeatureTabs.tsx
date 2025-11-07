@@ -56,7 +56,7 @@ const FEATURES = [
 
 export default function FeatureTabs() {
   return (
-    <div className="bg-orange-500 border-b border-orange-600">
+    <div className="bg-red-600 border-b border-red-700">
       <div className="container mx-auto px-4 lg:px-8 py-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {FEATURES.map((feature, index) => {
@@ -64,18 +64,18 @@ export default function FeatureTabs() {
             return (
               <div
                 key={index}
-                className="flex items-center gap-4 p-4 rounded-lg hover:bg-orange-50 transition-colors"
+                className="flex items-center gap-4 p-4 rounded-lg hover:bg-red-50 transition-colors"
               >
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-orange-600" />
+                  <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                    <Icon className="w-6 h-6 text-red-600" />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-1">
+                  <h4 className="text-sm font-semibold text-white mb-1">
                     {feature.title}
                   </h4>
-                  <p className="text-xs text-gray-600">{feature.subtitle}</p>
+                  <p className="text-xs text-red-50">{feature.subtitle}</p>
                 </div>
               </div>
             );

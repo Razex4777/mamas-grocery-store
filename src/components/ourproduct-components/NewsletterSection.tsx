@@ -1,18 +1,32 @@
 import { useState } from 'react';
+import { subscribeToNewsletter } from '../../lib/newsletter';
+import { useToast } from '../Toast';
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const toast = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Newsletter subscription:', email);
-    // Handle newsletter subscription
-    setEmail('');
+    if (isSubscribing || !email) return;
+
+    setIsSubscribing(true);
+    const result = await subscribeToNewsletter(email);
+    
+    if (result.success) {
+      toast.success(result.message);
+      setEmail(''); // Clear the input
+    } else {
+      toast.error(result.message);
+    }
+    
+    setIsSubscribing(false);
   };
 
   return (
     <section 
-      className="relative py-16 overflow-hidden"
+      className="relative pt-16 pb-16 overflow-hidden"
       data-aos="fade-up"
       data-aos-duration="1200"
     >
@@ -57,14 +71,16 @@ export default function NewsletterSection() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email address..."
+                    disabled={isSubscribing}
                     required
-                    className="w-full py-5 px-6 pr-40 rounded-full text-gray-800 font-sans placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all shadow-lg"
+                    className="w-full py-5 px-6 pr-40 rounded-full text-gray-800 font-sans placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   <button
                     type="submit"
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-heading font-semibold px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                    disabled={isSubscribing}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-heading font-semibold px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    Subscribe
+                    {isSubscribing ? 'Subscribing...' : 'Subscribe'}
                   </button>
                 </div>
               </form>

@@ -1,9 +1,28 @@
-import { Mail, MapPin, Phone, ArrowRight, Clock, Facebook, Instagram, Twitter } from "lucide-react";
-import { COMPANY_INFO, CATEGORY_LINKS, QUICK_LINKS } from "./constants";
-// framer-motion not used after removing back-to-top
-import { useEffect } from "react";
+import { Mail, MapPin, Phone, ArrowRight, Clock, Facebook, Shield } from "lucide-react";
+import { COMPANY_INFO, QUICK_LINKS } from "./constants";
+import { useEffect, useState } from "react";
+import AdminLoginModal from "../admin/AdminLoginModal";
+import { fetchCategories } from "../../lib/categories";
+import type { Category } from "../../lib/database.types";
+import { subscribeToNewsletter } from "../../lib/newsletter";
+import { useToast } from "../Toast";
 
 export default function Footer() {
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [email, setEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const toast = useToast();
+
+  useEffect(() => {
+    // Load categories from Supabase
+    const loadCategories = async () => {
+      const categoriesData = await fetchCategories();
+      setCategories(categoriesData);
+    };
+    loadCategories();
+  }, []);
+
   useEffect(() => {
     // expose footer height for spacing if needed
     const el = document.getElementById("site-footer");
@@ -15,19 +34,25 @@ export default function Footer() {
     return () => ro.disconnect();
   }, []);
 
-  return (
-    <footer id="site-footer" className="relative bg-gradient-to-b from-neutral-900 to-black text-neutral-200">
-      {/* Floating CTA strip (moved down for spacing) */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="pt-10 pb-16">
-          <div className="grid gap-6 md:grid-cols-3">
-            <InfoPill icon={<MapPin size={18} />} title="Address" value={COMPANY_INFO.address} />
-            <InfoPill icon={<Mail size={18} />} title="Email" value={COMPANY_INFO.email} />
-            <InfoPill icon={<Phone size={18} />} title="Call" value={COMPANY_INFO.phone} />
-          </div>
-        </div>
-      </div>
+  const handleNewsletterSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isSubscribing || !email) return;
 
+    setIsSubscribing(true);
+    const result = await subscribeToNewsletter(email);
+    
+    if (result.success) {
+      toast.success(result.message);
+      setEmail(''); // Clear the input
+    } else {
+      toast.error(result.message);
+    }
+    
+    setIsSubscribing(false);
+  };
+
+  return (
+    <footer id="site-footer" className="relative bg-gradient-to-b from-neutral-900 to-black text-neutral-200 pt-24">
       {/* Main body */}
       <div className="mx-auto max-w-7xl px-6 lg:px-12 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -52,9 +77,9 @@ export default function Footer() {
               </div>
             </div>
             <div className="flex gap-3 pt-2">
-              <Social icon={<Facebook size={16} />} />
-              <Social icon={<Instagram size={16} />} />
-              <Social icon={<Twitter size={16} />} />
+              {COMPANY_INFO.socials.map((social, index) => (
+                <Social key={index} icon={<Facebook size={16} />} href={social.href} />
+              ))}
             </div>
           </div>
 
@@ -77,45 +102,55 @@ export default function Footer() {
           <div>
             <FooterHeading>Our Categories</FooterHeading>
             <ul className="space-y-2">
-              {CATEGORY_LINKS.map((l) => (
-                <li key={l.label}>
-                  <a className="group inline-flex items-center gap-2 hover:text-white transition" href={l.href}>
+              {categories.slice(0, 6).map((category) => (
+                <li key={category.id}>
+                  <a 
+                    className="group inline-flex items-center gap-2 hover:text-white transition" 
+                    href={`/products?category=${category.id}`}
+                  >
                     <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-orange-500/10 text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition">
                       <ArrowRight size={14} />
                     </span>
-                    <span>{l.label}</span>
+                    <span>{category.name}</span>
                   </a>
                 </li>
               ))}
+              {categories.length === 0 && (
+                <li className="text-neutral-400 text-sm">Loading categories...</li>
+              )}
             </ul>
           </div>
 
           {/* Newsletter */}
           <div>
-            <FooterHeading>Contact Us</FooterHeading>
+            <FooterHeading>Newsletter</FooterHeading>
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleNewsletterSubscribe}
               className="space-y-3"
               aria-label="newsletter"
             >
               <div className="relative">
                 <input
-                  className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
                   placeholder="Your email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubscribing}
                   required
                 />
                 <button
-                  className="absolute right-1 top-1 bottom-1 px-4 rounded-lg bg-orange-600 text-white font-semibold hover:bg-orange-500 active:scale-95 transition"
+                  type="submit"
+                  disabled={isSubscribing}
+                  className="absolute right-1 top-1 bottom-1 px-4 rounded-lg bg-orange-600 text-white font-semibold hover:bg-orange-500 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Subscribe"
                 >
-                  <ArrowRight size={18} />
+                  {isSubscribing ? '...' : <ArrowRight size={18} />}
                 </button>
               </div>
-              <label className="flex items-center gap-2 text-xs text-neutral-400">
-                <input type="checkbox" className="accent-orange-500" /> I agree to the
-                <a href="#privacy" className="underline decoration-dotted hover:text-white">Privacy Policy</a>
-              </label>
+              <p className="text-xs text-neutral-400">
+                Subscribe to get special offers & updates
+              </p>
             </form>
 
             <div className="mt-6 space-y-3 text-sm">
@@ -134,11 +169,19 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             <a href="#terms" className="hover:text-white">Terms & Condition</a>
             <a href="#privacy" className="hover:text-white">Privacy Policy</a>
+            <button 
+              onClick={() => setIsAdminModalOpen(true)}
+              className="flex items-center gap-1.5 hover:text-teal-400 transition-colors group"
+            >
+              <Shield size={14} className="group-hover:rotate-12 transition-transform" />
+              Admin Access
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Back to top removed per request */}
+      {/* Admin Login Modal */}
+      <AdminLoginModal isOpen={isAdminModalOpen} onClose={() => setIsAdminModalOpen(false)} />
     </footer>
   );
 }
@@ -152,25 +195,16 @@ function FooterHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
-function InfoPill({ icon, title, value }: { icon: React.ReactNode; title: string; value: string }) {
+function Social({ icon, href }: { icon: React.ReactNode; href: string }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-600 to-red-600 text-white p-5 shadow-xl">
-      <div className="flex items-center gap-4">
-        <div className="w-10 h-10 rounded-full bg-white/20 grid place-items-center">{icon}</div>
-        <div className="space-y-0.5">
-          <div className="text-xs uppercase tracking-wider opacity-80">{title}</div>
-          <div className="text-base font-semibold">{value}</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Social({ icon }: { icon: React.ReactNode }) {
-  return (
-    <button className="w-8 h-8 rounded-md bg-white/10 hover:bg-white/20 transition grid place-items-center">
+    <a 
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-8 h-8 rounded-md bg-white/10 hover:bg-white/20 transition grid place-items-center"
+    >
       {icon}
-    </button>
+    </a>
   );
 }
 

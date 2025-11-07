@@ -40,8 +40,11 @@ export default function AnimatedMarqueeHero() {
   const duplicatedImages = [...GROCERY_IMAGES, ...GROCERY_IMAGES];
 
   const handleShopNow = () => {
-    // Scroll to products or navigate to products page
-    window.scrollTo({ top: 800, behavior: 'smooth' });
+    // Scroll to products section
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -114,7 +117,7 @@ export default function AnimatedMarqueeHero() {
             variants={FADE_IN_ANIMATION_VARIANTS}
             transition={{ delay: 0.6 }}
           >
-            <ActionButton onClick={handleShopNow}>Explore Now</ActionButton>
+            <ActionButton onClick={handleShopNow}>Explore Products</ActionButton>
           </motion.div>
         </div>
       </div>

@@ -12,8 +12,23 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env
+.env.local
+
 # Templates
 templates/
+
+# Backup folders
+backup_home2/
+backup_home2_complete/
+backup_home2_remaining/
+
+# Python artifacts (not source files)
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
 
 # Documentation
 docs/

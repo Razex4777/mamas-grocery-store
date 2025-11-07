@@ -1,12 +1,11 @@
-import { Facebook, Twitter, Instagram, Menu, X, MapPin, Mail, Phone } from 'lucide-react';
+import { Facebook, Menu, X, MapPin, Mail, Phone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const navLinks = [
   { label: 'Home', href: '/' },
-  { label: 'About Us', href: '#about' },
   { label: 'Our Products', href: '/products' },
-  { label: 'Contact Us', href: '#contact' }
+  { label: 'Contact Us', href: '/contact' }
 ];
 
 const FullNavbar = () => {
@@ -152,15 +151,14 @@ const FullNavbar = () => {
             {/* Social media icons on the far right */}
             <div className="absolute top-0 right-4 lg:right-8 h-full flex items-center space-x-2 lg:space-x-3">
               <span className="font-medium text-sm lg:text-base hidden md:inline">Follow Us:</span>
-              <button className="w-5 h-5 lg:w-6 lg:h-6 bg-white text-green-600 rounded-sm flex items-center justify-center text-sm font-bold hover:bg-green-600 hover:text-white transform hover:scale-110 transition-all duration-300">
+              <a 
+                href="https://www.facebook.com/Alsmadimoncton?locale=fr_FR" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-5 h-5 lg:w-6 lg:h-6 bg-white text-red-600 rounded-sm flex items-center justify-center text-sm font-bold hover:bg-red-600 hover:text-white transform hover:scale-110 transition-all duration-300"
+              >
                 <Facebook size={12} />
-              </button>
-              <button className="w-5 h-5 lg:w-6 lg:h-6 bg-white text-green-600 rounded-sm flex items-center justify-center text-sm font-bold hover:bg-blue-500 hover:text-white transform hover:scale-110 transition-all duration-300">
-                <Twitter size={12} />
-              </button>
-              <button className="w-5 h-5 lg:w-6 lg:h-6 bg-white text-green-600 rounded-sm flex items-center justify-center text-sm font-bold hover:bg-pink-500 hover:text-white transform hover:scale-110 transition-all duration-300">
-                <Instagram size={12} />
-              </button>
+              </a>
             </div>
           </div>
 
@@ -175,7 +173,7 @@ const FullNavbar = () => {
               <nav className="hidden lg:flex items-center space-x-8 text-base">
                 {navLinks.map((link, i) => {
                   const isRoute = link.href.startsWith('/');
-                  const commonClasses = "relative text-white hover:text-orange-500 transition-all duration-300 font-medium group py-2";
+                  const commonClasses = "relative text-white hover:text-red-600 transition-all duration-300 font-medium group py-2";
                   
                   return isRoute ? (
                     <Link
@@ -184,8 +182,8 @@ const FullNavbar = () => {
                       className={commonClasses}
                     >
                       {link.label}
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-                      <span className="absolute inset-0 bg-orange-500/10 rounded-md scale-0 group-hover:scale-100 transition-transform duration-300 -z-10"></span>
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 group-hover:w-full"></span>
+                      <span className="absolute inset-0 bg-red-600/10 rounded-md scale-0 group-hover:scale-100 transition-transform duration-300 -z-10"></span>
                     </Link>
                   ) : (
                     <a
@@ -194,8 +192,8 @@ const FullNavbar = () => {
                       className={commonClasses}
                     >
                       {link.label}
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-                      <span className="absolute inset-0 bg-orange-500/10 rounded-md scale-0 group-hover:scale-100 transition-transform duration-300 -z-10"></span>
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 group-hover:w-full"></span>
+                      <span className="absolute inset-0 bg-red-600/10 rounded-md scale-0 group-hover:scale-100 transition-transform duration-300 -z-10"></span>
                     </a>
                   );
                 })}
@@ -205,7 +203,7 @@ const FullNavbar = () => {
               <div className="hidden lg:flex items-center space-x-6">
                 <button className="bg-red-600 text-white px-6 py-3 font-bold text-base tracking-wide hover:bg-red-700 transform hover:scale-105 hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
                   <span className="relative z-10">VISIT NOW</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                 </button>
               </div>
 
@@ -268,9 +266,14 @@ const FullNavbar = () => {
                 VISIT NOW
               </button>
               <div className="flex items-center gap-2 text-gray-600">
-                <Facebook size={16} />
-                <Twitter size={16} />
-                <Instagram size={16} />
+                <a 
+                  href="https://www.facebook.com/Alsmadimoncton?locale=fr_FR" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-red-600 transition-colors"
+                >
+                  <Facebook size={16} />
+                </a>
               </div>
             </div>
           </div>

@@ -1,5 +1,8 @@
 import { motion } from 'framer-motion';
-import { Eye } from 'lucide-react';
+import { Eye, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useFavorites } from '../../../lib/favorites';
+
 import type { FeaturedProduct } from './types';
 
 interface ProductCardProps {
@@ -7,10 +10,13 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  // Calculate discount percentage
-  const discountPercent = product.originalPrice 
-    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
-    : 0;
+  const navigate = useNavigate();
+  const { toggleFavorite, isFavorite } = useFavorites();
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleFavorite(product.id);
+  };
 
   return (
     <motion.article
@@ -22,32 +28,35 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Animated gradient border on hover */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#629D23]/0 via-[#629D23]/0 to-[#629D23]/0 group-hover:from-[#629D23]/10 group-hover:via-transparent group-hover:to-[#629D23]/10 transition-all duration-500 pointer-events-none" />
 
-      {/* Discount Badge - Top Right with animation */}
-      {discountPercent > 0 && (
-        <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ type: "spring", stiffness: 200, damping: 15 }}
-          className="absolute top-3 right-3 z-10"
-        >
-          <div className="bg-gradient-to-br from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-            -{discountPercent}%
-          </div>
-        </motion.div>
-      )}
-
-      {/* Stock Badge - Top Left */}
-      {product.inStock && (
-        <div className="absolute top-3 left-3 z-10">
-          <div className="bg-green-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
-            <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-            In Stock
-          </div>
-        </div>
-      )}
+      {/* Favorite button - top right, appears on hover */}
+      <button
+        onClick={handleFavoriteClick}
+        className="absolute top-3 right-3 z-20 p-2 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:bg-white shadow-lg"
+        title={isFavorite(product.id) ? 'Remove from favorites' : 'Add to favorites'}
+      >
+        <Heart 
+          className={`h-5 w-5 transition-colors ${
+            isFavorite(product.id) 
+              ? 'text-red-500 fill-red-500' 
+              : 'text-gray-600'
+          }`}
+        />
+      </button>
 
       {/* Product Image with optimized hover effect */}
       <div className="relative h-56 flex items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+        {/* Badges */}
+        {product.newArrival && (
+          <div className="absolute top-3 left-3 z-10 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full ring-1 ring-blue-600/20">
+            New Arrival
+          </div>
+        )}
+        {product.featured && !isFavorite(product.id) && (
+          <div className="absolute top-3 right-3 z-10 bg-amber-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-2 py-1 rounded-full ring-1 ring-amber-500/20">
+            Featured
+          </div>
+        )}
+        
         {/* Glow effect behind image */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#629D23]/5 via-transparent to-[#629D23]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         
@@ -61,17 +70,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Info */}
       <div className="relative p-5 bg-white">
-        {/* Origin Badge */}
-        <div className="flex items-center gap-2 mb-2">
-          <span className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            {product.origin}
-          </span>
-          <span className="inline-flex items-center text-xs text-[#629D23] bg-[#629D23]/10 px-2 py-1 rounded-full font-medium">
-            {product.category}
+        {/* Origin and Stock Status */}
+        <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+          <span>{product.origin}</span>
+          <span className={product.inStock ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'}>
+            {product.inStock ? 'In Stock' : 'Out of Stock'}
           </span>
         </div>
 
@@ -87,11 +90,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* View Details Button */}
         <button
-          onClick={() => {
-            if (typeof window !== 'undefined') {
-              window.dispatchEvent(new CustomEvent('app:product:view', { detail: product }));
-            }
-          }}
+          onClick={() => navigate(`/product/${product.id}`)}
           className="w-full mt-4 bg-[#629D23] hover:bg-[#527d1d] text-white text-sm font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
         >
           <Eye size={18} />

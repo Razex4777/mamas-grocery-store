@@ -11,6 +11,8 @@ export interface FeaturedProduct {
   description: string; // Short product description
   inStock: boolean; // Stock availability
   origin: string; // Country/region of origin
+  featured?: boolean; // Featured product badge
+  newArrival?: boolean; // New arrival badge
 }
 
 
