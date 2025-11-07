@@ -7,7 +7,7 @@ export const fetchAllProducts = async (): Promise<Product[]> => {
     .from('products')
     .select('*')
     .order('display_order', { ascending: true })
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false }) as { data: Product[] | null; error: any };
 
   if (error) {
     console.error('Error fetching all products:', error);
@@ -24,7 +24,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
     .select('*')
     .eq('is_active', true)
     .order('display_order', { ascending: true })
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false }) as { data: Product[] | null; error: any };
 
   if (error) {
     console.error('Error fetching products:', error);
@@ -40,7 +40,7 @@ export const fetchProductById = async (id: string): Promise<Product | null> => {
     .from('products')
     .select('*')
     .eq('id', id)
-    .single();
+    .single() as { data: Product | null; error: any };
 
   if (error) {
     console.error('Error fetching product:', error);
@@ -57,7 +57,7 @@ export const fetchProductsByCategory = async (categoryId: string): Promise<Produ
     .select('*')
     .eq('category_id', categoryId)
     .eq('is_active', true)
-    .order('display_order', { ascending: true });
+    .order('display_order', { ascending: true }) as { data: Product[] | null; error: any };
 
   if (error) {
     console.error('Error fetching products by category:', error);
@@ -75,7 +75,7 @@ export const fetchFeaturedProducts = async (): Promise<Product[]> => {
     .eq('is_active', true)
     .eq('featured', true)
     .order('display_order', { ascending: true })
-    .limit(8);
+    .limit(8) as { data: Product[] | null; error: any };
 
   if (error) {
     console.error('Error fetching featured products:', error);
@@ -93,7 +93,7 @@ export const fetchNewArrivals = async (): Promise<Product[]> => {
     .eq('is_active', true)
     .eq('new_arrival', true)
     .order('created_at', { ascending: false })
-    .limit(12);
+    .limit(12) as { data: Product[] | null; error: any };
 
   if (error) {
     console.error('Error fetching new arrivals:', error);
@@ -111,7 +111,7 @@ export const fetchBestSellers = async (): Promise<Product[]> => {
     .eq('is_active', true)
     .eq('featured', true)
     .order('created_at', { ascending: false })
-    .limit(4);
+    .limit(4) as { data: Product[] | null; error: any };
 
   if (error) {
     console.error('Error fetching best sellers:', error);
@@ -127,7 +127,7 @@ export const createProduct = async (product: ProductInsert): Promise<Product | n
     .from('products')
     .insert(product)
     .select()
-    .single();
+    .single() as { data: Product | null; error: any };
 
   if (error) {
     console.error('Error creating product:', error);
@@ -147,7 +147,7 @@ export const updateProduct = async (
     .update(updates)
     .eq('id', id)
     .select()
-    .single();
+    .single() as { data: Product | null; error: any };
 
   if (error) {
     console.error('Error updating product:', error);

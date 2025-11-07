@@ -34,8 +34,8 @@ export async function subscribeToNewsletter(email: string): Promise<{ success: b
         // Reactivate subscription
         const { error: updateError } = await supabase
           .from('newsletter_subscriptions')
-          .update({ is_active: true } as any)
-          .eq('email', email.toLowerCase());
+          .update({ is_active: true })
+          .eq('email', email.toLowerCase()) as { error: any };
 
         if (updateError) {
           console.error('Error reactivating subscription:', updateError);
@@ -54,7 +54,7 @@ export async function subscribeToNewsletter(email: string): Promise<{ success: b
 
     const { error: insertError } = await supabase
       .from('newsletter_subscriptions')
-      .insert(newSubscription as any);
+      .insert(newSubscription) as { error: any };
 
     if (insertError) {
       console.error('Error subscribing:', insertError);
@@ -142,8 +142,8 @@ export async function deactivateNewsletterSubscription(id: string): Promise<{ su
   try {
     const { error } = await supabase
       .from('newsletter_subscriptions')
-      .update({ is_active: false } as any)
-      .eq('id', id);
+      .update({ is_active: false })
+      .eq('id', id) as { error: any };
 
     if (error) {
       console.error('Error deactivating subscription:', error);

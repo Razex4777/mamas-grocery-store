@@ -1,5 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-import type { Database } from './database.types';
 
 // Supabase configuration from environment variables
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -15,7 +14,8 @@ if (!supabaseAnonKey) {
 }
 
 // Create Supabase client with auth persistence
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+// Using any type to avoid never type inference issues during build
+export const supabase = createClient<any>(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,

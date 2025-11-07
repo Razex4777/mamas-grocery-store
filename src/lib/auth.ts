@@ -11,7 +11,7 @@ export async function validateAdminSession(username: string): Promise<{ isValid:
       .from('admin_data')
       .select('username')
       .eq('username', username)
-      .single();
+      .single() as { data: { username: string } | null; error: any };
 
     if (error || !data) {
       return { isValid: false };
@@ -36,7 +36,7 @@ export async function authenticateAdmin(username: string, password: string): Pro
       .select('username')
       .eq('username', username)
       .eq('password', password)
-      .single();
+      .single() as { data: { username: string } | null; error: any };
 
     if (error || !data) {
       return { success: false, message: 'Invalid credentials' };

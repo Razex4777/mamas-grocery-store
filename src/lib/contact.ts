@@ -11,7 +11,7 @@ export async function submitContactMessage(data: ContactMessageInsert): Promise<
       .from('contact_messages')
       .insert(data)
       .select()
-      .single();
+      .single() as { data: ContactMessage | null; error: any };
 
     if (error) {
       console.error('Error submitting contact message:', error);
@@ -21,7 +21,7 @@ export async function submitContactMessage(data: ContactMessageInsert): Promise<
     return { 
       success: true, 
       message: 'Thank you for contacting us! We will get back to you soon.',
-      data: insertedMessage as ContactMessage
+      data: insertedMessage || undefined
     };
   } catch (error) {
     console.error('Unexpected error:', error);
@@ -44,7 +44,7 @@ export async function fetchContactMessages(): Promise<ContactMessage[]> {
     const { data, error } = await supabase
       .from('contact_messages')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false }) as { data: ContactMessage[] | null; error: any };
 
     if (error) {
       console.error('Error fetching contact messages:', error);
@@ -75,7 +75,7 @@ export async function updateContactMessage(id: string, updates: ContactMessageUp
       .from('contact_messages')
       .select('id')
       .eq('id', id)
-      .single();
+      .single() as { data: { id: string } | null; error: any };
 
     if (fetchError || !existingMessage) {
       console.error('Message not found:', id);
@@ -86,7 +86,7 @@ export async function updateContactMessage(id: string, updates: ContactMessageUp
     const { error } = await supabase
       .from('contact_messages')
       .update(updates)
-      .eq('id', id);
+      .eq('id', id) as { error: any };
 
     if (error) {
       console.error('Error updating contact message:', error);
@@ -118,7 +118,7 @@ export async function deleteContactMessage(id: string): Promise<{ success: boole
       .from('contact_messages')
       .select('id, is_archived')
       .eq('id', id)
-      .single();
+      .single() as { data: { id: string; is_archived: boolean } | null; error: any };
 
     if (fetchError || !existingMessage) {
       console.error('Message not found:', id);
@@ -132,7 +132,7 @@ export async function deleteContactMessage(id: string): Promise<{ success: boole
         is_archived: true,
         status: 'archived'
       })
-      .eq('id', id);
+      .eq('id', id) as { error: any };
 
     if (error) {
       console.error('Error archiving contact message:', error);

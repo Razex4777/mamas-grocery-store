@@ -31,7 +31,14 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      increment_product_view_count: {
+        Args: { product_id: string };
+        Returns: void;
+      };
+      expire_old_new_arrivals: {
+        Args: Record<string, never>;
+        Returns: void;
+      };
     };
     Enums: {
       [_ in never]: never;

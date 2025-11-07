@@ -6,7 +6,7 @@ export const fetchAllCategories = async (): Promise<Category[]> => {
   const { data, error } = await supabase
     .from('categories')
     .select('*')
-    .order('name', { ascending: true });
+    .order('name', { ascending: true }) as { data: Category[] | null; error: any };
 
   if (error) {
     console.error('Error fetching all categories:', error);
@@ -22,7 +22,7 @@ export const fetchCategories = async (): Promise<Category[]> => {
     .from('categories')
     .select('*')
     .eq('is_active', true)
-    .order('name', { ascending: true });
+    .order('name', { ascending: true }) as { data: Category[] | null; error: any };
 
   if (error) {
     console.error('Error fetching categories:', error);
@@ -39,7 +39,7 @@ export const fetchCategoryBySlug = async (slug: string): Promise<Category | null
     .select('*')
     .eq('slug', slug)
     .eq('is_active', true)
-    .single();
+    .single() as { data: Category | null; error: any };
 
   if (error) {
     console.error('Error fetching category:', error);
@@ -53,33 +53,33 @@ export const fetchCategoryBySlug = async (slug: string): Promise<Category | null
 export const createCategory = async (category: CategoryInsert): Promise<Category | null> => {
   const { data, error } = await supabase
     .from('categories')
-    .insert(category as any)
+    .insert(category)
     .select()
-    .single();
+    .single() as { data: Category | null; error: any };
 
   if (error) {
     console.error('Error creating category:', error);
     throw error;
   }
 
-  return data as Category;
+  return data;
 };
 
 // Update category
 export const updateCategory = async (id: string, updates: CategoryUpdate): Promise<Category | null> => {
   const { data, error } = await supabase
     .from('categories')
-    .update(updates as any)
+    .update(updates)
     .eq('id', id)
     .select()
-    .single();
+    .single() as { data: Category | null; error: any };
 
   if (error) {
     console.error('Error updating category:', error);
     throw error;
   }
 
-  return data as Category;
+  return data;
 };
 
 // Delete category
