@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import Lottie from 'lottie-react';
 import { fetchProductById, fetchProducts, incrementProductViewCount } from '../lib/products';
 import type { Product } from '../lib/database.types';
 import ProductCard from '../components/ourproduct-components/FeaturedProducts/ProductCard';
@@ -280,13 +279,9 @@ export default function ProductDetailsPage() {
                 <div className="mt-5 rounded-xl border border-gray-200 bg-gradient-to-br from-gray-50 to-white p-4">
                   <div className="flex items-center gap-4">
                     <div className="flex-shrink-0">
-                      <Lottie
-                        animationData={null}
-                        path="https://assets-v2.lottiefiles.com/a/4369945c-1189-11ee-91c3-13782da42b93/Wz055eYDMD.json"
-                        loop={true}
-                        autoplay={true}
-                        style={{ width: 70, height: 70 }}
-                      />
+                      <div className="w-[70px] h-[70px] rounded-full bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                        <Package className="w-8 h-8 text-white" />
+                      </div>
                     </div>
                     <div className="flex-1">
                       <p className="text-[14px] font-semibold text-gray-900">Wholesale pricing</p>
