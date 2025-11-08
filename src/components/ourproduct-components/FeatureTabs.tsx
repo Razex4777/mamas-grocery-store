@@ -57,29 +57,59 @@ const FEATURES = [
 export default function FeatureTabs() {
   return (
     <div className="bg-red-600 border-b border-red-700">
-      <div className="container mx-auto px-4 lg:px-8 py-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {FEATURES.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <div
-                key={index}
-                className="flex items-center gap-4 p-4 rounded-lg hover:bg-red-50 transition-colors"
-              >
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-red-600" />
+      {/* Mobile: Horizontal scrollable single line */}
+      <div className="lg:hidden">
+        <div className="overflow-x-auto scrollbar-hide">
+          <div className="flex gap-3 px-4 py-4 min-w-max">
+            {FEATURES.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col items-center text-center gap-2 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-all duration-300 min-w-[140px] max-w-[140px]"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-red-600" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <h4 className="text-[11px] leading-tight font-bold text-white">
+                      {feature.title}
+                    </h4>
+                    <p className="text-[9px] leading-tight text-red-50/90">{feature.subtitle}</p>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <h4 className="text-sm font-semibold text-white mb-1">
-                    {feature.title}
-                  </h4>
-                  <p className="text-xs text-red-50">{feature.subtitle}</p>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop: Grid layout */}
+      <div className="hidden lg:block">
+        <div className="container mx-auto px-4 lg:px-8 py-6">
+          <div className="grid grid-cols-4 gap-6">
+            {FEATURES.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={index}
+                  className="flex items-center gap-4 p-4 rounded-lg hover:bg-red-50 transition-colors"
+                >
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center">
+                      <Icon className="w-6 h-6 text-red-600" />
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-sm font-semibold text-white mb-1">
+                      {feature.title}
+                    </h4>
+                    <p className="text-xs text-red-50">{feature.subtitle}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

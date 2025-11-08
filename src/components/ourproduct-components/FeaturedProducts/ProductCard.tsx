@@ -44,7 +44,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </button>
 
       {/* Product Image with optimized hover effect */}
-      <div className="relative h-56 flex items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
+      <div className="relative h-44 md:h-56 flex items-center justify-center p-4 md:p-6 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
         {/* Badges */}
         {product.newArrival && (
           <div className="absolute top-3 left-3 z-10 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full ring-1 ring-blue-600/20">
@@ -69,7 +69,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Product Info */}
-      <div className="relative p-5 bg-white">
+      <div className="relative p-4 md:p-5 bg-white">
         {/* Origin and Stock Status */}
         <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
           <span>{product.origin}</span>
@@ -79,21 +79,21 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Product Title */}
-        <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-2 min-h-[48px] group-hover:text-[#629D23] transition-colors duration-300">
+        <h3 className="text-sm md:text-base font-bold text-gray-900 mb-2 line-clamp-2 min-h-[40px] md:min-h-[48px] group-hover:text-[#629D23] transition-colors duration-300">
           {product.title}
         </h3>
 
         {/* Description */}
-        <p className="text-xs text-gray-600 line-clamp-2 mb-4 min-h-[32px]">
+        <p className="text-[10px] md:text-xs text-gray-600 line-clamp-2 mb-3 md:mb-4 min-h-[28px] md:min-h-[32px]">
           {product.description}
         </p>
 
         {/* View Details Button */}
         <button
           onClick={() => navigate(`/product/${product.id}`)}
-          className="w-full mt-4 bg-[#629D23] hover:bg-[#527d1d] text-white text-sm font-medium py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+          className="w-full mt-3 md:mt-4 bg-[#629D23] hover:bg-[#527d1d] text-white text-xs md:text-sm font-medium py-2 md:py-2.5 px-3 md:px-4 rounded-lg transition-colors flex items-center justify-center gap-1.5 md:gap-2"
         >
-          <Eye size={18} />
+          <Eye size={16} className="md:w-[18px] md:h-[18px]" />
           <span>View Details</span>
         </button>
       </div>

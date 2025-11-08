@@ -22,10 +22,10 @@ const ActionButton = ({ children, onClick }: { children: React.ReactNode; onClic
     whileHover={{ scale: 1.05 }}
     whileTap={{ scale: 0.95 }}
     onClick={onClick}
-    className="group mt-8 px-8 py-4 rounded-full bg-[#629D23] text-white font-semibold shadow-lg transition-all hover:bg-[#527d1d] focus:outline-none focus:ring-2 focus:ring-[#629D23] focus:ring-opacity-75 flex items-center gap-2"
+    className="group mt-4 md:mt-8 px-5 py-2.5 md:px-8 md:py-4 rounded-full bg-[#629D23] text-white text-sm md:text-base font-semibold shadow-lg transition-all hover:bg-[#527d1d] focus:outline-none focus:ring-2 focus:ring-[#629D23] focus:ring-opacity-75 flex items-center gap-2"
   >
     {children}
-    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+    <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
   </motion.button>
 );
 
@@ -61,14 +61,14 @@ export default function AnimatedMarqueeHero() {
       <div className="absolute inset-0 bg-gradient-to-br from-[#1a2332]/75 to-[#2d3e50]/60"></div>
       
       {/* Main Content Container */}
-      <div className="relative z-10 container mx-auto px-4 lg:px-8 py-16 md:py-24">
+      <div className="relative z-10 container mx-auto px-4 lg:px-8 py-8 md:py-16 lg:py-24">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
           {/* Tagline */}
           <motion.div
             initial="hidden"
             animate="show"
             variants={FADE_IN_ANIMATION_VARIANTS}
-            className="mb-6 inline-block rounded-full border-2 border-[#629D23] bg-white/90 px-6 py-2 text-sm font-medium text-[#629D23] backdrop-blur-sm shadow-sm"
+            className="mb-4 inline-block rounded-full border-2 border-[#629D23] bg-white/90 px-4 py-1.5 text-xs md:text-sm font-medium text-[#629D23] backdrop-blur-sm shadow-sm"
           >
             🌿 Fresh Quality Every Day
           </motion.div>
@@ -85,13 +85,13 @@ export default function AnimatedMarqueeHero() {
                 },
               },
             }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6"
+            className="text-2xl md:text-4xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-4 md:mb-6"
           >
             {["Your", "Neighborhood", "Grocery", "Store"].map((word, i) => (
               <motion.span
                 key={i}
                 variants={FADE_IN_ANIMATION_VARIANTS}
-                className="inline-block mr-3 md:mr-4"
+                className="inline-block mr-2 md:mr-3 lg:mr-4"
               >
                 {word}
               </motion.span>
@@ -104,7 +104,7 @@ export default function AnimatedMarqueeHero() {
             animate="show"
             variants={FADE_IN_ANIMATION_VARIANTS}
             transition={{ delay: 0.5 }}
-            className="mt-4 max-w-2xl text-base md:text-lg text-gray-200 leading-relaxed"
+            className="mt-2 md:mt-4 max-w-2xl text-sm md:text-base lg:text-lg text-gray-200 leading-relaxed px-2 md:px-0"
           >
             Farm-fresh produce, quality meats, and everyday essentials delivered to your door. 
             Experience the convenience of online grocery shopping with Mama's Grocery.
@@ -123,9 +123,9 @@ export default function AnimatedMarqueeHero() {
       </div>
 
       {/* Animated Image Marquee - Below Content */}
-      <div className="relative w-full h-48 md:h-64 overflow-hidden">
+      <div className="relative w-full h-32 md:h-48 lg:h-64 overflow-hidden">
         <motion.div
-          className="flex gap-4 md:gap-6 absolute"
+          className="flex gap-2 md:gap-4 lg:gap-6 absolute"
           animate={{
             x: ["-50%", "0%"],
             transition: {
@@ -138,7 +138,7 @@ export default function AnimatedMarqueeHero() {
           {duplicatedImages.map((src, index) => (
             <div
               key={index}
-              className="relative aspect-[3/4] h-48 md:h-64 flex-shrink-0"
+              className="relative aspect-[3/4] h-32 md:h-48 lg:h-64 flex-shrink-0"
               style={{
                 rotate: `${(index % 2 === 0 ? -3 : 3)}deg`,
               }}

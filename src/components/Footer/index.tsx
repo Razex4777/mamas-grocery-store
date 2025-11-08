@@ -52,31 +52,31 @@ export default function Footer() {
   };
 
   return (
-    <footer id="site-footer" className="relative bg-gradient-to-b from-neutral-900 to-black text-neutral-200 pt-24">
+    <footer id="site-footer" className="relative bg-gradient-to-b from-neutral-900 to-black text-neutral-200 pt-12 md:pt-24">
       {/* Main body */}
-      <div className="mx-auto max-w-7xl px-6 lg:px-12 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-12 pb-8 md:pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand + blurb */}
-          <div className="space-y-5">
-            <div className="flex items-center gap-3">
-              <div className="bg-white rounded-md p-2 w-12 h-12 grid place-items-center">
-                <img src="/logos/mamas-grocery-2.png" alt="Logo" className="h-8 w-auto" />
+          <div className="space-y-3 md:space-y-5">
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="bg-white rounded-md p-2 w-10 h-10 md:w-12 md:h-12 grid place-items-center">
+                <img src="/logos/mamas-grocery-2.png" alt="Logo" className="h-6 md:h-8 w-auto" />
               </div>
-              <div className="text-xl font-semibold tracking-wide">Mama's Grocery & Charcoal BBQ</div>
+              <div className="text-base md:text-xl font-semibold tracking-wide">Mama's Grocery & Charcoal BBQ</div>
             </div>
-            <p className="text-neutral-400 leading-relaxed">
+            <p className="text-sm md:text-base text-neutral-400 leading-relaxed">
               Distributeur premium d’ingrédients orientaux et internationaux. Qualité,
               régularité et logistique rapide à travers le Canada.
             </p>
-            <div className="flex items-center gap-3 text-neutral-300">
-              <Clock size={18} className="text-orange-400" />
+            <div className="flex items-center gap-2 md:gap-3 text-sm md:text-base text-neutral-300">
+              <Clock size={16} className="md:w-[18px] md:h-[18px] text-orange-400" />
               <div>
                 <div>Mon–Fri: {COMPANY_INFO.hours.weekdays}</div>
                 <div>Sat: {COMPANY_INFO.hours.saturday}</div>
                 <div>Sun: {COMPANY_INFO.hours.sunday}</div>
               </div>
             </div>
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-2 md:gap-3 pt-2">
               {COMPANY_INFO.socials.map((social, index) => (
                 <Social key={index} icon={<Facebook size={16} />} href={social.href} />
               ))}
@@ -131,7 +131,7 @@ export default function Footer() {
             >
               <div className="relative">
                 <input
-                  className="w-full rounded-xl bg-white/5 border border-white/10 px-4 py-3 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
+                  className="w-full rounded-xl bg-white/5 border border-white/10 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
                   placeholder="Your email"
                   type="email"
                   value={email}
@@ -142,10 +142,10 @@ export default function Footer() {
                 <button
                   type="submit"
                   disabled={isSubscribing}
-                  className="absolute right-1 top-1 bottom-1 px-4 rounded-lg bg-orange-600 text-white font-semibold hover:bg-orange-500 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="absolute right-1 top-1 bottom-1 px-3 md:px-4 rounded-lg bg-orange-600 text-white font-semibold hover:bg-orange-500 active:scale-95 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Subscribe"
                 >
-                  {isSubscribing ? '...' : <ArrowRight size={18} />}
+                  {isSubscribing ? '...' : <ArrowRight size={16} className="md:w-[18px] md:h-[18px]" />}
                 </button>
               </div>
               <p className="text-xs text-neutral-400">
@@ -153,10 +153,10 @@ export default function Footer() {
               </p>
             </form>
 
-            <div className="mt-6 space-y-3 text-sm">
-              <div className="flex items-center gap-2"><MapPin size={16} className="text-orange-400" />{COMPANY_INFO.address}</div>
-              <div className="flex items-center gap-2"><Mail size={16} className="text-orange-400" />{COMPANY_INFO.email}</div>
-              <div className="flex items-center gap-2"><Phone size={16} className="text-orange-400" />{COMPANY_INFO.phone}</div>
+            <div className="mt-4 md:mt-6 space-y-2 md:space-y-3 text-xs md:text-sm">
+              <div className="flex items-center gap-2"><MapPin size={14} className="md:w-4 md:h-4 text-orange-400" />{COMPANY_INFO.address}</div>
+              <div className="flex items-center gap-2"><Mail size={14} className="md:w-4 md:h-4 text-orange-400" />{COMPANY_INFO.email}</div>
+              <div className="flex items-center gap-2"><Phone size={14} className="md:w-4 md:h-4 text-orange-400" />{COMPANY_INFO.phone}</div>
             </div>
           </div>
         </div>
@@ -164,7 +164,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 lg:px-12 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-neutral-400">
+        <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-12 py-4 md:py-5 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-3 text-xs md:text-sm text-neutral-400">
           <div>© All Copyright {new Date().getFullYear()} by Mama's Grocery & Charcoal BBQ</div>
           <div className="flex items-center gap-4">
             <a href="#terms" className="hover:text-white">Terms & Condition</a>
@@ -173,7 +173,7 @@ export default function Footer() {
               onClick={() => setIsAdminModalOpen(true)}
               className="flex items-center gap-1.5 hover:text-teal-400 transition-colors group"
             >
-              <Shield size={14} className="group-hover:rotate-12 transition-transform" />
+              <Shield size={12} className="md:w-[14px] md:h-[14px] group-hover:rotate-12 transition-transform" />
               Admin Access
             </button>
           </div>
@@ -188,7 +188,7 @@ export default function Footer() {
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h4 className="text-white text-lg font-semibold tracking-wide mb-4 relative">
+    <h4 className="text-white text-base md:text-lg font-semibold tracking-wide mb-3 md:mb-4 relative">
       <span className="relative z-10">{children}</span>
       <span className="absolute -left-2 -bottom-1 h-2 w-10 bg-orange-600/30 rounded-full blur-sm" />
     </h4>

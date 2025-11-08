@@ -52,10 +52,10 @@ export default function BrandMarquee() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full overflow-hidden bg-gradient-to-r from-[#629D23] via-[#6fb32a] to-[#629D23] py-10 border-y-4 border-white/20 shadow-2xl">
+    <div ref={containerRef} className="relative w-full overflow-hidden bg-gradient-to-r from-[#629D23] via-[#6fb32a] to-[#629D23] py-6 md:py-10 border-y-4 border-white/20 shadow-2xl">
       {/* Gradient Fade Overlays for Seamless Infinity Effect */}
-      <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-[#629D23] via-[#629D23]/80 to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-[#629D23] via-[#629D23]/80 to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-r from-[#629D23] via-[#629D23]/80 to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-l from-[#629D23] via-[#629D23]/80 to-transparent z-10 pointer-events-none"></div>
 
       {/* Decorative Shimmer Lines */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
@@ -72,21 +72,21 @@ export default function BrandMarquee() {
       {/* Marquee Container */}
       <div ref={wrapperRef} className="marquee-wrapper flex whitespace-nowrap">
         {/* Marquee Track - Will be cloned by JS for seamless loop */}
-        <div className="marquee-track flex items-center gap-12 px-6 flex-shrink-0 will-change-transform">
+        <div className="marquee-track flex items-center gap-6 md:gap-12 px-4 md:px-6 flex-shrink-0 will-change-transform">
           {brands.map((brand, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 px-8 py-4 bg-white/15 backdrop-blur-md rounded-full border-2 border-white/40 hover:bg-white/25 hover:scale-110 hover:shadow-xl transition-all duration-300 group shadow-lg"
+              className="flex items-center gap-3 md:gap-4 px-5 md:px-8 py-3 md:py-4 bg-white/15 backdrop-blur-md rounded-full border-2 border-white/40 hover:bg-white/25 hover:scale-110 hover:shadow-xl transition-all duration-300 group shadow-lg"
             >
               <div className="relative">
                 <img 
                   src={brand.icon} 
                   alt={brand.name}
-                  className="w-14 h-14 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
+                  className="w-10 h-10 md:w-14 md:h-14 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-white/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
-              <span className="text-xl font-bold text-white whitespace-nowrap tracking-wide italic font-heading drop-shadow-md">
+              <span className="text-base md:text-xl font-bold text-white whitespace-nowrap tracking-wide italic font-heading drop-shadow-md">
                 {brand.name}
               </span>
             </div>

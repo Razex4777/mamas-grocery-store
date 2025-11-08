@@ -26,7 +26,7 @@ export default function NewsletterSection() {
 
   return (
     <section 
-      className="relative pt-16 pb-16 overflow-hidden"
+      className="relative py-8 md:py-16 overflow-hidden"
       data-aos="fade-up"
       data-aos-duration="1200"
     >
@@ -52,19 +52,19 @@ export default function NewsletterSection() {
             }} />
           </div>
 
-          <div className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-8 items-center p-8 md:p-12 lg:p-16">
+          <div className="relative z-10 grid grid-cols-1 xl:grid-cols-2 gap-8 items-center p-6 md:p-12 lg:p-16">
             {/* Left Content */}
-            <div className="space-y-6">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
+            <div className="space-y-4 md:space-y-6">
+              <h2 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-white leading-tight">
                 Don't Miss Out on<br />
                 Grocery Deals
               </h2>
               
-              <p className="text-xl md:text-2xl font-heading font-semibold text-white/90 tracking-wide uppercase">
+              <p className="text-base md:text-xl lg:text-2xl font-heading font-semibold text-white/90 tracking-wide uppercase">
                 Sign Up For The Update Newsletter
               </p>
 
-              <form onSubmit={handleSubmit} className="relative mt-8">
+              <form onSubmit={handleSubmit} className="relative mt-4 md:mt-8">
                 <div className="relative">
                   <input
                     type="email"
@@ -73,12 +73,12 @@ export default function NewsletterSection() {
                     placeholder="Your email address..."
                     disabled={isSubscribing}
                     required
-                    className="w-full py-5 px-6 pr-40 rounded-full text-gray-800 font-sans placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-3 md:py-5 px-4 md:px-6 pr-28 md:pr-40 rounded-full text-sm md:text-base text-gray-800 font-sans placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   <button
                     type="submit"
                     disabled={isSubscribing}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-heading font-semibold px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-heading font-semibold px-4 md:px-8 py-2 md:py-3 text-sm md:text-base rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     {isSubscribing ? 'Subscribing...' : 'Subscribe'}
                   </button>
