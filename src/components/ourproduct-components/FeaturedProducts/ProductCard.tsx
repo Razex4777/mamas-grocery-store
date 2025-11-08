@@ -45,17 +45,19 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Image with optimized hover effect */}
       <div className="relative h-44 md:h-56 flex items-center justify-center p-4 md:p-6 bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
-        {/* Badges */}
-        {product.newArrival && (
-          <div className="absolute top-3 left-3 z-10 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full ring-1 ring-blue-600/20">
-            New Arrival
-          </div>
-        )}
-        {product.featured && !isFavorite(product.id) && (
-          <div className="absolute top-3 right-3 z-10 bg-amber-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-2 py-1 rounded-full ring-1 ring-amber-500/20">
-            Featured
-          </div>
-        )}
+        {/* Badges - no overlap */}
+        <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
+          {product.newArrival && (
+            <div className="bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full ring-1 ring-blue-600/20 w-fit">
+              New Arrival
+            </div>
+          )}
+          {product.featured && !isFavorite(product.id) && (
+            <div className="bg-amber-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-2 py-1 rounded-full ring-1 ring-amber-500/20 w-fit">
+              Featured
+            </div>
+          )}
+        </div>
         
         {/* Glow effect behind image */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#629D23]/5 via-transparent to-[#629D23]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

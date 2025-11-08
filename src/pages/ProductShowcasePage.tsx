@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { Eye, Package, Sparkles, Zap, ArrowRight, X, Search, Filter, Check, ShoppingCart, MessageCircle, Heart } from 'lucide-react';
+import { Eye, Package, Sparkles, Zap, ArrowRight, X, Search, Filter, Check, ShoppingCart, MessageCircle, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion } from 'framer-motion';
@@ -34,7 +34,8 @@ export default function ProductShowcasePage() {
   const location = useLocation();
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // Support multiple categories
+  const [tempSelectedCategories, setTempSelectedCategories] = useState<string[]>([]); // For multi-select in modal
   const [selectedOrigin, setSelectedOrigin] = useState('All');
   const [sortBy, setSortBy] = useState('default');
   const [showCategoryModal, setShowCategoryModal] = useState(false);
@@ -44,6 +45,10 @@ export default function ProductShowcasePage() {
   const [highlightNewArrival, setHighlightNewArrival] = useState(false);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12; // Max products to show per page
 
   useEffect(() => {
     const loadData = async () => {
@@ -70,7 +75,7 @@ export default function ProductShowcasePage() {
     const params = new URLSearchParams(location.search);
     const categoryParam = params.get('category');
     if (categoryParam) {
-      setSelectedCategory(categoryParam);
+      setSelectedCategories([categoryParam]);
     }
   }, [location.search]);
 
@@ -99,7 +104,8 @@ export default function ProductShowcasePage() {
   
   // Reset filters handler
   const resetFilters = () => {
-    setSelectedCategory(null);
+    setSelectedCategories([]);
+    setTempSelectedCategories([]);
     setSelectedOrigin('All');
     setSearchTerm('');
     setStockFilter('All');
@@ -108,8 +114,38 @@ export default function ProductShowcasePage() {
     setShowFavoritesOnly(false);
   };
 
+  // Handle opening modal - initialize temp selection
+  const handleOpenModal = () => {
+    setTempSelectedCategories(selectedCategories);
+    setShowCategoryModal(true);
+  };
+
+  // Handle applying category filter - NOW SUPPORTS MULTIPLE!
+  const handleApplyCategoryFilter = () => {
+    setSelectedCategories(tempSelectedCategories);
+    setShowCategoryModal(false);
+  };
+
+  // Handle clearing category filter in modal
+  const handleClearCategoryFilter = () => {
+    setTempSelectedCategories([]);
+  };
+
+  // Toggle category selection in modal
+  const toggleCategorySelection = (categoryId: string | null) => {
+    if (categoryId === null) {
+      setTempSelectedCategories([]);
+    } else {
+      setTempSelectedCategories(prev => 
+        prev.includes(categoryId) 
+          ? prev.filter(id => id !== categoryId)
+          : [...prev, categoryId]
+      );
+    }
+  };
+
   const filteredProducts = products.filter(product => {
-      const matchesCategory = selectedCategory === null || product.category_id === selectedCategory;
+      const matchesCategory = selectedCategories.length === 0 || (product.category_id && selectedCategories.includes(product.category_id));
       const matchesOrigin = selectedOrigin === 'All' || product.origin === selectedOrigin;
       const matchesSearch =
         searchTerm.trim() === '' ||
@@ -143,6 +179,35 @@ export default function ProductShowcasePage() {
         default: return 0;
       }
     });
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategories, selectedOrigin, searchTerm, stockFilter, highlightFeatured, highlightNewArrival, showFavoritesOnly, sortBy]);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+  // Pagination handlers
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      goToPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      goToPage(currentPage - 1);
+    }
+  };
 
   return (
     <>
@@ -281,7 +346,7 @@ export default function ProductShowcasePage() {
                     <h3 className="text-xl font-extrabold text-gray-900 flex items-center gap-2">
                       <Filter className="w-5 h-5 text-green-600" /> Filters
                     </h3>
-                    {(selectedCategory !== null || selectedOrigin !== 'All' || searchTerm || stockFilter !== 'All' || highlightFeatured || highlightNewArrival || showFavoritesOnly) && (
+                    {(selectedCategories.length > 0 || selectedOrigin !== 'All' || searchTerm || stockFilter !== 'All' || highlightFeatured || highlightNewArrival || showFavoritesOnly) && (
                       <button
                         onClick={resetFilters}
                         className="text-xs text-gray-600 hover:text-green-700 underline"
@@ -290,6 +355,30 @@ export default function ProductShowcasePage() {
                       </button>
                     )}
                   </div>
+
+                  {/* Category Filter Button */}
+                  <div>
+                    <button
+                      onClick={handleOpenModal}
+                      className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+                    >
+                      <Package className="w-5 h-5" />
+                      {selectedCategories.length > 0
+                        ? selectedCategories.length === 1
+                          ? categories.find(c => c.id === selectedCategories[0])?.name || 'Browse Categories'
+                          : `${selectedCategories.length} Categories Selected`
+                        : 'Browse Categories'}
+                      {selectedCategories.length > 0 && (
+                        <span className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                      )}
+                    </button>
+                    {selectedCategories.length > 0 && (
+                      <p className="text-xs text-gray-600 mt-2 text-center">
+                        {selectedCategories.length === 1 ? 'Filtered by category' : `Filtering by ${selectedCategories.length} categories`} • <button onClick={() => { setSelectedCategories([]); setTempSelectedCategories([]); }} className="text-green-700 hover:underline">Clear</button>
+                      </p>
+                    )}
+                  </div>
+
                   {/* Origin Filter */}
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-4">Origin</h3>
@@ -413,7 +502,7 @@ export default function ProductShowcasePage() {
                   </div>
 
                   {/* Active Filter Chips */}
-                  {(selectedCategory !== null || selectedOrigin !== 'All' || searchTerm || stockFilter !== 'All' || highlightFeatured || highlightNewArrival || showFavoritesOnly) && (
+                  {(selectedCategories.length > 0 || selectedOrigin !== 'All' || searchTerm || stockFilter !== 'All' || highlightFeatured || highlightNewArrival || showFavoritesOnly) && (
                     <div className="flex items-center justify-between gap-3 flex-wrap">
                       <div className="flex flex-wrap gap-2">
                         {searchTerm && (
@@ -422,12 +511,12 @@ export default function ProductShowcasePage() {
                             <button onClick={() => setSearchTerm('')} className="hover:text-red-600" aria-label="Remove search"><X className="w-3.5 h-3.5" /></button>
                           </span>
                         )}
-                        {selectedCategory !== null && (
-                          <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            Category: <span className="font-semibold">{categories.find(c => c.id === selectedCategory)?.name || 'Selected'}</span>
-                            <button onClick={() => setSelectedCategory(null)} className="hover:text-red-600" aria-label="Remove category"><X className="w-3.5 h-3.5" /></button>
+                        {selectedCategories.map(catId => (
+                          <span key={catId} className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            Category: <span className="font-semibold">{categories.find(c => c.id === catId)?.name || 'Selected'}</span>
+                            <button onClick={() => setSelectedCategories(prev => prev.filter(id => id !== catId))} className="hover:text-red-600" aria-label="Remove category"><X className="w-3.5 h-3.5" /></button>
                           </span>
-                        )}
+                        ))}
                         {selectedOrigin !== 'All' && (
                           <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-green-50 text-green-700 border border-green-200">
                             Origin: <span className="font-semibold">{selectedOrigin}</span>
@@ -472,16 +561,22 @@ export default function ProductShowcasePage() {
                   {/* Product Count */}
                   <div className="flex items-center justify-between">
                     <p className="text-base font-medium text-gray-600">
-                      Showing <span className="font-bold text-gray-900">{filteredProducts.length}</span> product(s)
+                      Showing <span className="font-bold text-gray-900">{startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}</span> of <span className="font-bold text-gray-900">{filteredProducts.length}</span> product(s)
                     </p>
+                    {totalPages > 1 && (
+                      <p className="text-sm text-gray-500">
+                        Page {currentPage} of {totalPages}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 {/* Products */}
-                {filteredProducts.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {filteredProducts.map((product, index) => (
-                      <motion.div
+                {paginatedProducts.length > 0 ? (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                      {paginatedProducts.map((product, index) => (
+                        <motion.div
                         key={product.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -489,17 +584,19 @@ export default function ProductShowcasePage() {
                         className="group relative overflow-hidden rounded-2xl bg-white/80 backdrop-blur-lg border border-white/20 ring-1 ring-gray-200/50 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col"
                       >
                         <div className="relative flex items-center justify-center p-6 h-56 bg-gradient-to-br from-gray-50/50 to-white/30">
-                          {/* Badges with glass effect */}
-                          {product.new_arrival && (
-                            <div className="absolute top-3 left-3 z-10 bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full ring-1 ring-blue-600/20">
-                              New Arrival
-                            </div>
-                          )}
-                          {product.featured && (
-                            <div className="absolute top-3 left-3 z-10 bg-amber-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-2 py-1 rounded-full ring-1 ring-amber-500/20">
-                              Featured
-                            </div>
-                          )}
+                          {/* Badges with glass effect - no overlap */}
+                          <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
+                            {product.new_arrival && (
+                              <div className="bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full ring-1 ring-blue-600/20 w-fit">
+                                New Arrival
+                              </div>
+                            )}
+                            {product.featured && (
+                              <div className="bg-amber-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-2 py-1 rounded-full ring-1 ring-amber-500/20 w-fit">
+                                Featured
+                              </div>
+                            )}
+                          </div>
                           
                           {/* Favorite button - top right, appears on hover */}
                           <button
@@ -542,12 +639,67 @@ export default function ProductShowcasePage() {
                       </motion.div>
                     ))}
                   </div>
+
+                  {/* Pagination Controls */}
+                  {totalPages > 1 && (
+                    <div className="mt-12 flex items-center justify-center gap-2" data-aos="fade-up">
+                      {/* Previous Button */}
+                      <button
+                        onClick={goToPreviousPage}
+                        disabled={currentPage === 1}
+                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-xl bg-white border-2 border-gray-300 text-gray-700 font-semibold hover:border-green-700 hover:text-green-700 hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-300 disabled:hover:text-gray-700 disabled:hover:bg-white transition-all duration-300 shadow-md hover:shadow-lg"
+                      >
+                        <ChevronLeft size={20} />
+                        <span className="hidden md:inline">Previous</span>
+                      </button>
+
+                      {/* Page Numbers */}
+                      <div className="flex items-center gap-2">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                          // Show first page, last page, current page, and pages around current
+                          if (
+                            page === 1 ||
+                            page === totalPages ||
+                            (page >= currentPage - 1 && page <= currentPage + 1)
+                          ) {
+                            return (
+                              <button
+                                key={page}
+                                onClick={() => goToPage(page)}
+                                className={`w-10 h-10 md:w-12 md:h-12 rounded-xl font-bold text-sm md:text-base transition-all duration-300 shadow-md hover:shadow-lg ${
+                                  currentPage === page
+                                    ? 'bg-gradient-to-br from-green-700 to-green-600 text-white scale-110 ring-2 ring-green-700 ring-offset-2'
+                                    : 'bg-white border-2 border-gray-300 text-gray-700 hover:border-green-700 hover:text-green-700 hover:bg-green-50'
+                                }`}
+                              >
+                                {page}
+                              </button>
+                            );
+                          } else if (page === currentPage - 2 || page === currentPage + 2) {
+                            return <span key={page} className="text-gray-400 px-2">•••</span>;
+                          }
+                          return null;
+                        })}
+                      </div>
+
+                      {/* Next Button */}
+                      <button
+                        onClick={goToNextPage}
+                        disabled={currentPage === totalPages}
+                        className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-xl bg-white border-2 border-gray-300 text-gray-700 font-semibold hover:border-green-700 hover:text-green-700 hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-300 disabled:hover:text-gray-700 disabled:hover:bg-white transition-all duration-300 shadow-md hover:shadow-lg"
+                      >
+                        <span className="hidden md:inline">Next</span>
+                        <ChevronRight size={20} />
+                      </button>
+                    </div>
+                  )}
+                  </>
                 ) : (
                   <div className="bg-gray-50 rounded-2xl p-12 text-center" data-aos="fade-up">
                     <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
                     <h3 className="text-xl font-bold text-gray-900 mb-2">No Products Found</h3>
                     <p className="text-sm text-gray-600">Try adjusting your filters to find what you're looking for.</p>
-                    <button onClick={() => { setSelectedCategory(null); setSelectedOrigin('All'); }} className="mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold text-sm">
+                    <button onClick={() => { setSelectedCategories([]); setSelectedOrigin('All'); }} className="mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold text-sm">
                       Reset Filters
                     </button>
                   </div>
@@ -560,148 +712,202 @@ export default function ProductShowcasePage() {
         {/* Newsletter Section */}
         <NewsletterSection />
 
-        {/* Modern Category Modal */}
+        {/* Professional Category Modal */}
         {showCategoryModal && (
           <>
-            {/* Enhanced Backdrop */}
+            {/* Backdrop with animation */}
             <div 
-              className="fixed inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80 backdrop-blur-md z-50 animate-in fade-in-0 duration-300"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 animate-in fade-in-0 duration-300"
               onClick={() => setShowCategoryModal(false)}
             />
             
-            {/* Modern Modal Panel */}
-            <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 w-auto md:max-w-5xl bg-white rounded-3xl shadow-2xl z-50 max-h-[85vh] overflow-hidden animate-in zoom-in-95 fade-in-0 duration-300">
-              {/* Gradient Header */}
-              <div className="relative bg-gradient-to-r from-emerald-500 via-green-600 to-emerald-500 px-8 py-6">
-                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiBwYXR0ZXJuVW5pdHM9InVzZXJTcGFjZU9uVXNlIj48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLW9wYWNpdHk9IjAuMSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-30" />
-                <div className="relative flex justify-between items-center">
+            {/* Modal Panel with slide-up animation */}
+            <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 w-auto md:max-w-4xl bg-white rounded-2xl shadow-2xl z-50 max-h-[90vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom-8 fade-in-0 zoom-in-95 duration-300">
+              {/* Header - Fixed */}
+              <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 px-6 md:px-8 py-5 border-b border-gray-700 flex-shrink-0">
+                <div className="flex justify-between items-center">
                   <div>
-                    <h2 className="text-3xl font-bold text-white mb-1 flex items-center gap-3">
-                      <Package className="w-8 h-8" />
-                      Choose Your Category
-                    </h2>
-                    <p className="text-emerald-50 text-sm">Select a category to explore our products</p>
+                    <h2 className="text-xl md:text-2xl font-bold text-white">Browse Categories</h2>
+                    <p className="text-gray-300 text-xs md:text-sm mt-1">Select a category to filter products</p>
                   </div>
                   <button
                     onClick={() => setShowCategoryModal(false)}
-                    className="w-12 h-12 rounded-xl bg-white/20 hover:bg-white/30 backdrop-blur-sm flex items-center justify-center transition-all hover:rotate-90 duration-300 group"
+                    className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors group"
                   >
-                    <X className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+                    <X className="w-5 h-5 text-white" />
                   </button>
                 </div>
               </div>
 
               {/* Scrollable Content */}
-              <div className="overflow-y-auto max-h-[calc(85vh-140px)] px-8 py-6">
+              <div className="overflow-y-auto flex-1 px-4 md:px-6 py-5">
                 {/* Categories Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {/* All Products */}
                   <button
                     type="button"
-                    onClick={() => {
-                      setSelectedCategory(null);
-                      setShowCategoryModal(false);
-                    }}
-                    className={`group relative flex flex-col items-center gap-3 p-6 rounded-2xl transition-all duration-300 overflow-hidden ${
-                      selectedCategory === null 
-                        ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-500 shadow-lg scale-105' 
-                        : 'bg-white hover:bg-gradient-to-br hover:from-gray-50 hover:to-green-50 border-2 border-gray-200 hover:border-green-400 hover:shadow-xl hover:-translate-y-2'
+                    onClick={() => toggleCategorySelection(null)}
+                    className={`group relative flex flex-col items-center gap-2.5 p-4 rounded-xl transition-all duration-200 ${
+                      tempSelectedCategories.length === 0
+                        ? 'bg-green-50 border-2 border-green-600 shadow-md' 
+                        : 'bg-gray-50 border border-gray-200 hover:border-green-500 hover:shadow-md'
                     }`}
                   >
-                    {selectedCategory === null && (
-                      <div className="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs">✓</span>
+                    {/* Circular Image */}
+                    <div className={`relative w-16 h-16 md:w-18 md:h-18 rounded-full overflow-hidden border-2 transition-all duration-200 ${
+                      tempSelectedCategories.length === 0
+                        ? 'border-green-600 ring-4 ring-green-100' 
+                        : 'border-gray-300 group-hover:border-green-500'
+                    }`}>
+                      <div className={`w-full h-full flex items-center justify-center ${
+                        tempSelectedCategories.length === 0 ? 'bg-green-600' : 'bg-white group-hover:bg-green-50'
+                      }`}>
+                        <Package className={`w-7 h-7 ${
+                          tempSelectedCategories.length === 0 ? 'text-white' : 'text-gray-700 group-hover:text-green-600'
+                        }`} />
                       </div>
-                    )}
-                    <div className={`w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${
-                      selectedCategory === null ? 'bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg' : 'bg-gradient-to-br from-gray-100 to-gray-200 group-hover:from-green-100 group-hover:to-emerald-100'
-                    }`}>
-                      <Package className={`w-10 h-10 ${
-                        selectedCategory === null ? 'text-white' : 'text-gray-600 group-hover:text-green-700'
-                      }`} />
+                      {tempSelectedCategories.length === 0 && (
+                        <div className="absolute inset-0 bg-green-600/90 flex items-center justify-center">
+                          <Check className="w-6 h-6 text-white" strokeWidth={3} />
+                        </div>
+                      )}
                     </div>
-                    <span className={`text-base font-bold text-center ${
-                      selectedCategory === null ? 'text-green-700' : 'text-gray-800 group-hover:text-green-700'
-                    }`}>
-                      All Products
-                    </span>
-                    <span className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                      selectedCategory === null ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600 group-hover:bg-green-100 group-hover:text-green-700'
-                    }`}>{getProductCount(null)} items</span>
+
+                    {/* Text */}
+                    <div className="text-center">
+                      <p className={`text-sm font-semibold ${
+                        tempSelectedCategories.length === 0 ? 'text-green-700' : 'text-gray-900 group-hover:text-green-700'
+                      }`}>
+                        All Products
+                      </p>
+                      <p className="text-xs text-gray-500 mt-0.5">
+                        {getProductCount(null)} items
+                      </p>
+                    </div>
                   </button>
 
                   {/* Dynamic Categories from Supabase */}
                   {categories.map((category) => {
-                    const isSelected = selectedCategory === category.id;
+                    const isSelected = tempSelectedCategories.includes(category.id);
                     
                     return (
                       <button
                         key={category.id}
                         type="button"
-                        onClick={() => {
-                          setSelectedCategory(category.id);
-                          setShowCategoryModal(false);
-                        }}
-                        className={`group relative flex flex-col items-center gap-3 p-6 rounded-2xl transition-all duration-300 overflow-hidden ${
+                        onClick={() => toggleCategorySelection(category.id)}
+                        className={`group relative flex flex-col items-center gap-2.5 p-4 rounded-xl transition-all duration-200 ${
                           isSelected
-                            ? 'bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-500 shadow-lg scale-105' 
-                            : 'bg-white hover:bg-gradient-to-br hover:from-gray-50 hover:to-green-50 border-2 border-gray-200 hover:border-green-400 hover:shadow-xl hover:-translate-y-2'
+                            ? 'bg-green-50 border-2 border-green-600 shadow-md' 
+                            : 'bg-gray-50 border border-gray-200 hover:border-green-500 hover:shadow-md'
                         }`}
                       >
-                        {isSelected && (
-                          <div className="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                            <span className="text-white text-xs">✓</span>
-                          </div>
-                        )}
-                        {/* Category Image or Icon */}
-                        {category.image_url ? (
-                          <div className={`w-20 h-20 rounded-2xl overflow-hidden transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${
-                            isSelected ? 'ring-4 ring-green-500 shadow-lg' : 'ring-2 ring-gray-200'
-                          }`}>
+                        {/* Circular Image */}
+                        <div className={`relative w-16 h-16 md:w-18 md:h-18 rounded-full overflow-hidden border-2 transition-all duration-200 ${
+                          isSelected 
+                            ? 'border-green-600 ring-4 ring-green-100' 
+                            : 'border-gray-300 group-hover:border-green-500'
+                        }`}>
+                          {category.image_url ? (
                             <img 
                               src={category.image_url} 
                               alt={category.name}
                               className="w-full h-full object-cover"
                             />
-                          </div>
-                        ) : (
-                          <div className={`w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${
-                            isSelected ? 'bg-gradient-to-br from-green-500 to-emerald-600 shadow-lg' : 'bg-gradient-to-br from-gray-100 to-gray-200 group-hover:from-green-100 group-hover:to-emerald-100'
+                          ) : (
+                            <div className={`w-full h-full flex items-center justify-center ${
+                              isSelected ? 'bg-green-600' : 'bg-gradient-to-br from-gray-200 to-gray-300 group-hover:from-green-100 group-hover:to-green-200'
+                            }`}>
+                              <span className={`text-xl font-bold ${
+                                isSelected ? 'text-white' : 'text-gray-700 group-hover:text-green-700'
+                              }`}>
+                                {category.name.charAt(0)}
+                              </span>
+                            </div>
+                          )}
+                          
+                          {/* Checkmark Overlay */}
+                          {isSelected && (
+                            <div className="absolute inset-0 bg-green-600/90 flex items-center justify-center">
+                              <Check className="w-6 h-6 text-white" strokeWidth={3} />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Text */}
+                        <div className="text-center">
+                          <p className={`text-sm font-semibold line-clamp-2 min-h-[2.5rem] flex items-center justify-center ${
+                            isSelected ? 'text-green-700' : 'text-gray-900 group-hover:text-green-700'
                           }`}>
-                            <Sparkles className={`w-10 h-10 ${
-                              isSelected ? 'text-white' : 'text-gray-600 group-hover:text-green-700'
-                            }`} />
-                          </div>
-                        )}
-                        
-                        {/* Category Name */}
-                        <span className={`text-base font-bold text-center line-clamp-2 min-h-[48px] flex items-center ${
-                          isSelected ? 'text-green-700' : 'text-gray-800 group-hover:text-green-700'
-                        }`}>
-                          {category.name}
-                        </span>
-                        <span className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                          isSelected ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600 group-hover:bg-green-100 group-hover:text-green-700'
-                        }`}>{getProductCount(category.id)} items</span>
+                            {category.name}
+                          </p>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            {getProductCount(category.id)} items
+                          </p>
+                        </div>
                       </button>
                     );
                   })}
                 </div>
 
-                {/* Quick Stats */}
-                <div className="mt-8 pt-6 border-t border-gray-200 grid grid-cols-3 gap-4 text-center">
-                  <div className="p-4 bg-emerald-50 rounded-xl">
-                    <div className="text-2xl font-bold text-green-600">{categories.length}</div>
-                    <div className="text-xs text-gray-600 mt-1">Categories</div>
+                {/* Stats Footer */}
+                <div className="mt-6 pt-5 border-t border-gray-200">
+                  <div className="flex items-center justify-center gap-6 md:gap-8 text-center">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+                        <Package className="w-4 h-4 text-green-600" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-sm font-bold text-gray-900">{categories.length}</div>
+                        <div className="text-xs text-gray-500">Categories</div>
+                      </div>
+                    </div>
+                    <div className="w-px h-10 bg-gray-200"></div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                        <Sparkles className="w-4 h-4 text-blue-600" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-sm font-bold text-gray-900">{products.length}</div>
+                        <div className="text-xs text-gray-500">Products</div>
+                      </div>
+                    </div>
+                    <div className="w-px h-10 bg-gray-200"></div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center">
+                        <Check className="w-4 h-4 text-green-600" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-sm font-bold text-gray-900">100%</div>
+                        <div className="text-xs text-gray-500">Quality</div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-4 bg-blue-50 rounded-xl">
-                    <div className="text-2xl font-bold text-blue-600">{products.length}</div>
-                    <div className="text-xs text-gray-600 mt-1">Products</div>
-                  </div>
-                  <div className="p-4 bg-purple-50 rounded-xl">
-                    <div className="text-2xl font-bold text-purple-600">100%</div>
-                    <div className="text-xs text-gray-600 mt-1">Quality</div>
-                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons Footer - Fixed at Bottom */}
+              <div className="border-t border-gray-200 px-4 md:px-6 py-4 bg-gray-50 flex items-center justify-between gap-3 flex-shrink-0">
+                <div className="text-sm text-gray-600">
+                  {tempSelectedCategories.length > 0 ? (
+                    <span className="font-semibold text-green-700">{tempSelectedCategories.length} selected</span>
+                  ) : (
+                    <span>Select categories to filter</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={handleClearCategoryFilter}
+                    className="px-4 md:px-5 py-2 md:py-2.5 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 hover:border-gray-400 transition-colors text-sm"
+                  >
+                    Clear
+                  </button>
+                  <button
+                    onClick={handleApplyCategoryFilter}
+                    className="px-4 md:px-6 py-2 md:py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-colors shadow-md hover:shadow-lg text-sm flex items-center gap-2"
+                  >
+                    <Check className="w-4 h-4" />
+                    Apply Filter
+                  </button>
                 </div>
               </div>
             </div>
