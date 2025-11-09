@@ -132,40 +132,43 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </aside>
 
       {/* Main Content */}
-      <main className="lg:ml-56 min-h-screen pb-20 lg:pb-0 px-4 md:px-6 lg:px-8">
+      <main className="lg:ml-56 min-h-screen pb-16 sm:pb-20 lg:pb-0">
         {children}
       </main>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800 z-40">
-        <div className="flex items-center justify-around px-2 py-3">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-t border-slate-800/70 z-50 safe-area-bottom">
+        <div className="flex items-center justify-around px-1 py-2 sm:px-2 sm:py-3">
           {navigation.map((item) => {
             const isActive = location.pathname === item.href;
             return (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-all ${
+                className={`relative flex flex-col items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-all min-w-0 ${
                   isActive 
                     ? 'text-emerald-400' 
-                    : 'text-slate-400 hover:text-white'
+                    : 'text-slate-400 active:text-white active:bg-slate-800/50'
                 }`}
               >
+                {isActive && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-lg"></div>
+                )}
                 <img
                   src={item.iconSrc}
                   alt={item.name}
-                  className={`w-5 h-5 ${isActive ? 'scale-110 brightness-125' : ''} transition-transform`}
+                  className={`relative z-10 w-5 h-5 sm:w-6 sm:h-6 ${isActive ? 'scale-110 brightness-125' : ''} transition-transform flex-shrink-0`}
                 />
-                <span className="text-[10px] font-medium">{item.name}</span>
+                <span className="relative z-10 text-[9px] sm:text-[10px] font-medium truncate max-w-[60px]">{item.name}</span>
               </Link>
             );
           })}
           <button
             onClick={handleLogout}
-            className="flex flex-col items-center gap-1 px-4 py-2 text-slate-400 hover:text-red-400 rounded-lg transition-all"
+            className="flex flex-col items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1.5 sm:py-2 text-slate-400 active:text-red-400 active:bg-red-500/10 rounded-lg transition-all min-w-0"
           >
-            <LogOut className="w-5 h-5" />
-            <span className="text-[10px] font-medium">Logout</span>
+            <LogOut className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
+            <span className="text-[9px] sm:text-[10px] font-medium">Logout</span>
           </button>
         </div>
       </nav>

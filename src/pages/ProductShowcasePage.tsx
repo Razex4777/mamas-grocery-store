@@ -10,7 +10,7 @@ import type { Category, Product } from '../lib/database.types';
 import NewsletterSection from '../components/ourproduct-components/NewsletterSection';
 import { useFavorites } from '../lib/favorites';
 
-const ORIGINS = ['All', 'Morocco', 'Algeria', 'Tunisia', 'Orient'];
+const ORIGINS = ['All', 'Morocco', 'Algeria', 'Tunisia', 'Orient', 'Africa', 'Europe'];
 const SORT_OPTIONS = [
   { value: 'default', label: 'Default Sorting' },
   { value: 'name-asc', label: 'Name: A to Z' },
@@ -25,6 +25,8 @@ const getOriginIcon = (origin: string): string | null => {
     'Algeria': '/flags/algeria_flag_icon.svg',
     'Tunisia': '/flags/tunisia_flag_icon.svg',
     'Orient': '/flags/orient_middle_east_flag_icon.svg',
+    'Africa': '/flags/africa_icon.svg',
+    'Europe': '/flags/europe_flag_icon.svg',
   };
   return iconMap[origin] || null;
 };
@@ -145,8 +147,9 @@ export default function ProductShowcasePage() {
   };
 
   const filteredProducts = products.filter(product => {
+      const productCategory = categories.find(c => c.id === product.category_id);
       const matchesCategory = selectedCategories.length === 0 || (product.category_id && selectedCategories.includes(product.category_id));
-      const matchesOrigin = selectedOrigin === 'All' || product.origin === selectedOrigin;
+      const matchesOrigin = selectedOrigin === 'All' || (productCategory?.origin === selectedOrigin);
       const matchesSearch =
         searchTerm.trim() === '' ||
         product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -620,7 +623,7 @@ export default function ProductShowcasePage() {
                         </div>
                         <div className="p-5 flex flex-col flex-grow bg-white/60 backdrop-blur-sm">
                           <div className="flex items-center justify-between text-xs mb-2">
-                            <span className="text-gray-600">{product.origin}</span>
+                            <span className="text-gray-600">{categories.find(c => c.id === product.category_id)?.origin || 'N/A'}</span>
                             <span className={product.in_stock ? 'inline-flex items-center gap-1 text-emerald-700 font-semibold bg-emerald-100/80 px-2 py-0.5 rounded-full text-[10px] ring-1 ring-emerald-600/20' : 'inline-flex items-center gap-1 text-red-700 font-semibold bg-red-100/80 px-2 py-0.5 rounded-full text-[10px] ring-1 ring-red-600/20'}>
                               {product.in_stock ? 'In Stock' : 'Out of Stock'}
                             </span>

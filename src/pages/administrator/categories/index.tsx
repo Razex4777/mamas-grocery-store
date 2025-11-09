@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useToast } from '../../../components/Toast';
-import { Plus, Edit2, Trash2, Check, X, Upload, Image as ImageIcon, Search } from 'lucide-react';
+import { Plus, Edit2, Trash2, Check, X, Upload, Image as ImageIcon, Search, ChevronDown } from 'lucide-react';
 import { 
   fetchAllCategories, 
   createCategory, 
@@ -108,6 +108,7 @@ export default function CategoriesPage() {
                   <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Image</th>
                   <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Name</th>
                   <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Slug</th>
+                  <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Origin</th>
                   <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Status</th>
                   <th className="text-right px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Actions</th>
               </tr>
@@ -133,6 +134,27 @@ export default function CategoriesPage() {
                     </td>
                     <td className="px-4 py-3">
                       <span className="text-slate-400 font-mono text-xs">{category.slug}</span>
+                    </td>
+                    <td className="px-4 py-3">
+                      {category.origin ? (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-cyan-500/10 text-cyan-400 rounded-full text-[10px] font-medium border border-cyan-500/20">
+                          <img 
+                            src={
+                              category.origin === 'Morocco' ? '/flags/morocco_flag_icon.svg' :
+                              category.origin === 'Algeria' ? '/flags/algeria_flag_icon.svg' :
+                              category.origin === 'Tunisia' ? '/flags/tunisia_flag_icon.svg' :
+                              category.origin === 'Orient' ? '/flags/orient_middle_east_flag_icon.svg' :
+                              category.origin === 'Africa' ? '/flags/africa_icon.svg' :
+                              category.origin === 'Europe' ? '/flags/europe_flag_icon.svg' : ''
+                            }
+                            alt={category.origin}
+                            className="w-4 h-4 object-contain"
+                          />
+                          {category.origin}
+                        </span>
+                      ) : (
+                        <span className="text-slate-500 text-xs italic">Not set</span>
+                      )}
                     </td>
                     <td className="px-4 py-3">
                     {category.is_active ? (
@@ -240,6 +262,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
     name: category?.name || '',
     slug: category?.slug || '',
     description: category?.description || '',
+    origin: category?.origin || '',
     image_url: category?.image_url || '',
   });
   const [loading, setLoading] = useState(false);
@@ -247,6 +270,46 @@ function CategoryModal({ category, onClose, onSuccess }: {
   const [isDragging, setIsDragging] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>(category?.image_url || '');
   const [tempImageFile, setTempImageFile] = useState<File | null>(null);
+  const [isOriginDropdownOpen, setIsOriginDropdownOpen] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<'bottom' | 'top'>('bottom');
+  const originDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Origin options with flags
+  const ORIGIN_OPTIONS = [
+    { value: 'Morocco', label: 'Morocco (Maroc)', icon: '/flags/morocco_flag_icon.svg' },
+    { value: 'Algeria', label: 'Algeria (Algérie)', icon: '/flags/algeria_flag_icon.svg' },
+    { value: 'Tunisia', label: 'Tunisia (Tunisie)', icon: '/flags/tunisia_flag_icon.svg' },
+    { value: 'Orient', label: 'Orient (Middle East)', icon: '/flags/orient_middle_east_flag_icon.svg' },
+    { value: 'Africa', label: 'Africa (Afrique)', icon: '/flags/africa_icon.svg' },
+    { value: 'Europe', label: 'Europe', icon: '/flags/europe_flag_icon.svg' },
+  ];
+
+  // Calculate dropdown position to avoid going off-screen
+  const calculateDropdownPosition = () => {
+    if (originDropdownRef.current) {
+      const rect = originDropdownRef.current.getBoundingClientRect();
+      const dropdownHeight = 300; // Approximate max height
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      
+      if (spaceBelow < dropdownHeight && spaceAbove > spaceBelow) {
+        setDropdownPosition('top');
+      } else {
+        setDropdownPosition('bottom');
+      }
+    }
+  };
+
+  // Close origin dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (originDropdownRef.current && !originDropdownRef.current.contains(event.target as Node)) {
+        setIsOriginDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Load temp image from localStorage on mount (for new categories only)
   useEffect(() => {
@@ -517,6 +580,81 @@ function CategoryModal({ category, onClose, onSuccess }: {
               className="w-full px-3 py-2 text-sm bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:bg-slate-800/80 transition-all duration-200 resize-none"
               placeholder="Brief description..."
             />
+          </div>
+
+          {/* Origin/Region Custom Dropdown with Flag Icons */}
+          <div>
+            <label className="block text-slate-300 text-xs font-semibold mb-1.5">
+              Origin / Region <span className="text-emerald-400 text-[10px] font-normal">(Products inherit from category)</span>
+            </label>
+            <div className="relative" ref={originDropdownRef}>
+              <button
+                type="button"
+                onClick={() => {
+                  calculateDropdownPosition();
+                  setIsOriginDropdownOpen(!isOriginDropdownOpen);
+                }}
+                className="w-full px-3 py-2.5 text-sm bg-slate-800/50 border border-slate-700/50 rounded-lg text-white focus:outline-none focus:border-emerald-500/50 hover:bg-slate-800/80 transition-all duration-200 flex items-center justify-between"
+              >
+                <div className="flex items-center gap-2">
+                  {formData.origin ? (
+                    <>
+                      <img
+                        src={ORIGIN_OPTIONS.find(opt => opt.value === formData.origin)?.icon}
+                        alt={formData.origin}
+                        className="w-5 h-5 object-contain"
+                      />
+                      <span>{ORIGIN_OPTIONS.find(opt => opt.value === formData.origin)?.label}</span>
+                    </>
+                  ) : (
+                    <span className="text-slate-500">Select origin...</span>
+                  )}
+                </div>
+                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOriginDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isOriginDropdownOpen && (
+                <div className="fixed z-[100] bg-slate-800 border border-slate-700/50 rounded-lg shadow-2xl overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200"
+                  style={{
+                    ...(dropdownPosition === 'bottom' ? {
+                      top: originDropdownRef.current?.getBoundingClientRect().bottom ? `${originDropdownRef.current.getBoundingClientRect().bottom + 8}px` : 'auto',
+                    } : {
+                      bottom: originDropdownRef.current?.getBoundingClientRect().top ? `${window.innerHeight - originDropdownRef.current.getBoundingClientRect().top + 8}px` : 'auto',
+                    }),
+                    left: originDropdownRef.current?.getBoundingClientRect().left ? `${originDropdownRef.current.getBoundingClientRect().left}px` : 'auto',
+                    width: originDropdownRef.current?.offsetWidth ? `${originDropdownRef.current.offsetWidth}px` : 'auto',
+                  }}
+                >
+                  <div className="py-1 max-h-60 overflow-y-auto">
+                    {ORIGIN_OPTIONS.map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => {
+                          setFormData({ ...formData, origin: option.value });
+                          setIsOriginDropdownOpen(false);
+                        }}
+                        className={`w-full px-3 py-2.5 flex items-center gap-3 hover:bg-slate-700/50 transition-colors text-left ${
+                          formData.origin === option.value ? 'bg-emerald-500/10 text-emerald-400' : 'text-slate-200'
+                        }`}
+                      >
+                        <img
+                          src={option.icon}
+                          alt={option.label}
+                          className="w-6 h-6 object-contain"
+                        />
+                        <span className="text-sm font-medium">{option.label}</span>
+                        {formData.origin === option.value && (
+                          <Check className="w-4 h-4 ml-auto text-emerald-400" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <p className="text-[10px] text-slate-500 mt-1">All products in this category will inherit this origin</p>
           </div>
 
           {/* Actions */}

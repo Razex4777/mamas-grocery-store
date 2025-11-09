@@ -8,7 +8,8 @@ import {
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { fetchProductById, fetchProducts, incrementProductViewCount } from '../lib/products';
-import type { Product } from '../lib/database.types';
+import { fetchCategories } from '../lib/categories';
+import type { Product, Category } from '../lib/database.types';
 import ProductCard from '../components/ourproduct-components/FeaturedProducts/ProductCard';
 import { useToast } from '../components/Toast';
 import { COMPANY_INFO } from '../components/Footer/constants';
@@ -21,6 +22,8 @@ const getOriginIcon = (origin: string): string | null => {
     'Algeria': '/flags/algeria_flag_icon.svg',
     'Tunisia': '/flags/tunisia_flag_icon.svg',
     'Orient': '/flags/orient_middle_east_flag_icon.svg',
+    'Africa': '/flags/africa_icon.svg',
+    'Europe': '/flags/europe_flag_icon.svg',
   };
   return iconMap[origin] || null;
 };
@@ -29,6 +32,7 @@ export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [suggestedProducts, setSuggestedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -55,6 +59,10 @@ export default function ProductDetailsPage() {
       }
 
       setProduct(productData);
+      
+      // Load categories
+      const categoriesData = await fetchCategories();
+      setCategories(categoriesData);
       
       // Increment view count only once (prevents double increment in React StrictMode)
       if (!viewCountIncrementedRef.current) {
@@ -89,6 +97,8 @@ export default function ProductDetailsPage() {
   if (!product) return null;
 
   const images = [product.image_url, ...(product.images || [])].filter(Boolean);
+  const productCategory = categories.find(c => c.id === product.category_id);
+  const productOrigin = productCategory?.origin || 'N/A';
 
   return (
     <>
@@ -103,10 +113,10 @@ export default function ProductDetailsPage() {
           </div>
           <div className="mt-3 flex flex-wrap items-center gap-2 rounded-2xl border border-gray-200 bg-white/80 px-3 py-2 backdrop-blur supports-[backdrop-filter]:bg-white/60">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[12px] font-medium text-blue-700">
-              {getOriginIcon(product.origin) && (
-                <img src={getOriginIcon(product.origin)!} alt={`${product.origin} flag`} className="w-[18px] h-[18px] object-contain" />
+              {getOriginIcon(productOrigin) && (
+                <img src={getOriginIcon(productOrigin)!} alt={`${productOrigin} flag`} className="w-[18px] h-[18px] object-contain" />
               )}
-              {product.origin}
+              {productOrigin}
             </span>
             <span
               className="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[12px] font-semibold"
@@ -233,10 +243,10 @@ export default function ProductDetailsPage() {
 
                     <div className="mt-3 flex flex-wrap items-center gap-2">
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[12px] font-medium text-blue-700">
-                        {getOriginIcon(product.origin) && (
-                          <img src={getOriginIcon(product.origin)!} alt={`${product.origin} flag`} className="w-[18px] h-[18px] object-contain" />
+                        {getOriginIcon(productOrigin) && (
+                          <img src={getOriginIcon(productOrigin)!} alt={`${productOrigin} flag`} className="w-[18px] h-[18px] object-contain" />
                         )}
-                        {product.origin}
+                        {productOrigin}
                       </span>
                       <span
                         className="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[12px] font-semibold"
@@ -383,26 +393,29 @@ export default function ProductDetailsPage() {
                   <h2 className="text-[24px] tracking-tight font-semibold text-gray-900">You may also like</h2>
                 </div>
                 <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
-                  {suggestedProducts.map((suggestedProduct) => (
-                    <ProductCard
-                      key={suggestedProduct.id}
-                      product={{
-                        id: suggestedProduct.id,
-                        title: suggestedProduct.title,
-                        category: suggestedProduct.category_id || 'Uncategorized',
-                        priceDisplay: '',
-                        price: 0,
-                        wholesalePrice: '',
-                        minOrderQty: 0,
-                        imageSrc: suggestedProduct.image_url,
-                        description: suggestedProduct.description,
-                        inStock: suggestedProduct.in_stock,
-                        origin: suggestedProduct.origin,
-                        featured: suggestedProduct.featured,
-                        newArrival: suggestedProduct.new_arrival,
-                      }}
-                    />
-                  ))}
+                  {suggestedProducts.map((suggestedProduct) => {
+                    const suggestedCategory = categories.find(c => c.id === suggestedProduct.category_id);
+                    return (
+                      <ProductCard
+                        key={suggestedProduct.id}
+                        product={{
+                          id: suggestedProduct.id,
+                          title: suggestedProduct.title,
+                          category: suggestedProduct.category_id || 'Uncategorized',
+                          priceDisplay: '',
+                          price: 0,
+                          wholesalePrice: '',
+                          minOrderQty: 0,
+                          imageSrc: suggestedProduct.image_url,
+                          description: suggestedProduct.description,
+                          inStock: suggestedProduct.in_stock,
+                          origin: suggestedCategory?.origin || 'N/A',
+                          featured: suggestedProduct.featured,
+                          newArrival: suggestedProduct.new_arrival,
+                        }}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             )}
