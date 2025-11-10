@@ -19,6 +19,14 @@ export default function MessagesPage() {
   const [filterStatus, setFilterStatus] = useState<'all' | 'unread' | 'read' | 'replied' | 'archived'>('all');
   const toast = useToast();
 
+  const STATUS_LABELS: Record<'all' | 'unread' | 'read' | 'replied' | 'archived', string> = {
+    all: 'Tous',
+    unread: 'Non lus',
+    read: 'Lus',
+    replied: 'Répondus',
+    archived: 'Archivés',
+  };
+
   // Lottie animations state
   const [animationsAvailable, setAnimationsAvailable] = useState(false);
   const [animations] = useState<{[key: string]: any}>({
@@ -52,7 +60,7 @@ export default function MessagesPage() {
       setStats(statsData);
     } catch (error) {
       console.error('Failed to load messages:', error);
-      toast.error('Failed to load messages');
+      toast.error('Impossible de charger les messages');
     } finally {
       setLoading(false);
     }
@@ -61,25 +69,30 @@ export default function MessagesPage() {
   const handleStatusChange = async (id: string, status: 'read' | 'replied' | 'archived') => {
     const result = await updateContactMessage(id, { status });
     if (result.success) {
-      toast.success(result.message);
+      const statusMessages: Record<typeof status, string> = {
+        read: 'Message marqué comme lu.',
+        replied: 'Message marqué comme répondu.',
+        archived: 'Message archivé.',
+      };
+      toast.success(statusMessages[status]);
       loadData();
     } else {
-      toast.error(result.message);
+      toast.error('Impossible de mettre à jour le statut du message.');
     }
   };
 
   const handleDelete = async (id: string, email: string) => {
-    if (!confirm(`Are you sure you want to delete message from ${email}?`)) {
+    if (!confirm(`Êtes-vous sûr de vouloir supprimer le message de ${email} ?`)) {
       return;
     }
 
     const result = await deleteContactMessage(id);
     if (result.success) {
-      toast.success(result.message);
+      toast.success('Message supprimé avec succès!');
       setSelectedMessage(null);
       loadData();
     } else {
-      toast.error(result.message);
+      toast.error('Échec de la suppression du message.');
     }
   };
 
@@ -88,12 +101,13 @@ export default function MessagesPage() {
     : messages.filter(m => m.status === filterStatus);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    return new Date(dateString).toLocaleDateString('fr-CA', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
+      hour12: false,
     });
   };
 
@@ -125,15 +139,15 @@ export default function MessagesPage() {
               </div>
               <div>
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
-                  Contact Messages
+                  Messages de Contact
                 </h1>
-                <p className="text-slate-400 text-sm mt-1">Manage customer inquiries and communications</p>
+                <p className="text-slate-400 text-sm mt-1">Gérer les demandes et communications clients</p>
               </div>
             </div>
             
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-              <span className="text-xs text-slate-400">Live</span>
+              <span className="text-xs text-slate-400">En direct</span>
             </div>
           </div>
         </div>
@@ -142,32 +156,32 @@ export default function MessagesPage() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <StatCard
             icon={<MessageSquare className="w-5 h-5" />}
-            title="Total Messages"
+            title="Messages totaux"
             value={stats.total}
             color="from-violet-500 to-purple-500"
             animation={animations.success}
           />
           <StatCard
             icon={<Mail className="w-5 h-5" />}
-            title="Unread"
+            title="Non lus"
             value={stats.unread}
             color="from-blue-500 to-cyan-500"
           />
           <StatCard
             icon={<Eye className="w-5 h-5" />}
-            title="Read"
+            title="Lus"
             value={stats.read}
             color="from-purple-500 to-pink-500"
           />
           <StatCard
             icon={<CheckCircle className="w-5 h-5" />}
-            title="Replied"
+            title="Répondus"
             value={stats.replied}
             color="from-emerald-500 to-teal-500"
           />
           <StatCard
             icon={<Archive className="w-5 h-5" />}
-            title="Archived"
+            title="Archivés"
             value={stats.archived}
             color="from-slate-500 to-gray-500"
           />
@@ -185,7 +199,7 @@ export default function MessagesPage() {
                   : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
               }`}
             >
-              {status.charAt(0).toUpperCase() + status.slice(1)}
+              {STATUS_LABELS[status as keyof typeof STATUS_LABELS]}
             </button>
           ))}
         </div>
@@ -201,7 +215,7 @@ export default function MessagesPage() {
             ) : filteredMessages.length === 0 ? (
               <div className="bg-slate-900/50 border border-slate-800/50 rounded-xl p-8 text-center">
                 <MessageSquare className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-                <p className="text-slate-400">No messages found</p>
+                <p className="text-slate-400">Aucun message trouvé</p>
               </div>
             ) : (
               filteredMessages.map((message) => (
@@ -217,7 +231,7 @@ export default function MessagesPage() {
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="font-semibold text-white truncate flex-1">{message.name}</h3>
                     <span className={`text-[10px] px-2 py-0.5 rounded-full border ${getStatusColor(message.status)}`}>
-                      {message.status}
+                      {STATUS_LABELS[message.status as keyof typeof STATUS_LABELS] ?? message.status}
                     </span>
                   </div>
                   <p className="text-sm text-slate-400 truncate mb-2">{message.subject}</p>
@@ -242,7 +256,7 @@ export default function MessagesPage() {
                       <p className="text-lg text-violet-400 mb-3">{selectedMessage.subject}</p>
                     </div>
                     <span className={`text-xs px-3 py-1 rounded-full border ${getStatusColor(selectedMessage.status)}`}>
-                      {selectedMessage.status}
+                      {STATUS_LABELS[selectedMessage.status as keyof typeof STATUS_LABELS] ?? selectedMessage.status}
                     </span>
                   </div>
 
@@ -282,7 +296,7 @@ export default function MessagesPage() {
                         className="flex items-center gap-2 px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg transition-all border border-purple-500/30"
                       >
                         <Eye className="w-4 h-4" />
-                        Mark as Read
+                        Marquer comme lu
                       </button>
                     )}
                     {selectedMessage.status !== 'replied' && (
@@ -291,7 +305,7 @@ export default function MessagesPage() {
                         className="flex items-center gap-2 px-4 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 rounded-lg transition-all border border-emerald-500/30"
                       >
                         <CheckCircle className="w-4 h-4" />
-                        Mark as Replied
+                        Marquer comme répondu
                       </button>
                     )}
                     {selectedMessage.status !== 'archived' && (
@@ -300,7 +314,7 @@ export default function MessagesPage() {
                         className="flex items-center gap-2 px-4 py-2 bg-slate-500/20 hover:bg-slate-500/30 text-slate-400 rounded-lg transition-all border border-slate-500/30"
                       >
                         <Archive className="w-4 h-4" />
-                        Archive
+                        Archiver
                       </button>
                     )}
                     <button
@@ -308,7 +322,7 @@ export default function MessagesPage() {
                       className="flex items-center gap-2 px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg transition-all border border-red-500/30 ml-auto"
                     >
                       <Trash2 className="w-4 h-4" />
-                      Delete
+                      Supprimer
                     </button>
                   </div>
                 </div>
@@ -316,7 +330,7 @@ export default function MessagesPage() {
             ) : (
               <div className="bg-slate-900/50 border border-slate-800/50 rounded-xl p-12 text-center">
                 <MessageSquare className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-                <p className="text-slate-400 text-lg">Select a message to view details</p>
+                <p className="text-slate-400 text-lg">Sélectionnez un message pour voir les détails</p>
               </div>
             )}
           </div>

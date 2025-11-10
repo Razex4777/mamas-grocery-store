@@ -65,15 +65,14 @@ export default function Footer() {
               <div className="text-base md:text-xl font-semibold tracking-wide">Mama's Grocery & Charcoal BBQ</div>
             </div>
             <p className="text-sm md:text-base text-neutral-400 leading-relaxed">
-              Distributeur premium d’ingrédients orientaux et internationaux. Qualité,
-              régularité et logistique rapide à travers le Canada.
+              Distributeur premium d'ingrédients orientaux et internationaux. Qualité, régularité et logistique rapide à travers le Canada.
             </p>
             <div className="flex items-center gap-2 md:gap-3 text-sm md:text-base text-neutral-300">
               <Clock size={16} className="md:w-[18px] md:h-[18px] text-orange-400" />
               <div>
-                <div>Mon–Fri: {COMPANY_INFO.hours.weekdays}</div>
-                <div>Sat: {COMPANY_INFO.hours.saturday}</div>
-                <div>Sun: {COMPANY_INFO.hours.sunday}</div>
+                <div>Lun–Ven: {COMPANY_INFO.hours.weekdays}</div>
+                <div>Sam: {COMPANY_INFO.hours.saturday}</div>
+                <div>Dim: {COMPANY_INFO.hours.sunday}</div>
               </div>
             </div>
             <div className="flex gap-2 md:gap-3 pt-2">
@@ -85,7 +84,7 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <FooterHeading>Quick Links</FooterHeading>
+            <FooterHeading>Liens Rapides</FooterHeading>
             <ul className="space-y-2">
               {QUICK_LINKS.map((l) => (
                 <li key={l.label}>
@@ -100,7 +99,7 @@ export default function Footer() {
 
           {/* Our Categories */}
           <div>
-            <FooterHeading>Our Categories</FooterHeading>
+            <FooterHeading>Nos Catégories</FooterHeading>
             <ul className="space-y-2">
               {categories.slice(0, 6).map((category) => (
                 <li key={category.id}>
@@ -116,7 +115,7 @@ export default function Footer() {
                 </li>
               ))}
               {categories.length === 0 && (
-                <li className="text-neutral-400 text-sm">Loading categories...</li>
+                <li className="text-neutral-400 text-sm">Chargement des catégories...</li>
               )}
             </ul>
           </div>
@@ -132,7 +131,7 @@ export default function Footer() {
               <div className="relative">
                 <input
                   className="w-full rounded-xl bg-white/5 border border-white/10 px-3 md:px-4 py-2 md:py-3 text-sm md:text-base placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500 disabled:opacity-50"
-                  placeholder="Your email"
+                  placeholder="Votre email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -149,7 +148,7 @@ export default function Footer() {
                 </button>
               </div>
               <p className="text-xs text-neutral-400">
-                Subscribe to get special offers & updates
+                Abonnez-vous pour recevoir des offres spéciales et des mises à jour
               </p>
             </form>
 
@@ -165,16 +164,16 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-12 py-4 md:py-5 flex flex-col md:flex-row items-center justify-between gap-2 md:gap-3 text-xs md:text-sm text-neutral-400">
-          <div>© All Copyright {new Date().getFullYear()} by Mama's Grocery & Charcoal BBQ</div>
+          <div>© Tous droits réservés {new Date().getFullYear()} by Mama's Grocery & Charcoal BBQ</div>
           <div className="flex items-center gap-4">
-            <a href="#terms" className="hover:text-white">Terms & Condition</a>
-            <a href="#privacy" className="hover:text-white">Privacy Policy</a>
+            <a href="#terms" className="hover:text-white">Termes et Conditions</a>
+            <a href="#privacy" className="hover:text-white">Politique de Confidentialité</a>
             <button 
               onClick={() => setIsAdminModalOpen(true)}
               className="flex items-center gap-1.5 hover:text-teal-400 transition-colors group"
             >
               <Shield size={12} className="md:w-[14px] md:h-[14px] group-hover:rotate-12 transition-transform" />
-              Admin Access
+              Accès Administrateur
             </button>
           </div>
         </div>

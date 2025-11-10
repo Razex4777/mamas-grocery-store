@@ -52,10 +52,10 @@ export default function CategoriesPage() {
       await deleteCategory(deletingCategory.id);
       setDeletingCategory(null);
       await loadCategories();
-      toast.success('Category deleted successfully!');
+      toast.success('Catégorie supprimée avec succès!');
     } catch (error) {
       console.error('Delete failed:', error);
-      toast.error('Failed to delete category');
+      toast.error('Échec de la suppression de la catégorie');
     }
     setLoading(false);
   };
@@ -72,16 +72,16 @@ export default function CategoriesPage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              Categories
+              Catégories
             </h1>
-            <p className="text-slate-400 text-sm mt-0.5">{categories.length} total categories</p>
+            <p className="text-slate-400 text-sm mt-0.5">{categories.length} catégories au total</p>
           </div>
           <button
             onClick={() => setIsAddModalOpen(true)}
             className="group flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm rounded-lg font-medium hover:shadow-lg hover:shadow-emerald-500/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
           >
             <Plus size={16} className="group-hover:rotate-90 transition-transform duration-300" />
-            Add New
+            Ajouter
           </button>
         </div>
 
@@ -93,7 +93,7 @@ export default function CategoriesPage() {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search categories..."
+              placeholder="Rechercher des catégories..."
               className="w-full pl-9 pr-3 py-2 text-sm bg-slate-900/50 border border-slate-800/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:bg-slate-900/80 transition-all duration-200"
             />
           </div>
@@ -106,10 +106,10 @@ export default function CategoriesPage() {
               <thead className="bg-slate-900/50 border-b border-slate-800/50">
               <tr>
                   <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Image</th>
-                  <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Name</th>
+                  <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Nom</th>
                   <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Slug</th>
-                  <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Origin</th>
-                  <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Status</th>
+                  <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Origine</th>
+                  <th className="text-left px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Statut</th>
                   <th className="text-right px-4 py-3 text-slate-400 font-semibold text-xs uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
@@ -153,7 +153,7 @@ export default function CategoriesPage() {
                           {category.origin}
                         </span>
                       ) : (
-                        <span className="text-slate-500 text-xs italic">Not set</span>
+                        <span className="text-slate-500 text-xs italic">Non défini</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -174,14 +174,14 @@ export default function CategoriesPage() {
                       <button
                         onClick={() => setEditingCategory(category)}
                           className="p-2 text-emerald-400 hover:bg-emerald-500/10 rounded-lg transition-all duration-200 hover:scale-110"
-                          title="Edit"
+                          title="Modifier"
                       >
                           <Edit2 size={14} />
                       </button>
                       <button
                         onClick={() => setDeletingCategory(category)}
                           className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-200 hover:scale-110"
-                          title="Delete"
+                          title="Supprimer"
                       >
                           <Trash2 size={14} />
                       </button>
@@ -196,7 +196,7 @@ export default function CategoriesPage() {
           {filteredCategories.length === 0 && (
             <div className="text-center py-12">
               <ImageIcon className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-              <p className="text-slate-400 text-sm">No categories found</p>
+              <p className="text-slate-400 text-sm">Aucune catégorie trouvée</p>
             </div>
           )}
         </div>
@@ -223,23 +223,23 @@ export default function CategoriesPage() {
       {deletingCategory && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-lg animate-fadeIn">
           <div className="bg-slate-900/95 border border-slate-800/50 rounded-xl p-5 max-w-sm w-full animate-slideUp">
-            <h3 className="text-lg font-bold text-white mb-2">Delete Category?</h3>
+            <h3 className="text-lg font-bold text-white mb-2">Supprimer la catégorie ?</h3>
             <p className="text-slate-400 text-sm mb-5">
-              Are you sure you want to delete <span className="text-white font-semibold">{deletingCategory.name}</span>? This action cannot be undone.
+              Êtes-vous sûr de vouloir supprimer <span className="text-white font-semibold">{deletingCategory.name}</span> ? Cette action est irréversible.
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setDeletingCategory(null)}
                 className="flex-1 px-4 py-2 text-sm bg-slate-800/50 hover:bg-slate-800 text-white rounded-lg transition-all duration-200 hover:scale-[1.02]"
               >
-                Cancel
+                Annuler
               </button>
               <button
                 onClick={handleDelete}
                 disabled={loading}
                 className="flex-1 px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg transition-all duration-200 disabled:opacity-50 hover:scale-[1.02] active:scale-[0.98]"
               >
-                {loading ? 'Deleting...' : 'Delete'}
+                {loading ? 'Suppression...' : 'Supprimer'}
               </button>
             </div>
           </div>
@@ -276,11 +276,11 @@ function CategoryModal({ category, onClose, onSuccess }: {
 
   // Origin options with flags
   const ORIGIN_OPTIONS = [
-    { value: 'Morocco', label: 'Morocco (Maroc)', icon: '/flags/morocco_flag_icon.svg' },
-    { value: 'Algeria', label: 'Algeria (Algérie)', icon: '/flags/algeria_flag_icon.svg' },
-    { value: 'Tunisia', label: 'Tunisia (Tunisie)', icon: '/flags/tunisia_flag_icon.svg' },
-    { value: 'Orient', label: 'Orient (Middle East)', icon: '/flags/orient_middle_east_flag_icon.svg' },
-    { value: 'Africa', label: 'Africa (Afrique)', icon: '/flags/africa_icon.svg' },
+    { value: 'Morocco', label: 'Maroc', icon: '/flags/morocco_flag_icon.svg' },
+    { value: 'Algeria', label: 'Algérie', icon: '/flags/algeria_flag_icon.svg' },
+    { value: 'Tunisia', label: 'Tunisie', icon: '/flags/tunisia_flag_icon.svg' },
+    { value: 'Orient', label: 'Orient (Moyen-Orient)', icon: '/flags/orient_middle_east_flag_icon.svg' },
+    { value: 'Africa', label: 'Afrique', icon: '/flags/africa_icon.svg' },
     { value: 'Europe', label: 'Europe', icon: '/flags/europe_flag_icon.svg' },
   ];
 
@@ -331,12 +331,12 @@ function CategoryModal({ category, onClose, onSuccess }: {
 
   const handleImageUpload = async (file: File) => {
     if (!file.type.startsWith('image/')) {
-      toast.error('Please upload an image file');
+      toast.error('Veuillez téléverser un fichier image');
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('File size must be less than 5MB');
+      toast.error('La taille du fichier doit être inférieure à 5 Mo');
       return;
     }
 
@@ -373,7 +373,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
       }
     } catch (error) {
       console.error('Upload failed:', error);
-      toast.error('Failed to process image');
+      toast.error("Échec du traitement de l'image");
     }
     setUploadingImage(false);
   };
@@ -393,7 +393,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
       if (category) {
         // Editing existing category
         await updateCategory(category.id, formData);
-        toast.success('Category updated successfully!');
+        toast.success('Catégorie mise à jour avec succès!');
       } else {
         // Creating new category
         // First create the category
@@ -416,21 +416,21 @@ function CategoryModal({ category, onClose, onSuccess }: {
           } catch (uploadError) {
             console.error('Image upload failed:', uploadError);
             // Category created but image failed - inform user
-            toast.warning('Category created but image upload failed. You can edit the category to add an image.');
+            toast.warning("Catégorie créée mais l'envoi de l'image a échoué. Vous pouvez modifier la catégorie pour ajouter une image.");
           }
         }
 
         // Clear localStorage immediately after successful creation
         localStorage.removeItem(TEMP_IMAGE_KEY);
         localStorage.removeItem(TEMP_IMAGE_FILE_KEY);
-        toast.success('Category created successfully!');
+        toast.success('Catégorie créée avec succès!');
       }
       
       onSuccess();
       onClose();
     } catch (error) {
       console.error('Save failed:', error);
-      toast.error('Failed to save category');
+      toast.error("Échec de l'enregistrement de la catégorie");
     }
     setLoading(false);
   };
@@ -442,9 +442,9 @@ function CategoryModal({ category, onClose, onSuccess }: {
         <div className="flex items-center justify-between mb-5">
           <div>
             <h3 className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              {category ? 'Edit Category' : 'New Category'}
+              {category ? 'Modifier la catégorie' : 'Nouvelle catégorie'}
             </h3>
-            <p className="text-slate-400 text-xs mt-0.5">Fill in the details below</p>
+            <p className="text-slate-400 text-xs mt-0.5">Renseignez les informations ci-dessous</p>
           </div>
           <button
             onClick={onClose}
@@ -459,7 +459,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
           <div>
             <label className="block text-slate-300 text-xs font-semibold mb-2 flex items-center gap-1.5">
               <ImageIcon size={12} className="text-emerald-400" />
-              Category Image
+              Image de la catégorie
             </label>
             <div
               onDrop={handleDrop}
@@ -480,7 +480,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
                   />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg flex items-center justify-center gap-2">
                     <label className="cursor-pointer px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 rounded-lg text-white text-xs font-medium transition-all duration-200 hover:scale-105">
-                      Change
+                      Modifier
                       <input
                         type="file"
                         accept="image/*"
@@ -499,7 +499,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
                       }}
                       className="px-3 py-1.5 bg-red-500 hover:bg-red-600 rounded-lg text-white text-xs font-medium transition-all duration-200 hover:scale-105"
                     >
-                      Remove
+                      Supprimer
                     </button>
                   </div>
                 </div>
@@ -507,9 +507,9 @@ function CategoryModal({ category, onClose, onSuccess }: {
                 <label className="flex flex-col items-center justify-center cursor-pointer py-6">
                   <Upload className={`w-10 h-10 mb-2 ${isDragging ? 'text-emerald-400 scale-110' : 'text-slate-500'} transition-all duration-200`} />
                   <p className="text-slate-300 font-medium text-sm mb-0.5">
-                    {uploadingImage ? 'Uploading...' : 'Drop image here or click'}
+                    {uploadingImage ? 'Téléversement...' : 'Déposez l’image ici ou cliquez'}
                   </p>
-                  <p className="text-slate-500 text-xs">PNG, JPG, WebP • Max 5MB</p>
+                  <p className="text-slate-500 text-xs">PNG, JPG, WebP • 5 Mo max</p>
                   <input
                     type="file"
                     accept="image/*"
@@ -523,7 +523,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
                 <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-lg flex items-center justify-center">
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-                    <p className="text-white text-xs font-medium">Uploading...</p>
+                    <p className="text-white text-xs font-medium">Téléversement...</p>
                   </div>
                 </div>
               )}
@@ -534,7 +534,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-slate-300 text-xs font-semibold mb-1.5">
-                Name <span className="text-red-400">*</span>
+                Nom <span className="text-red-400">*</span>
               </label>
               <input
                 type="text"
@@ -548,7 +548,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
                   });
                 }}
                 className="w-full px-3 py-2 text-sm bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:bg-slate-800/80 transition-all duration-200"
-                placeholder="e.g., Grains"
+                placeholder="ex.: Épicerie"
                 required
               />
             </div>
@@ -562,7 +562,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
                 value={formData.slug}
                 onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '') })}
                 className="w-full px-3 py-2 text-sm bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:bg-slate-800/80 transition-all duration-200 font-mono text-xs"
-                placeholder="e.g., grains"
+                placeholder="ex.: epicerie"
                 required
               />
             </div>
@@ -578,14 +578,14 @@ function CategoryModal({ category, onClose, onSuccess }: {
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               rows={3}
               className="w-full px-3 py-2 text-sm bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:bg-slate-800/80 transition-all duration-200 resize-none"
-              placeholder="Brief description..."
+              placeholder="Brève description..."
             />
           </div>
 
           {/* Origin/Region Custom Dropdown with Flag Icons */}
           <div>
             <label className="block text-slate-300 text-xs font-semibold mb-1.5">
-              Origin / Region <span className="text-emerald-400 text-[10px] font-normal">(Products inherit from category)</span>
+              Origine / Région <span className="text-emerald-400 text-[10px] font-normal">(Les produits héritent de la catégorie)</span>
             </label>
             <div className="relative" ref={originDropdownRef}>
               <button
@@ -607,7 +607,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
                       <span>{ORIGIN_OPTIONS.find(opt => opt.value === formData.origin)?.label}</span>
                     </>
                   ) : (
-                    <span className="text-slate-500">Select origin...</span>
+                    <span className="text-slate-500">Sélectionnez une origine...</span>
                   )}
                 </div>
                 <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOriginDropdownOpen ? 'rotate-180' : ''}`} />
@@ -654,34 +654,24 @@ function CategoryModal({ category, onClose, onSuccess }: {
                 </div>
               )}
             </div>
-            <p className="text-[10px] text-slate-500 mt-1">All products in this category will inherit this origin</p>
+            <p className="text-[10px] text-slate-500 mt-1">Tous les produits de cette catégorie hériteront de cette origine</p>
           </div>
 
           {/* Actions */}
-          <div className="flex gap-2 pt-3 border-t border-slate-800/50">
+          <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 text-sm bg-slate-800/50 hover:bg-slate-800 border border-slate-700/50 text-white rounded-lg font-medium transition-all duration-200 hover:scale-[1.02]"
+              className="px-4 py-2 text-sm bg-slate-800/70 text-slate-300 rounded-lg hover:bg-slate-800 transition-colors"
             >
-              Cancel
+              Annuler
             </button>
             <button
               type="submit"
-              disabled={loading || uploadingImage}
-              className="flex-1 px-4 py-2 text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-emerald-500/30 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
+              disabled={loading}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:shadow-lg hover:shadow-emerald-500/30 transition-all duration-200 disabled:opacity-50 hover:scale-[1.02] active:scale-[0.98]"
             >
-              {loading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Check size={14} />
-                  {category ? 'Update' : 'Create'}
-                </>
-              )}
+              {loading ? 'Enregistrement...' : category ? 'Enregistrer les modifications' : 'Créer la catégorie'}
             </button>
           </div>
         </form>

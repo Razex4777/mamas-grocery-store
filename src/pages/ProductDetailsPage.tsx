@@ -105,9 +105,9 @@ export default function ProductDetailsPage() {
       <div className="bg-gray-50 border-b border-gray-200">
         <div className="container mx-auto px-4 lg:px-8 py-4">
           <div className="flex items-center gap-2 text-sm text-gray-600">
-            <button onClick={() => navigate('/')} className="hover:text-gray-900">Home</button>
+            <button onClick={() => navigate('/')} className="hover:text-gray-900">Accueil</button>
             <span>›</span>
-            <button onClick={() => navigate('/products')} className="hover:text-gray-900">Products</button>
+            <button onClick={() => navigate('/products')} className="hover:text-gray-900">Produits</button>
             <span>›</span>
             <span className="text-gray-900 font-medium">{product.title}</span>
           </div>
@@ -127,7 +127,7 @@ export default function ProductDetailsPage() {
               }}
             >
               {product.in_stock ? <CheckCircle className="h-[14px] w-[14px]" /> : <Package className="h-[14px] w-[14px]" />}
-              {product.in_stock ? 'In Stock' : 'Out of Stock'}
+              {product.in_stock ? 'En Stock' : 'Rupture de Stock'}
             </span>
             {product.sku && (
               <span className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white px-2.5 py-1 text-[12px] font-medium text-gray-700">
@@ -137,18 +137,18 @@ export default function ProductDetailsPage() {
             )}
             <span className="inline-flex items-center gap-1 rounded-full border border-purple-200 bg-purple-50 px-2.5 py-1 text-[12px] font-medium text-purple-700">
               <Eye className="h-[14px] w-[14px]" />
-              <span>{(product.viewer_count || 0).toLocaleString()}</span> views
+              <span>{(product.viewer_count || 0).toLocaleString()}</span> vues
             </span>
             {product.new_arrival && (
               <span className="inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-600 px-2.5 py-1 text-[12px] font-bold text-white shadow-sm">
                 <Sparkles className="h-[14px] w-[14px]" />
-                New Arrival
+                Nouvelle Arrivée
               </span>
             )}
             {product.featured && (
               <span className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-500 px-2.5 py-1 text-[12px] font-extrabold text-white shadow-sm">
                 <Award className="h-[14px] w-[14px]" />
-                Featured
+                En Vedette
               </span>
             )}
           </div>
@@ -165,7 +165,7 @@ export default function ProductDetailsPage() {
                 <div className="flex items-center justify-between px-1 pb-2">
                   <div className="inline-flex items-center gap-2 text-[12px] font-medium text-gray-600">
                     <Images className="h-4 w-4" />
-                    Gallery · <span>{selectedImage + 1}/{images.length}</span>
+                    Galerie · <span>{selectedImage + 1}/{images.length}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-[12px] text-gray-600">{selectedImage + 1} / {images.length}</span>
@@ -201,7 +201,7 @@ export default function ProductDetailsPage() {
                   {/* Image badge */}
                   <div className="pointer-events-none absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-green-200 bg-green-50/90 px-2 py-1 text-[11px] font-semibold text-green-700 backdrop-blur shadow-sm">
                     <Award className="h-3.5 w-3.5" />
-                    Premium Quality
+                    Qualité Premium
                   </div>
                 </div>
 
@@ -257,7 +257,7 @@ export default function ProductDetailsPage() {
                         }}
                       >
                         {product.in_stock ? <CheckCircle className="h-[14px] w-[14px]" /> : <Package className="h-[14px] w-[14px]" />}
-                        {product.in_stock ? 'In Stock' : 'Out of Stock'}
+                        {product.in_stock ? 'En Stock' : 'Rupture de Stock'}
                       </span>
                       {product.sku && (
                         <span className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white px-2.5 py-1 text-[12px] font-medium text-gray-700">
@@ -273,15 +273,15 @@ export default function ProductDetailsPage() {
                 <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
                   <div className="flex items-center gap-2 rounded-xl border border-orange-200 bg-orange-50/70 px-3 py-2 text-[12px] font-medium text-orange-700">
                     <img src="/icons/features/fast_delivery_truck_icon.svg" alt="Fast Delivery" className="h-5 w-5" />
-                    Fast Delivery
+                    Livraison Rapide
                   </div>
                   <div className="flex items-center gap-2 rounded-xl border border-green-200 bg-green-50/70 px-3 py-2 text-[12px] font-medium text-green-700">
                     <img src="/icons/features/quality_checked_shield_with_checkmark.svg" alt="Quality Checked" className="h-5 w-5" />
-                    Quality Checked
+                    Qualité Vérifiée
                   </div>
                   <div className="flex items-center gap-2 rounded-xl border border-blue-200 bg-blue-50/70 px-3 py-2 text-[12px] font-medium text-blue-700">
                     <img src="/icons/features/authentic_sourcing_globe_icon.svg" alt="Authentic Sourcing" className="h-5 w-5" />
-                    Authentic Sourcing
+                    Approvisionnement Authentique
                   </div>
                 </div>
 
@@ -294,9 +294,9 @@ export default function ProductDetailsPage() {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <p className="text-[14px] font-semibold text-gray-900">Wholesale pricing</p>
-                      <p className="text-[13px] text-gray-600">Available on request • MOQ varies</p>
-                      <p className="text-[11px] text-gray-500">Tell us your volumes and route windows</p>
+                      <p className="text-[14px] font-semibold text-gray-900">Prix de gros</p>
+                      <p className="text-[13px] text-gray-600">Disponible sur demande • MOQ varie</p>
+                      <p className="text-[11px] text-gray-500">Dites-nous vos volumes et fenêtres de livraison</p>
                     </div>
                   </div>
                 </div>
@@ -309,7 +309,7 @@ export default function ProductDetailsPage() {
                       className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-transparent bg-red-600 px-4 py-3 text-[14px] font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 sm:w-auto"
                     >
                       <MessageSquare className="h-4 w-4" />
-                      Talk to our wholesale team
+                      Parlez à notre équipe de gros
                     </button>
                     <div className="flex w-full gap-2 sm:w-auto">
                       <a
@@ -317,7 +317,7 @@ export default function ProductDetailsPage() {
                         className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-[14px] font-semibold text-gray-800 hover:bg-gray-50 transition-all hover:scale-105 sm:flex-none"
                       >
                         <img src="/icons/contact/phone_call_icon_for_wholesale_contact.svg" alt="Call" className="h-5 w-5" />
-                        Call
+                        Appeler
                       </a>
                       <a
                         href={`mailto:${COMPANY_INFO.email}?subject=Wholesale%20Inquiry%20-%20${encodeURIComponent(product.title)}`}
@@ -329,7 +329,7 @@ export default function ProductDetailsPage() {
                     </div>
                   </div>
                   <p className="mt-2 text-[12px] text-gray-500">
-                    Serving New Brunswick and the Maritimes with reliable cold‑chain logistics.
+                    Au service du Nouveau-Brunswick et des Maritimes avec une logistique fiable de chaîne du froid.
                   </p>
                 </div>
 
@@ -338,10 +338,10 @@ export default function ProductDetailsPage() {
                   <button
                     onClick={() => { 
                       toggleFavorite(product.id); 
-                      success(isFavorite(product.id) ? 'Removed from favorites' : 'Added to favorites!'); 
+                      success(isFavorite(product.id) ? 'Retiré des favoris' : 'Ajouté aux favoris!'); 
                     }}
                     className="inline-flex items-center justify-center rounded-xl border border-gray-200 bg-white px-3 py-2 text-[13px] font-semibold text-gray-800 hover:bg-gray-50 transition-all hover:scale-105"
-                    title={isFavorite(product.id) ? 'Remove from favorites' : 'Add to favorites'}
+                    title={isFavorite(product.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}
                   >
                     <Heart className={`h-5 w-5 ${isFavorite(product.id) ? 'text-red-500 fill-red-500' : ''}`} />
                   </button>
@@ -350,14 +350,14 @@ export default function ProductDetailsPage() {
                     className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-[13px] font-semibold text-gray-800 hover:bg-gray-50 transition-all hover:scale-105"
                   >
                     <ShareIcon />
-                    Share
+                    Partager
                   </button>
                 </div>
 
                 {/* Benefits */}
                 {product.benefits && product.benefits.length > 0 && (
                   <div className="mt-6">
-                    <h2 className="text-[20px] tracking-tight font-semibold text-gray-900">Why kitchens choose this</h2>
+                    <h2 className="text-[20px] tracking-tight font-semibold text-gray-900">Pourquoi les cuisines choisissent ceci</h2>
                     <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                       {product.benefits.map((benefit, index) => (
                         <li key={index} className="group relative overflow-hidden rounded-xl border border-gray-200 bg-white p-3 transition-all hover:shadow-md hover:-translate-y-0.5">
@@ -378,7 +378,7 @@ export default function ProductDetailsPage() {
 
                 {/* Detailed Description */}
                 <div className="mt-6">
-                  <h2 className="text-[20px] tracking-tight font-semibold text-gray-900">Product details</h2>
+                  <h2 className="text-[20px] tracking-tight font-semibold text-gray-900">Détails du Produit</h2>
                   <div className="mt-2">
                     <p className="text-[14px] text-gray-700">{product.description}</p>
                   </div>
@@ -390,7 +390,7 @@ export default function ProductDetailsPage() {
             {suggestedProducts.length > 0 && (
               <div className="lg:col-span-12 mt-12" data-aos="fade-up">
                 <div className="mb-4 flex items-center justify-between">
-                  <h2 className="text-[24px] tracking-tight font-semibold text-gray-900">You may also like</h2>
+                  <h2 className="text-[24px] tracking-tight font-semibold text-gray-900">Vous aimerez aussi</h2>
                 </div>
                 <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                   {suggestedProducts.map((suggestedProduct) => {
@@ -401,7 +401,7 @@ export default function ProductDetailsPage() {
                         product={{
                           id: suggestedProduct.id,
                           title: suggestedProduct.title,
-                          category: suggestedProduct.category_id || 'Uncategorized',
+                          category: suggestedProduct.category_id || 'Non catégorisé',
                           priceDisplay: '',
                           price: 0,
                           wholesalePrice: '',
@@ -434,7 +434,7 @@ export default function ProductDetailsPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between">
-              <h3 className="text-[18px] font-semibold text-gray-900">Share this product</h3>
+              <h3 className="text-[18px] font-semibold text-gray-900">Partager ce produit</h3>
               <button 
                 onClick={() => setShareModalOpen(false)}
                 className="rounded-lg p-1 hover:bg-gray-100 transition-colors"
@@ -490,7 +490,7 @@ export default function ProductDetailsPage() {
               <button 
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
-                  success('Link copied to clipboard!');
+                  success('Lien copié dans le presse-papiers!');
                   setShareModalOpen(false);
                 }}
                 className="flex flex-col items-center gap-2 rounded-xl border border-gray-200 bg-white p-3 hover:bg-gray-50 transition-colors"
@@ -501,7 +501,7 @@ export default function ProductDetailsPage() {
                     <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
                   </svg>
                 </div>
-                <span className="text-[11px] font-medium text-gray-700">Copy</span>
+                <span className="text-[11px] font-medium text-gray-700">Copier</span>
               </button>
             </div>
             <div className="mt-4">

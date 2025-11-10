@@ -4,7 +4,6 @@ import 'aos/dist/aos.css';
 import FeatureTabs from '../components/ourproduct-components/FeatureTabs';
 import AnimatedMarqueeHero from '../components/ourproduct-components/AnimatedMarqueeHero';
 import NewsletterSection from '../components/ourproduct-components/NewsletterSection';
-import BrandMarquee from '../components/ourproduct-components/BrandMarquee';
 import AboutUsSection from '../components/ourproduct-components/AboutUsSection';
 import RegionalProducts from '../components/ourproduct-components/RegionalProducts';
 
@@ -62,13 +61,13 @@ export default function OurProductsPage() {
               
               <div className="relative p-6 md:p-8 lg:p-12 flex items-center justify-between">
                 <div className="flex-1 max-w-2xl">
-                  <span className="inline-block text-red-600 text-xs md:text-sm font-heading font-semibold mb-2 tracking-wider">Weekend Discount</span>
+                  <span className="inline-block text-red-600 text-xs md:text-sm font-heading font-semibold mb-2 tracking-wider">Réduction de Week-end</span>
                   <h2 className="text-xl md:text-3xl lg:text-4xl font-display font-bold text-white mb-2 md:mb-4 leading-tight">
-                    Healthy vegetable that you deserve to eat fresh
+                    Des légumes sains que vous méritez de manger frais
                   </h2>
                   <p className="text-gray-300 text-xs md:text-sm">
-                    We have prepared special discounts for you on grocery products.<br />
-                    Don't miss these opportunities...
+                    Nous avons préparé des réductions spéciales pour vous sur les produits d'épicerie.<br />
+                    Ne manquez pas ces opportunités...
                   </p>
                 </div>
               </div>
@@ -77,12 +76,8 @@ export default function OurProductsPage() {
         </div>
       </div>
 
-      {/* About Us Section with Marquee Animation */}
+      {/* About Us Section */}
       <AboutUsSection />
-
-
-      {/* Brand Marquee - GSAP Animation */}
-      <BrandMarquee />
 
       {/* Newsletter Section */}
       <NewsletterSection />

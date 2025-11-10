@@ -34,23 +34,23 @@ const DeliveryIcon = ({ className }: { className?: string }) => (
 const FEATURES = [
   {
     icon: PaymentIcon,
-    title: 'Installments Without Card',
-    subtitle: 'Easy Payment Option',
+    title: 'Paiements Sans Carte',
+    subtitle: 'Option de Paiement Facile',
   },
   {
     icon: TrackingIcon,
-    title: 'Track Your Order Online',
-    subtitle: 'Order Location Check',
+    title: 'Suivez Votre Commande en Ligne',
+    subtitle: 'Vérification de Localisation',
   },
   {
     icon: HappyIcon,
-    title: '100% Happy Customers',
-    subtitle: 'Happy Customer Feedbacks',
+    title: '100% Clients Satisfaits',
+    subtitle: 'Avis Clients Positifs',
   },
   {
     icon: DeliveryIcon,
-    title: 'Free Delivery From $70',
-    subtitle: 'Home Delivery Available',
+    title: 'Livraison Gratuite à partir de 70$',
+    subtitle: 'Livraison à Domicile Disponible',
   },
 ];
 

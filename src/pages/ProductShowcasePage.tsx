@@ -11,12 +11,28 @@ import NewsletterSection from '../components/ourproduct-components/NewsletterSec
 import { useFavorites } from '../lib/favorites';
 
 const ORIGINS = ['All', 'Morocco', 'Algeria', 'Tunisia', 'Orient', 'Africa', 'Europe'];
+const ORIGIN_LABELS: Record<string, string> = {
+  All: 'Toutes les origines',
+  Morocco: 'Maroc',
+  Algeria: 'Algérie',
+  Tunisia: 'Tunisie',
+  Orient: 'Orient',
+  Africa: 'Afrique',
+  Europe: 'Europe',
+};
 const SORT_OPTIONS = [
-  { value: 'default', label: 'Default Sorting' },
-  { value: 'name-asc', label: 'Name: A to Z' },
-  { value: 'name-desc', label: 'Name: Z to A' },
-  { value: 'newest', label: 'Newest First' },
+  { value: 'default', label: 'Tri par défaut' },
+  { value: 'name-asc', label: 'Nom : A à Z' },
+  { value: 'name-desc', label: 'Nom : Z à A' },
+  { value: 'newest', label: 'Plus récent en premier' },
 ];
+const AVAILABILITY_LABELS: Record<'All' | 'In Stock' | 'Out of Stock', string> = {
+  All: 'Tout',
+  'In Stock': 'En stock',
+  'Out of Stock': 'Rupture de stock',
+};
+
+const getOriginLabel = (origin: string) => ORIGIN_LABELS[origin] ?? origin;
 
 // Helper function to get flag icon path
 const getOriginIcon = (origin: string): string | null => {
@@ -246,17 +262,17 @@ export default function ProductShowcasePage() {
               {/* Badge */}
               <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white ring-1 ring-white/20 backdrop-blur-sm">
                 <Zap className="h-4 w-4" />
-                Quality You Can Trust
+                Qualité de Confiance
               </span>
 
               {/* Main Heading */}
               <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white">
-                Fresh Products
+                Produits Frais
               </h1>
 
               {/* Description */}
               <p className="mt-4 max-w-2xl text-lg text-white/90">
-                Welcome to Mama's Grocery Store. Your trusted source for premium quality products and exceptional service. Discover our carefully curated selection.
+                Bienvenue chez Mama's Grocery Store. Votre source de confiance pour des produits de qualité supérieure et un service exceptionnel. Découvrez notre sélection soigneusement élaborée.
               </p>
 
 
@@ -272,14 +288,14 @@ export default function ProductShowcasePage() {
                   className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-neutral-900 hover:bg-white/90 transition-all hover:scale-105 shadow-lg cursor-pointer"
                 >
                   <ShoppingCart className="h-4 w-4" />
-                  Explore Products
+                  Explorer les Produits
                 </button>
                 <a
                   href="/contact"
                   className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2.5 text-sm font-medium text-white ring-1 ring-white/20 hover:bg-white/15 backdrop-blur-sm transition-all"
                 >
                   <MessageCircle className="h-4 w-4" />
-                  Talk to us
+                  Parlez-nous
                 </a>
               </div>
             </div>
@@ -288,23 +304,23 @@ export default function ProductShowcasePage() {
             <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 max-w-5xl">
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
                 <div className="text-2xl font-semibold tracking-tight">{categories.length}</div>
-                <div className="text-sm text-white/90">Dynamic categories</div>
+                <div className="text-sm text-white/90">Catégories dynamiques</div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
                 <div className="text-2xl font-semibold tracking-tight">{products.length}</div>
-                <div className="text-sm text-white/90">Premium products</div>
+                <div className="text-sm text-white/90">Produits premium</div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
                 <div className="text-2xl font-semibold tracking-tight">24h</div>
-                <div className="text-sm text-white/90">Response time</div>
+                <div className="text-sm text-white/90">Temps de réponse</div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
                 <div className="text-2xl font-semibold tracking-tight">A+</div>
-                <div className="text-sm text-white/90">Product quality</div>
+                <div className="text-sm text-white/90">Qualité des produits</div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
                 <div className="text-2xl font-semibold tracking-tight">{products.filter(p => p.new_arrival).length}</div>
-                <div className="text-sm text-white/90">New arrivals</div>
+                <div className="text-sm text-white/90">Nouvelles arrivées</div>
               </div>
             </div>
           </div>
@@ -320,23 +336,23 @@ export default function ProductShowcasePage() {
             <div className="text-center md:text-left md:flex md:items-center md:justify-between mb-8">
               <div>
                 <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
-                  Fresh Products
+                  Produits Frais
                 </h1>
                 <p className="text-base text-gray-600 max-w-2xl mx-auto md:mx-0">
-                  Browse our catalog designed for digital showroom: premium quality and refined selection.
+                  Parcourez notre catalogue pensé comme un showroom numérique : qualité premium et sélection raffinée.
                 </p>
               </div>
               <Link to="/contact" className="hidden md:flex items-center gap-2 mt-4 md:mt-0 px-6 py-3 bg-gray-800 text-white rounded-full font-semibold hover:bg-gray-900 transition-colors">
-                Contact Us
+                Contactez-nous
                 <ArrowRight size={18} />
               </Link>
             </div>
 
             {/* Ambient Stats */}
             <div className="flex items-center justify-center gap-6 text-sm text-gray-500 mb-10">
-              <span className="flex items-center gap-2"><Package size={16} /> {categories.length} dynamic categories</span>
-              <span className="flex items-center gap-2"><Sparkles size={16} /> {products.length} premium products</span>
-              <span className="flex items-center gap-2"><Zap size={16} /> Digital showroom experience</span>
+              <span className="flex items-center gap-2"><Package size={16} /> {categories.length} catégories dynamiques</span>
+              <span className="flex items-center gap-2"><Sparkles size={16} /> {products.length} produits premium</span>
+              <span className="flex items-center gap-2"><Zap size={16} /> Expérience de showroom numérique</span>
             </div>
 
             {/* Products Grid */}
@@ -347,14 +363,14 @@ export default function ProductShowcasePage() {
                   {/* Quick Filters Heading */}
                   <div className="flex items-center justify-between">
                     <h3 className="text-xl font-extrabold text-gray-900 flex items-center gap-2">
-                      <Filter className="w-5 h-5 text-green-600" /> Filters
+                      <Filter className="w-5 h-5 text-green-600" /> Filtres
                     </h3>
                     {(selectedCategories.length > 0 || selectedOrigin !== 'All' || searchTerm || stockFilter !== 'All' || highlightFeatured || highlightNewArrival || showFavoritesOnly) && (
                       <button
                         onClick={resetFilters}
                         className="text-xs text-gray-600 hover:text-green-700 underline"
                       >
-                        Clear All
+                        Tout réinitialiser
                       </button>
                     )}
                   </div>
@@ -368,23 +384,23 @@ export default function ProductShowcasePage() {
                       <Package className="w-5 h-5" />
                       {selectedCategories.length > 0
                         ? selectedCategories.length === 1
-                          ? categories.find(c => c.id === selectedCategories[0])?.name || 'Browse Categories'
-                          : `${selectedCategories.length} Categories Selected`
-                        : 'Browse Categories'}
+                          ? categories.find(c => c.id === selectedCategories[0])?.name || 'Parcourir les catégories'
+                          : `${selectedCategories.length} catégories sélectionnées`
+                        : 'Parcourir les catégories'}
                       {selectedCategories.length > 0 && (
                         <span className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></span>
                       )}
                     </button>
                     {selectedCategories.length > 0 && (
                       <p className="text-xs text-gray-600 mt-2 text-center">
-                        {selectedCategories.length === 1 ? 'Filtered by category' : `Filtering by ${selectedCategories.length} categories`} • <button onClick={() => { setSelectedCategories([]); setTempSelectedCategories([]); }} className="text-green-700 hover:underline">Clear</button>
+                        {selectedCategories.length === 1 ? 'Filtré par catégorie' : `Filtrage par ${selectedCategories.length} catégories`} • <button onClick={() => { setSelectedCategories([]); setTempSelectedCategories([]); }} className="text-green-700 hover:underline">Effacer</button>
                       </p>
                     )}
                   </div>
 
                   {/* Origin Filter */}
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Origin</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Origine</h3>
                     <div className="space-y-2">
                       {ORIGINS.map(origin => {
                         const iconPath = getOriginIcon(origin);
@@ -397,7 +413,7 @@ export default function ProductShowcasePage() {
                             {iconPath && (
                               <img src={iconPath} alt={`${origin} flag`} className="w-5 h-5 object-contain" />
                             )}
-                            <span className="flex-1 text-left">{origin}</span>
+                            <span className="flex-1 text-left">{getOriginLabel(origin)}</span>
                             {selectedOrigin === origin && (
                               <span className="w-2 h-2 bg-white rounded-full" />
                             )}
@@ -409,7 +425,7 @@ export default function ProductShowcasePage() {
 
                   {/* Availability Filter */}
                   <div className="pt-6 border-t border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Availability</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Disponibilité</h3>
                     <div className="grid grid-cols-3 gap-2">
                       {(['All', 'In Stock', 'Out of Stock'] as const).map(option => (
                         <button
@@ -421,7 +437,7 @@ export default function ProductShowcasePage() {
                               : 'bg-white text-gray-700 border-gray-200 hover:border-green-500 hover:bg-gray-50'
                           }`}
                         >
-                          {option}
+                          {AVAILABILITY_LABELS[option]}
                         </button>
                       ))}
                     </div>
@@ -429,7 +445,7 @@ export default function ProductShowcasePage() {
 
                   {/* Highlights Filter */}
                   <div className="pt-6 border-t border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Highlights</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Mises en avant</h3>
                     <div className="flex flex-wrap gap-2">
                       <button
                         onClick={() => setHighlightFeatured(prev => !prev)}
@@ -438,7 +454,7 @@ export default function ProductShowcasePage() {
                         }`}
                       >
                         {highlightFeatured && <Check className="w-4 h-4" />}
-                        Featured
+                        En vedette
                       </button>
                       <button
                         onClick={() => setHighlightNewArrival(prev => !prev)}
@@ -447,7 +463,7 @@ export default function ProductShowcasePage() {
                         }`}
                       >
                         {highlightNewArrival && <Check className="w-4 h-4" />}
-                        New Arrival
+                        Nouvelle arrivée
                       </button>
                       <button
                         onClick={() => setShowFavoritesOnly(prev => !prev)}
@@ -456,14 +472,14 @@ export default function ProductShowcasePage() {
                         }`}
                       >
                         <Heart className={`w-4 h-4 ${showFavoritesOnly ? 'fill-red-800' : ''}`} />
-                        Favorites {favorites.length > 0 && `(${favorites.length})`}
+                        Favoris {favorites.length > 0 && `(${favorites.length})`}
                       </button>
                     </div>
                   </div>
 
                   {/* Sorting Filter */}
                   <div className="pt-6 border-t border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Sort By</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Tri</h3>
                     <div className="space-y-2">
                       {SORT_OPTIONS.map(option => (
                         <button
@@ -490,14 +506,14 @@ export default function ProductShowcasePage() {
                       type="text"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="Search products by name or description..."
+                      placeholder="Recherchez des produits par nom ou description..."
                       className="w-full pl-12 pr-12 py-3 rounded-xl border border-gray-200 bg-white/80 backdrop-blur placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"
                     />
                     {searchTerm && (
                       <button
                         onClick={() => setSearchTerm('')}
                         className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
-                        aria-label="Clear search"
+                        aria-label="Effacer la recherche"
                       >
                         <X className="w-4 h-4 text-gray-500" />
                       </button>
@@ -510,45 +526,45 @@ export default function ProductShowcasePage() {
                       <div className="flex flex-wrap gap-2">
                         {searchTerm && (
                           <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-gray-100 text-gray-700 border border-gray-200">
-                            Search: <span className="font-semibold">{searchTerm}</span>
-                            <button onClick={() => setSearchTerm('')} className="hover:text-red-600" aria-label="Remove search"><X className="w-3.5 h-3.5" /></button>
+                            Recherche : <span className="font-semibold">{searchTerm}</span>
+                            <button onClick={() => setSearchTerm('')} className="hover:text-red-600" aria-label="Supprimer la recherche"><X className="w-3.5 h-3.5" /></button>
                           </span>
                         )}
                         {selectedCategories.map(catId => (
                           <span key={catId} className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            Category: <span className="font-semibold">{categories.find(c => c.id === catId)?.name || 'Selected'}</span>
-                            <button onClick={() => setSelectedCategories(prev => prev.filter(id => id !== catId))} className="hover:text-red-600" aria-label="Remove category"><X className="w-3.5 h-3.5" /></button>
+                            Catégorie : <span className="font-semibold">{categories.find(c => c.id === catId)?.name || 'Sélectionnée'}</span>
+                            <button onClick={() => setSelectedCategories(prev => prev.filter(id => id !== catId))} className="hover:text-red-600" aria-label="Supprimer la catégorie"><X className="w-3.5 h-3.5" /></button>
                           </span>
                         ))}
                         {selectedOrigin !== 'All' && (
                           <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-green-50 text-green-700 border border-green-200">
-                            Origin: <span className="font-semibold">{selectedOrigin}</span>
-                            <button onClick={() => setSelectedOrigin('All')} className="hover:text-red-600" aria-label="Remove origin"><X className="w-3.5 h-3.5" /></button>
+                            Origine : <span className="font-semibold">{getOriginLabel(selectedOrigin)}</span>
+                            <button onClick={() => setSelectedOrigin('All')} className="hover:text-red-600" aria-label="Supprimer l'origine"><X className="w-3.5 h-3.5" /></button>
                           </span>
                         )}
                         {stockFilter !== 'All' && (
                           <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-blue-50 text-blue-700 border border-blue-200">
-                            Availability: <span className="font-semibold">{stockFilter}</span>
-                            <button onClick={() => setStockFilter('All')} className="hover:text-red-600" aria-label="Remove availability"><X className="w-3.5 h-3.5" /></button>
+                            Disponibilité : <span className="font-semibold">{AVAILABILITY_LABELS[stockFilter]}</span>
+                            <button onClick={() => setStockFilter('All')} className="hover:text-red-600" aria-label="Supprimer la disponibilité"><X className="w-3.5 h-3.5" /></button>
                           </span>
                         )}
                         {highlightFeatured && (
                           <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-yellow-50 text-yellow-800 border border-yellow-200">
-                            Featured
-                            <button onClick={() => setHighlightFeatured(false)} className="hover:text-red-600" aria-label="Remove featured"><X className="w-3.5 h-3.5" /></button>
+                            En vedette
+                            <button onClick={() => setHighlightFeatured(false)} className="hover:text-red-600" aria-label="Supprimer le filtre vedette"><X className="w-3.5 h-3.5" /></button>
                           </span>
                         )}
                         {highlightNewArrival && (
                           <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
-                            New Arrival
-                            <button onClick={() => setHighlightNewArrival(false)} className="hover:text-red-600" aria-label="Remove new arrival"><X className="w-3.5 h-3.5" /></button>
+                            Nouvelle arrivée
+                            <button onClick={() => setHighlightNewArrival(false)} className="hover:text-red-600" aria-label="Supprimer le filtre nouvelles arrivées"><X className="w-3.5 h-3.5" /></button>
                           </span>
                         )}
                         {showFavoritesOnly && (
                           <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs rounded-full bg-red-50 text-red-700 border border-red-200">
                             <Heart className="w-3.5 h-3.5 fill-red-700" />
-                            Favorites Only
-                            <button onClick={() => setShowFavoritesOnly(false)} className="hover:text-red-600" aria-label="Remove favorites filter"><X className="w-3.5 h-3.5" /></button>
+                            Favoris uniquement
+                            <button onClick={() => setShowFavoritesOnly(false)} className="hover:text-red-600" aria-label="Supprimer le filtre favoris"><X className="w-3.5 h-3.5" /></button>
                           </span>
                         )}
                       </div>
@@ -556,7 +572,7 @@ export default function ProductShowcasePage() {
                         onClick={resetFilters}
                         className="text-xs font-semibold text-gray-600 hover:text-green-700 underline"
                       >
-                        Clear all filters
+                        Réinitialiser tous les filtres
                       </button>
                     </div>
                   )}
@@ -564,11 +580,11 @@ export default function ProductShowcasePage() {
                   {/* Product Count */}
                   <div className="flex items-center justify-between">
                     <p className="text-base font-medium text-gray-600">
-                      Showing <span className="font-bold text-gray-900">{startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}</span> of <span className="font-bold text-gray-900">{filteredProducts.length}</span> product(s)
+                      Affichage <span className="font-bold text-gray-900">{startIndex + 1}-{Math.min(endIndex, filteredProducts.length)}</span> sur <span className="font-bold text-gray-900">{filteredProducts.length}</span> produit(s)
                     </p>
                     {totalPages > 1 && (
                       <p className="text-sm text-gray-500">
-                        Page {currentPage} of {totalPages}
+                        Page {currentPage} sur {totalPages}
                       </p>
                     )}
                   </div>
@@ -591,12 +607,12 @@ export default function ProductShowcasePage() {
                           <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
                             {product.new_arrival && (
                               <div className="bg-blue-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded-full ring-1 ring-blue-600/20 w-fit">
-                                New Arrival
+                                Nouvelle arrivée
                               </div>
                             )}
                             {product.featured && (
                               <div className="bg-amber-500/90 backdrop-blur-sm text-white text-[10px] font-extrabold px-2 py-1 rounded-full ring-1 ring-amber-500/20 w-fit">
-                                Featured
+                                En vedette
                               </div>
                             )}
                           </div>
@@ -608,7 +624,7 @@ export default function ProductShowcasePage() {
                               toggleFavorite(product.id);
                             }}
                             className="absolute top-3 right-3 z-20 p-2 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 hover:bg-white shadow-lg"
-                            title={isFavorite(product.id) ? 'Remove from favorites' : 'Add to favorites'}
+                            title={isFavorite(product.id) ? 'Retirer des favoris' : 'Ajouter aux favoris'}
                           >
                             <Heart 
                               className={`h-5 w-5 transition-colors ${
@@ -625,7 +641,7 @@ export default function ProductShowcasePage() {
                           <div className="flex items-center justify-between text-xs mb-2">
                             <span className="text-gray-600">{categories.find(c => c.id === product.category_id)?.origin || 'N/A'}</span>
                             <span className={product.in_stock ? 'inline-flex items-center gap-1 text-emerald-700 font-semibold bg-emerald-100/80 px-2 py-0.5 rounded-full text-[10px] ring-1 ring-emerald-600/20' : 'inline-flex items-center gap-1 text-red-700 font-semibold bg-red-100/80 px-2 py-0.5 rounded-full text-[10px] ring-1 ring-red-600/20'}>
-                              {product.in_stock ? 'In Stock' : 'Out of Stock'}
+                              {product.in_stock ? 'En stock' : 'Rupture de stock'}
                             </span>
                           </div>
                           <h3 className="font-bold text-gray-900 mb-3 text-lg leading-tight flex-grow group-hover:text-emerald-600 transition-colors line-clamp-2">
@@ -636,7 +652,7 @@ export default function ProductShowcasePage() {
                           </p>
                           <button onClick={() => navigate(`/product/${product.id}`)} className="w-full mt-auto bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white text-sm font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl ring-1 ring-emerald-600/20">
                             <Eye size={16} />
-                            View Details
+                            Voir les détails
                           </button>
                         </div>
                       </motion.div>
@@ -653,7 +669,7 @@ export default function ProductShowcasePage() {
                         className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-xl bg-white border-2 border-gray-300 text-gray-700 font-semibold hover:border-green-700 hover:text-green-700 hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-300 disabled:hover:text-gray-700 disabled:hover:bg-white transition-all duration-300 shadow-md hover:shadow-lg"
                       >
                         <ChevronLeft size={20} />
-                        <span className="hidden md:inline">Previous</span>
+                        <span className="hidden md:inline">Précédente</span>
                       </button>
 
                       {/* Page Numbers */}
@@ -691,7 +707,7 @@ export default function ProductShowcasePage() {
                         disabled={currentPage === totalPages}
                         className="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-xl bg-white border-2 border-gray-300 text-gray-700 font-semibold hover:border-green-700 hover:text-green-700 hover:bg-green-50 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-gray-300 disabled:hover:text-gray-700 disabled:hover:bg-white transition-all duration-300 shadow-md hover:shadow-lg"
                       >
-                        <span className="hidden md:inline">Next</span>
+                        <span className="hidden md:inline">Suivante</span>
                         <ChevronRight size={20} />
                       </button>
                     </div>
@@ -700,10 +716,10 @@ export default function ProductShowcasePage() {
                 ) : (
                   <div className="bg-gray-50 rounded-2xl p-12 text-center" data-aos="fade-up">
                     <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">No Products Found</h3>
-                    <p className="text-sm text-gray-600">Try adjusting your filters to find what you're looking for.</p>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Aucun produit trouvé</h3>
+                    <p className="text-sm text-gray-600">Essayez d'ajuster vos filtres pour trouver ce que vous recherchez.</p>
                     <button onClick={() => { setSelectedCategories([]); setSelectedOrigin('All'); }} className="mt-6 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold text-sm">
-                      Reset Filters
+                      Réinitialiser les filtres
                     </button>
                   </div>
                 )}
@@ -730,8 +746,8 @@ export default function ProductShowcasePage() {
               <div className="relative bg-gradient-to-r from-gray-900 to-gray-800 px-6 md:px-8 py-5 border-b border-gray-700 flex-shrink-0">
                 <div className="flex justify-between items-center">
                   <div>
-                    <h2 className="text-xl md:text-2xl font-bold text-white">Browse Categories</h2>
-                    <p className="text-gray-300 text-xs md:text-sm mt-1">Select a category to filter products</p>
+                    <h2 className="text-xl md:text-2xl font-bold text-white">Parcourir les catégories</h2>
+                    <p className="text-gray-300 text-xs md:text-sm mt-1">Sélectionnez une catégorie pour filtrer les produits</p>
                   </div>
                   <button
                     onClick={() => setShowCategoryModal(false)}
@@ -781,10 +797,10 @@ export default function ProductShowcasePage() {
                       <p className={`text-sm font-semibold ${
                         tempSelectedCategories.length === 0 ? 'text-green-700' : 'text-gray-900 group-hover:text-green-700'
                       }`}>
-                        All Products
+                        Tous les produits
                       </p>
                       <p className="text-xs text-gray-500 mt-0.5">
-                        {getProductCount(null)} items
+                        {getProductCount(null)} articles
                       </p>
                     </div>
                   </button>
@@ -844,7 +860,7 @@ export default function ProductShowcasePage() {
                             {category.name}
                           </p>
                           <p className="text-xs text-gray-500 mt-0.5">
-                            {getProductCount(category.id)} items
+                            {getProductCount(category.id)} articles
                           </p>
                         </div>
                       </button>
@@ -902,14 +918,14 @@ export default function ProductShowcasePage() {
                     onClick={handleClearCategoryFilter}
                     className="px-4 md:px-5 py-2 md:py-2.5 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 hover:border-gray-400 transition-colors text-sm"
                   >
-                    Clear
+                    Effacer
                   </button>
                   <button
                     onClick={handleApplyCategoryFilter}
                     className="px-4 md:px-6 py-2 md:py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-colors shadow-md hover:shadow-lg text-sm flex items-center gap-2"
                   >
                     <Check className="w-4 h-4" />
-                    Apply Filter
+                    Appliquer le filtre
                   </button>
                 </div>
               </div>

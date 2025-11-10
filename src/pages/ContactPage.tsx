@@ -38,7 +38,7 @@ export default function ContactPage() {
         toast.error(result.message);
       }
     } catch (error) {
-      toast.error('Failed to send message. Please try again.');
+      toast.error('Échec de l\'envoi du message. Veuillez réessayer.');
     } finally {
       setIsSubmitting(false);
     }
@@ -56,8 +56,8 @@ export default function ContactPage() {
       {/* Breadcrumb */}
       <div className="bg-gray-50 border-b border-gray-200">
         <div className="container mx-auto px-4 lg:px-8 py-4 md:py-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Contact Us</h1>
-          <p className="text-sm md:text-base text-gray-600 mt-2">Get in touch with us for wholesale inquiries and partnerships</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Contactez-nous</h1>
+          <p className="text-sm md:text-base text-gray-600 mt-2">Contactez-nous pour des demandes de gros et des partenariats</p>
         </div>
       </div>
 
@@ -68,12 +68,12 @@ export default function ContactPage() {
             {/* Contact Form - 2 columns */}
             <div className="lg:col-span-2">
               <div className="bg-white border border-gray-200 rounded-lg p-5 md:p-8" data-aos="fade-up">
-                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Send Us a Message</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Envoyez-nous un Message</h2>
                 <form onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     <div>
                       <label htmlFor="name" className="block text-xs md:text-sm font-semibold text-gray-900 mb-2">
-                        Full Name <span className="text-red-600">*</span>
+                        Nom Complet <span className="text-red-600">*</span>
                       </label>
                       <input
                         type="text"
@@ -83,13 +83,13 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700 focus:border-transparent"
-                        placeholder="Your full name"
+                        placeholder="Votre nom complet"
                       />
                     </div>
 
                     <div>
                       <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
-                        Email Address <span className="text-red-600">*</span>
+                        Adresse Email <span className="text-red-600">*</span>
                       </label>
                       <input
                         type="email"
@@ -99,13 +99,13 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700 focus:border-transparent"
-                        placeholder="your.email@example.com"
+                        placeholder="votre.email@exemple.com"
                       />
                     </div>
 
                     <div>
                       <label htmlFor="phone" className="block text-sm font-semibold text-gray-900 mb-2">
-                        Phone Number <span className="text-red-600">*</span>
+                        Numéro de Téléphone <span className="text-red-600">*</span>
                       </label>
                       <input
                         type="tel"
@@ -121,7 +121,7 @@ export default function ContactPage() {
 
                     <div>
                       <label htmlFor="subject" className="block text-sm font-semibold text-gray-900 mb-2">
-                        Subject <span className="text-red-600">*</span>
+                        Sujet <span className="text-red-600">*</span>
                       </label>
                       <input
                         type="text"
@@ -131,7 +131,7 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-3 md:px-4 py-2.5 md:py-3 text-sm md:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700 focus:border-transparent"
-                        placeholder="Wholesale inquiry"
+                        placeholder="Demande de gros"
                       />
                     </div>
 
@@ -147,7 +147,7 @@ export default function ContactPage() {
                         required
                         rows={6}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700 focus:border-transparent resize-none"
-                        placeholder="Tell us about your wholesale needs..."
+                        placeholder="Parlez-nous de vos besoins en gros..."
                       />
                     </div>
 
@@ -160,12 +160,12 @@ export default function ContactPage() {
                         {isSubmitting ? (
                           <>
                             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                            Sending...
+                            Envoi en cours...
                           </>
                         ) : (
                           <>
                             <Send size={16} className="md:w-[18px] md:h-[18px]" />
-                            Send Message
+                            Envoyer
                           </>
                         )}
                       </button>
@@ -178,7 +178,7 @@ export default function ContactPage() {
             {/* Contact Info Sidebar - 1 column */}
             <div className="lg:col-span-1">
               <div className="bg-white border border-gray-200 rounded-lg p-5 md:p-8 mb-6" data-aos="fade-up" data-aos-delay="100">
-                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6">Get In Touch</h3>
+                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6">Entrer en Contact</h3>
                 
                 <div className="space-y-4 md:space-y-6">
                   <div className="flex items-start gap-4">
@@ -186,7 +186,7 @@ export default function ContactPage() {
                       <Phone className="w-4 h-4 md:w-5 md:h-5 text-green-700" />
                     </div>
                     <div>
-                      <p className="text-xs md:text-sm text-gray-600 mb-1">Phone</p>
+                      <p className="text-xs md:text-sm text-gray-600 mb-1">Téléphone</p>
                       <a href="tel:+15065445692" className="text-sm md:text-base text-gray-900 font-medium hover:text-green-700 transition-colors">
                         +1 (506) 544-5692
                       </a>
@@ -210,7 +210,7 @@ export default function ContactPage() {
                       <MapPin className="w-4 h-4 md:w-5 md:h-5 text-green-700" />
                     </div>
                     <div>
-                      <p className="text-xs md:text-sm text-gray-600 mb-1">Address</p>
+                      <p className="text-xs md:text-sm text-gray-600 mb-1">Adresse</p>
                       <p className="text-sm md:text-base text-gray-900 font-medium">
                         New Brunswick<br />
                         Maritimes, Canada
@@ -227,7 +227,7 @@ export default function ContactPage() {
                   className="block bg-gray-900 hover:bg-gray-800 text-white rounded-lg p-4 transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold">Get Support On Call</span>
+                    <span className="font-semibold">Obtenir de l'Aide par Téléphone</span>
                     <div className="w-10 h-10 bg-green-700 rounded-lg flex items-center justify-center">
                       <Headset className="w-5 h-5" />
                     </div>
@@ -241,7 +241,7 @@ export default function ContactPage() {
                   className="block bg-gray-900 hover:bg-gray-800 text-white rounded-lg p-4 transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold">Get Directions</span>
+                    <span className="font-semibold">Obtenir l'Itinéraire</span>
                     <div className="w-10 h-10 bg-green-700 rounded-lg flex items-center justify-center">
                       <MapPin className="w-5 h-5" />
                     </div>
@@ -251,19 +251,19 @@ export default function ContactPage() {
 
               {/* Business Hours */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-6 mt-6" data-aos="fade-up" data-aos-delay="300">
-                <h4 className="font-bold text-green-900 mb-3">Business Hours</h4>
+                <h4 className="font-bold text-green-900 mb-3">Heures d'Ouverture</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-green-800">Monday - Friday:</span>
-                    <span className="font-semibold text-green-900">8:00 AM - 6:00 PM</span>
+                    <span className="text-green-800">Lundi - Vendredi:</span>
+                    <span className="font-semibold text-green-900">8h00 - 18h00</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-green-800">Saturday:</span>
-                    <span className="font-semibold text-green-900">8:00 AM - 12:00 PM</span>
+                    <span className="text-green-800">Samedi:</span>
+                    <span className="font-semibold text-green-900">8h00 - 12h00</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-green-800">Sunday:</span>
-                    <span className="font-semibold text-green-900">Closed</span>
+                    <span className="text-green-800">Dimanche:</span>
+                    <span className="font-semibold text-green-900">Fermé</span>
                   </div>
                 </div>
               </div>
@@ -283,7 +283,7 @@ export default function ContactPage() {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="Location Map"
+            title="Carte de Localisation"
           />
         </div>
       </section>

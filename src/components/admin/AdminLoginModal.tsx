@@ -31,12 +31,12 @@ export default function AdminLoginModal({ isOpen, onClose }: AdminLoginModalProp
       } else {
         // Set client session on successful authentication
         setClientSession(username);
-        toast.success('Welcome back, admin!');
+        toast.success('Bienvenue, administrateur!');
         navigate('/administrator/overview');
         onClose();
       }
     } catch (err) {
-      setError('Authentication failed. Please try again.');
+      setError("Échec de l'authentification. Veuillez réessayer.");
     } finally {
       setIsLoading(false);
     }
@@ -75,10 +75,10 @@ export default function AdminLoginModal({ isOpen, onClose }: AdminLoginModalProp
             </div>
           </div>
           <h2 className="text-xl font-bold text-center bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-            Admin Access
+            Accès Administrateur
           </h2>
           <p className="text-slate-400 text-center mt-1.5 text-xs">
-            Secure authentication required
+            Authentification sécurisée requise
           </p>
         </div>
 
@@ -95,7 +95,7 @@ export default function AdminLoginModal({ isOpen, onClose }: AdminLoginModalProp
           {/* Username */}
           <div>
             <label className="block text-slate-300 text-xs font-medium mb-1.5">
-              Username
+              Nom d'utilisateur
             </label>
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-lg blur opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
@@ -106,7 +106,7 @@ export default function AdminLoginModal({ isOpen, onClose }: AdminLoginModalProp
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full pl-9 pr-3 py-2 text-sm bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:bg-slate-800/80 transition-all duration-200"
-                  placeholder="Enter username"
+                  placeholder="Entrez le nom d'utilisateur"
                   required
                 />
               </div>
@@ -116,7 +116,7 @@ export default function AdminLoginModal({ isOpen, onClose }: AdminLoginModalProp
           {/* Password */}
           <div>
             <label className="block text-slate-300 text-xs font-medium mb-1.5">
-              Password
+              Mot de passe
             </label>
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-lg blur opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
@@ -127,7 +127,7 @@ export default function AdminLoginModal({ isOpen, onClose }: AdminLoginModalProp
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-9 pr-3 py-2 text-sm bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-teal-500/50 focus:bg-slate-800/80 transition-all duration-200"
-                  placeholder="Enter password"
+                  placeholder="Entrez le mot de passe"
                   required
                 />
               </div>
@@ -146,12 +146,12 @@ export default function AdminLoginModal({ isOpen, onClose }: AdminLoginModalProp
               {isLoading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  <span>Authenticating...</span>
+                  <span>Authentification...</span>
                 </>
               ) : (
                 <>
                   <Lock size={14} />
-                  <span>Access Dashboard</span>
+                  <span>Accéder au tableau de bord</span>
                 </>
               )}
             </span>

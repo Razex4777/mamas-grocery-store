@@ -9,9 +9,9 @@ interface AdminLayoutProps {
 }
 
 const navigation = [
-  { name: 'Overview', href: '/administrator/overview', iconSrc: '/icons/admin-nav/dashboard_overview_analytics.svg' },
-  { name: 'Categories', href: '/administrator/categories', iconSrc: '/icons/admin-nav/folder_categories_organize.svg' },
-  { name: 'Products', href: '/administrator/products', iconSrc: '/icons/admin-nav/box_package_products.svg' },
+  { name: 'Aperçu', href: '/administrator/overview', iconSrc: '/icons/admin-nav/dashboard_overview_analytics.svg' },
+  { name: 'Catégories', href: '/administrator/categories', iconSrc: '/icons/admin-nav/folder_categories_organize.svg' },
+  { name: 'Produits', href: '/administrator/products', iconSrc: '/icons/admin-nav/box_package_products.svg' },
   { name: 'Messages', href: '/administrator/messages', iconSrc: '/icons/admin-nav/message_contact_inbox.svg' },
   { name: 'Newsletter', href: '/administrator/newsletter', iconSrc: '/icons/admin-nav/envelope_newsletter_email.svg' },
 ];
@@ -53,7 +53,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-400">Validating session...</p>
+          <p className="text-slate-400">Validation de session...</p>
         </div>
       </div>
     );
@@ -79,8 +79,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 </div>
               </div>
               <div>
-                <h1 className="text-white font-semibold text-sm tracking-tight">Admin Panel</h1>
-                <p className="text-[10px] text-slate-400 tracking-wide">CONTROL CENTER</p>
+                <h1 className="text-white font-semibold text-sm tracking-tight">Panneau Admin</h1>
+                <p className="text-[10px] text-slate-400 tracking-wide">CENTRE DE CONTRÔLE</p>
               </div>
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               className="w-full group flex items-center gap-2.5 px-3 py-2 text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-300 relative overflow-hidden"
             >
               <LogOut className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" />
-              <span className="text-sm font-medium">Logout</span>
+              <span className="text-sm font-medium">Déconnexion</span>
             </button>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             className="flex flex-col items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-1.5 sm:py-2 text-slate-400 active:text-red-400 active:bg-red-500/10 rounded-lg transition-all min-w-0"
           >
             <LogOut className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" />
-            <span className="text-[9px] sm:text-[10px] font-medium">Logout</span>
+            <span className="text-[9px] sm:text-[10px] font-medium">Déconnexion</span>
           </button>
         </div>
       </nav>

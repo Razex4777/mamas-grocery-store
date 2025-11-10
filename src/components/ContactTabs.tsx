@@ -7,7 +7,7 @@ export default function ContactTabs() {
         <div className="grid gap-4 md:gap-6 md:grid-cols-3">
           <ContactTab
             imgSrc="/icons/contact/location_pin_marker.svg"
-            title="ADDRESS"
+            title="ADRESSE"
             value={COMPANY_INFO.address}
           />
           <ContactTab
@@ -17,7 +17,7 @@ export default function ContactTabs() {
           />
           <ContactTab
             imgSrc="/icons/contact/phone_call_handset.svg"
-            title="CALL"
+            title="APPELER"
             value={COMPANY_INFO.phone}
           />
         </div>

@@ -2,16 +2,16 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 const brands = [
-  { name: 'Fresh Produce', icon: '/marquee/fresh-produce.png' },
-  { name: 'Organic Foods', icon: '/marquee/organic-foods.png' },
-  { name: 'Dairy Products', icon: '/marquee/dairy-products.png' },
-  { name: 'Bakery Fresh', icon: '/marquee/bakery-fresh.png' },
-  { name: 'Meat & Seafood', icon: '/marquee/meat-seafood.png' },
-  { name: 'Beverages', icon: '/marquee/beverages.png' },
+  { name: 'Produits Frais', icon: '/marquee/fresh-produce.png' },
+  { name: 'Aliments Biologiques', icon: '/marquee/organic-foods.png' },
+  { name: 'Produits Laitiers', icon: '/marquee/dairy-products.png' },
+  { name: 'Boulangerie Fraîche', icon: '/marquee/bakery-fresh.png' },
+  { name: 'Viande & Produits de la Mer', icon: '/marquee/meat-seafood.png' },
+  { name: 'Boissons', icon: '/marquee/beverages.png' },
   { name: 'Snacks & Chips', icon: '/marquee/snacks-chips.png' },
-  { name: 'Health & Wellness', icon: '/marquee/health-wellness.png' },
-  { name: 'Frozen Foods', icon: '/marquee/frozen-foods.png' },
-  { name: 'Pantry Staples', icon: '/marquee/pantry-staples.png' },
+  { name: 'Santé & Bien-être', icon: '/marquee/health-wellness.png' },
+  { name: 'Produits Surgelés', icon: '/marquee/frozen-foods.png' },
+  { name: 'Produits de Base du Garde-manger', icon: '/marquee/pantry-staples.png' },
 ];
 
 export default function BrandMarquee() {

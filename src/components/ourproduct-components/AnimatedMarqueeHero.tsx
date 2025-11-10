@@ -4,16 +4,18 @@ import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
-// Sample grocery images - replace with your actual product images
+// Local grocery images from hero marquee
 const GROCERY_IMAGES = [
-  "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1506617564039-2f3b650b7010?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1518843875459-f738682238a6?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1490818387583-1baba5e638af?w=400&h=500&fit=crop",
+  "/hero_form/hero_marquee/1.jpeg",
+  "/hero_form/hero_marquee/2.jpeg",
+  "/hero_form/hero_marquee/3.jpeg",
+  "/hero_form/hero_marquee/4.jpeg",
+  "/hero_form/hero_marquee/5.jpeg",
+  "/hero_form/hero_marquee/6.jpeg",
+  "/hero_form/hero_marquee/7.jpeg",
+  "/hero_form/hero_marquee/8.jpeg",
+  "/hero_form/hero_marquee/9.jpeg",
+  "/hero_form/hero_marquee/10.jpeg",
 ];
 
 // Reusable Button component
@@ -70,7 +72,7 @@ export default function AnimatedMarqueeHero() {
             variants={FADE_IN_ANIMATION_VARIANTS}
             className="mb-4 inline-block rounded-full border-2 border-[#629D23] bg-white/90 px-4 py-1.5 text-xs md:text-sm font-medium text-[#629D23] backdrop-blur-sm shadow-sm"
           >
-            🌿 Fresh Quality Every Day
+            🌿 Qualité Fraîche Chaque Jour
           </motion.div>
 
           {/* Main Title */}
@@ -87,7 +89,7 @@ export default function AnimatedMarqueeHero() {
             }}
             className="text-2xl md:text-4xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-4 md:mb-6"
           >
-            {["Your", "Neighborhood", "Grocery", "Store"].map((word, i) => (
+            {["Votre", "Magasin", "d'Épicerie", "de", "Quartier"].map((word, i) => (
               <motion.span
                 key={i}
                 variants={FADE_IN_ANIMATION_VARIANTS}
@@ -106,8 +108,8 @@ export default function AnimatedMarqueeHero() {
             transition={{ delay: 0.5 }}
             className="mt-2 md:mt-4 max-w-2xl text-sm md:text-base lg:text-lg text-gray-200 leading-relaxed px-2 md:px-0"
           >
-            Farm-fresh produce, quality meats, and everyday essentials delivered to your door. 
-            Experience the convenience of online grocery shopping with Mama's Grocery.
+            Produits fraîs de la ferme, viandes de qualité et produits essentiels livrés à votre porte. 
+            Découvrez la commodité des achats d'épicerie en ligne avec Mama's Grocery.
           </motion.p>
 
           {/* Call to Action Button */}
@@ -117,7 +119,7 @@ export default function AnimatedMarqueeHero() {
             variants={FADE_IN_ANIMATION_VARIANTS}
             transition={{ delay: 0.6 }}
           >
-            <ActionButton onClick={handleShopNow}>Explore Products</ActionButton>
+            <ActionButton onClick={handleShopNow}>Explorer les Produits</ActionButton>
           </motion.div>
         </div>
       </div>

@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Our Products', href: '/products' },
-  { label: 'Contact Us', href: '/contact' }
+  { label: 'Accueil', href: '/' },
+  { label: 'Nos Produits', href: '/products' },
+  { label: 'Contactez-nous', href: '/contact' }
 ];
 
 const FullNavbar = () => {
@@ -150,7 +150,7 @@ const FullNavbar = () => {
 
             {/* Social media icons on the far right */}
             <div className="absolute top-0 right-4 lg:right-8 h-full flex items-center space-x-2 lg:space-x-3">
-              <span className="font-medium text-sm lg:text-base hidden md:inline">Follow Us:</span>
+              <span className="font-medium text-sm lg:text-base hidden md:inline">Suivez-nous:</span>
               <a 
                 href="https://www.facebook.com/Alsmadimoncton?locale=fr_FR" 
                 target="_blank" 
@@ -202,7 +202,7 @@ const FullNavbar = () => {
               {/* Desktop actions */}
               <div className="hidden lg:flex items-center space-x-6">
                 <button className="bg-red-600 text-white px-6 py-3 font-bold text-base tracking-wide hover:bg-red-700 transform hover:scale-105 hover:shadow-lg transition-all duration-300 relative overflow-hidden group">
-                  <span className="relative z-10">VISIT NOW</span>
+                  <span className="relative z-10">VISITEZ MAINTENANT</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
                 </button>
               </div>
@@ -263,7 +263,7 @@ const FullNavbar = () => {
             </nav>
             <div className="mt-6 border-t pt-6 space-y-4">
               <button className="w-full bg-red-600 text-white px-6 py-3 font-bold text-base tracking-wide hover:bg-red-700 transition rounded-md">
-                VISIT NOW
+                VISITEZ MAINTENANT
               </button>
               <div className="flex items-center gap-2 text-gray-600">
                 <a 

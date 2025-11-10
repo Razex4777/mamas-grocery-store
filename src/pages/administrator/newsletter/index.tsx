@@ -74,9 +74,9 @@ export default function NewsletterManagementPage() {
           <div>
             <h1 className="text-3xl font-bold text-white flex items-center gap-3">
               <img src="/icons/dashboard/envelope_mail_letter_professional_clean.svg" alt="Newsletter" className="w-12 h-12" />
-              Newsletter Subscribers
+              Abonnés à la Newsletter
             </h1>
-            <p className="text-slate-400 mt-2">Manage your newsletter subscription list</p>
+            <p className="text-slate-400 mt-2">Gérer votre liste d'abonnement à la newsletter</p>
           </div>
         </div>
 
@@ -86,7 +86,7 @@ export default function NewsletterManagementPage() {
           <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-sm font-medium">Total Subscribers</p>
+                <p className="text-slate-400 text-sm font-medium">Total des Abonnés</p>
                 <p className="text-3xl font-bold text-white mt-2">{stats.total}</p>
               </div>
               <img src="/icons/dashboard/envelope_mail_letter_professional_clean.svg" alt="Total" className="w-14 h-14" />
@@ -97,7 +97,7 @@ export default function NewsletterManagementPage() {
           <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-sm font-medium">Active</p>
+                <p className="text-slate-400 text-sm font-medium">Actif</p>
                 <p className="text-3xl font-bold text-emerald-400 mt-2">{stats.active}</p>
               </div>
               <img src="/icons/dashboard/checkmark_circle_badge_verified_professional.svg" alt="Active" className="w-14 h-14" />
@@ -108,7 +108,7 @@ export default function NewsletterManagementPage() {
           <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-slate-400 text-sm font-medium">Inactive</p>
+                <p className="text-slate-400 text-sm font-medium">Inactif</p>
                 <p className="text-3xl font-bold text-slate-400 mt-2">{stats.inactive}</p>
               </div>
               <img src="/icons/dashboard/user_crossed_inactive_disabled_professional.svg" alt="Inactive" className="w-14 h-14" />
@@ -119,23 +119,23 @@ export default function NewsletterManagementPage() {
         {/* Subscribers Table */}
         <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl border border-slate-700/50 overflow-hidden">
           <div className="p-6 border-b border-slate-700/50">
-            <h2 className="text-xl font-semibold text-white">All Subscribers</h2>
+            <h2 className="text-xl font-semibold text-white">Tous les Abonnés</h2>
             <p className="text-slate-400 text-sm mt-1">
-              {subscriptions.length} subscriber(s) found
+              {subscriptions.length} abonné(s) trouvé(s)
             </p>
           </div>
 
           {loading ? (
             <div className="p-12 text-center">
               <div className="inline-block w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-              <p className="text-slate-400 mt-4">Loading subscribers...</p>
+              <p className="text-slate-400 mt-4">Chargement des abonnés...</p>
             </div>
           ) : subscriptions.length === 0 ? (
             <div className="p-12 text-center">
               <img src="/icons/dashboard/envelope_mail_letter_professional_clean.svg" alt="Newsletter" className="w-16 h-16 opacity-50 mx-auto mb-4" />
-              <p className="text-slate-400 text-lg">No subscribers yet</p>
+              <p className="text-slate-400 text-lg">Aucun abonné pour le moment</p>
               <p className="text-slate-500 text-sm mt-2">
-                Subscribers will appear here once users sign up for your newsletter
+                Les abonnés apparaîtront ici une fois que les utilisateurs s'inscriront à votre newsletter
               </p>
             </div>
           ) : (
@@ -147,10 +147,10 @@ export default function NewsletterManagementPage() {
                       Email
                     </th>
                     <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                      Status
+                      Statut
                     </th>
                     <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                      Subscribed At
+                      Abonné le
                     </th>
                     <th className="px-6 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider text-right">
                       Actions
@@ -170,12 +170,12 @@ export default function NewsletterManagementPage() {
                         {sub.is_active ? (
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-medium">
                             <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-                            Active
+                            Actif
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-700 text-slate-400 text-sm font-medium">
                             <div className="w-2 h-2 rounded-full bg-slate-400"></div>
-                            Inactive
+                            Inactif
                           </span>
                         )}
                       </td>
@@ -189,7 +189,7 @@ export default function NewsletterManagementPage() {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           <img src="/icons/dashboard/trash_bin_delete_remove_professional.svg" alt="Delete" className="w-4 h-4" />
-                          {deletingId === sub.id ? 'Deleting...' : 'Delete'}
+                          {deletingId === sub.id ? 'Suppression...' : 'Supprimer'}
                         </button>
                       </td>
                     </tr>

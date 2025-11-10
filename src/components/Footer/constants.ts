@@ -21,8 +21,8 @@ export const COMPANY_INFO: CompanyInfo = {
 };
 
 export const QUICK_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Our Products", href: "/products" },
+  { label: "Accueil", href: "/" },
+  { label: "Nos Produits", href: "/products" },
   { label: "Contact", href: "/contact" },
 ];
 

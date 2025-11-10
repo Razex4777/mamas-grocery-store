@@ -60,10 +60,10 @@ export default function ProductsPage() {
       await deleteProduct(deletingProduct.id);
       setDeletingProduct(null);
       await loadProducts();
-      toast.success('Product deleted successfully!');
+      toast.success('Produit supprimé avec succès!');
     } catch (error) {
       console.error('Delete failed:', error);
-      toast.error('Failed to delete product');
+      toast.error("Échec de la suppression du produit");
     }
     setLoading(false);
   };
@@ -80,9 +80,9 @@ export default function ProductsPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              Products Management
+              Gestion des Produits
             </h1>
-            <p className="text-sm text-slate-400 mt-1">Manage product showcase</p>
+            <p className="text-sm text-slate-400 mt-1">Gérer la vitrine de produits</p>
           </div>
           <button
             onClick={() => {
@@ -92,7 +92,7 @@ export default function ProductsPage() {
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white rounded-lg hover:from-emerald-600 hover:to-teal-600 transition-all duration-200 shadow-lg hover:shadow-emerald-500/50 transform hover:scale-105"
           >
             <Plus size={18} />
-            <span className="font-medium">Add Product</span>
+            <span className="font-medium">Ajouter un Produit</span>
           </button>
         </div>
 
@@ -101,7 +101,7 @@ export default function ProductsPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input
             type="text"
-            placeholder="Search products..."
+            placeholder="Rechercher des produits..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-all"
@@ -130,12 +130,12 @@ export default function ProductsPage() {
                 <div className="absolute top-2 left-2 flex flex-wrap gap-1">
                   {product.featured && (
                     <span className="px-2 py-0.5 bg-yellow-500/20 text-yellow-400 text-[10px] font-medium rounded border border-yellow-500/30">
-                      Featured
+                      En vedette
                     </span>
                   )}
                   {product.new_arrival && (
                     <span className="px-2 py-0.5 bg-blue-500/20 text-blue-400 text-[10px] font-medium rounded border border-blue-500/30">
-                      New
+                      Nouveau
                     </span>
                   )}
                 </div>
@@ -159,11 +159,11 @@ export default function ProductsPage() {
 
                 <div className="flex items-center gap-2 text-xs text-slate-400">
                   <Package size={12} />
-                  <span>{categories.find(c => c.id === product.category_id)?.origin || 'No category'}</span>
+                  <span>{categories.find(c => c.id === product.category_id)?.origin || 'Aucune catégorie'}</span>
                   {product.in_stock ? (
-                    <span className="ml-auto text-emerald-400">In Stock</span>
+                    <span className="ml-auto text-emerald-400">En stock</span>
                   ) : (
-                    <span className="ml-auto text-red-400">Out of Stock</span>
+                    <span className="ml-auto text-red-400">Rupture de stock</span>
                   )}
                 </div>
 
@@ -177,14 +177,14 @@ export default function ProductsPage() {
                     className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded hover:bg-emerald-500/20 transition-all text-xs font-medium"
                   >
                     <Edit2 size={12} />
-                    Edit
+                    Modifier
                   </button>
                   <button
                     onClick={() => setDeletingProduct(product)}
                     className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 bg-red-500/10 text-red-400 rounded hover:bg-red-500/20 transition-all text-xs font-medium"
                   >
                     <Trash2 size={12} />
-                    Delete
+                    Supprimer
                   </button>
                 </div>
               </div>
@@ -196,7 +196,7 @@ export default function ProductsPage() {
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
             <Package className="mx-auto text-slate-600 mb-3" size={48} />
-            <p className="text-slate-400">No products found</p>
+            <p className="text-slate-400">Aucun produit trouvé</p>
           </div>
         )}
       </div>
@@ -222,9 +222,9 @@ export default function ProductsPage() {
       {deletingProduct && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-slate-900 border border-slate-700 rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-lg font-semibold text-slate-200 mb-2">Delete Product</h3>
+            <h3 className="text-lg font-semibold text-slate-200 mb-2">Supprimer le Produit</h3>
             <p className="text-sm text-slate-400 mb-6">
-              Are you sure you want to delete "{deletingProduct.title}"? This will also delete all product images.
+              Êtes-vous sûr de vouloir supprimer "{deletingProduct.title}" ? Cela supprimera également toutes les images du produit.
             </p>
             <div className="flex gap-3">
               <button
@@ -232,14 +232,14 @@ export default function ProductsPage() {
                 disabled={loading}
                 className="flex-1 px-4 py-2 bg-slate-800 text-slate-300 rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50"
               >
-                Cancel
+                Annuler
               </button>
               <button
                 onClick={handleDelete}
                 disabled={loading}
                 className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50"
               >
-                {loading ? 'Deleting...' : 'Delete'}
+                {loading ? 'Suppression...' : 'Supprimer'}
               </button>
             </div>
           </div>
@@ -350,18 +350,18 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
     
     // Check if adding these files would exceed the limit
     if (imagePreviews.length + fileArray.length > MAX_IMAGES) {
-      toast.warning(`You can only upload up to ${MAX_IMAGES} images. Currently ${imagePreviews.length} uploaded.`);
+      toast.warning(`Vous pouvez téléverser jusqu'à ${MAX_IMAGES} images. Actuellement ${imagePreviews.length} envoyée(s).`);
       return;
     }
 
     // Validate all files
     for (const file of fileArray) {
       if (!file.type.startsWith('image/')) {
-        toast.error('Please upload only image files');
+        toast.error('Veuillez téléverser uniquement des fichiers image');
         return;
       }
       if (file.size > 5 * 1024 * 1024) {
-        toast.error('Each file size must be less than 5MB');
+        toast.error('Chaque fichier doit faire moins de 5 Mo');
         return;
       }
     }
@@ -411,7 +411,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
       }
     } catch (error) {
       console.error('Upload failed:', error);
-      toast.error('Failed to process images');
+      toast.error("Échec du téléversement des images");
     }
     setUploadingImage(false);
   };
@@ -456,7 +456,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
       if (product) {
         // Update existing product
         await updateProduct(product.id, formData);
-        toast.success('Product updated successfully!');
+        toast.success('Produit mis à jour avec succès!');
         onSave();
       } else {
         // Create new product
@@ -486,12 +486,12 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
         // Clear temp storage
         localStorage.removeItem(TEMP_IMAGE_KEY);
         localStorage.removeItem(TEMP_IMAGE_FILE_KEY);
-        toast.success('Product created successfully!');
+        toast.success('Produit créé avec succès!');
         onSave();
       }
     } catch (error) {
       console.error('Save failed:', error);
-      toast.error('Failed to save product');
+      toast.error("Échec de l'enregistrement du produit");
     }
 
     setSaving(false);
@@ -503,7 +503,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-slate-700 flex-shrink-0">
           <h2 className="text-lg font-semibold text-slate-200">
-            {product ? 'Edit Product' : 'Add New Product'}
+            {product ? 'Modifier le produit' : 'Ajouter un nouveau produit'}
           </h2>
           <button
             onClick={onClose}
@@ -520,7 +520,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
             {/* Title */}
             <div className="md:col-span-2">
               <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                Product Title *
+                Titre du produit *
               </label>
               <input
                 type="text"
@@ -528,7 +528,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-500/50"
-                placeholder="Enter product title"
+                placeholder="Saisissez le titre du produit"
               />
             </div>
 
@@ -543,14 +543,14 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                 value={formData.slug}
                 onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                 className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-sm text-slate-200 font-mono focus:outline-none focus:border-emerald-500/50"
-                placeholder="product-slug"
+                placeholder="produit-slug"
               />
             </div>
 
             {/* Custom Category Dropdown with Search */}
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                Category
+                Catégorie
               </label>
               <div className="relative" ref={categoryDropdownRef}>
                 {/* Selected Value Display */}
@@ -568,7 +568,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                         <span>{categories.find(c => c.id === formData.category_id)?.name}</span>
                       </>
                     ) : (
-                      <span className="text-slate-500">No Category</span>
+                      <span className="text-slate-500">Aucune catégorie</span>
                     )}
                   </div>
                   <svg
@@ -593,7 +593,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                           type="text"
                           value={categorySearchQuery}
                           onChange={(e) => setCategorySearchQuery(e.target.value)}
-                          placeholder="Search categories..."
+                          placeholder="Rechercher des catégories..."
                           className="w-full pl-9 pr-3 py-2 bg-slate-900/50 border border-slate-700/50 rounded-lg text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
                         />
                       </div>
@@ -616,7 +616,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                         <div className="w-6 h-6 rounded bg-slate-700/50 flex items-center justify-center text-slate-400 text-xs">
                           —
                         </div>
-                        <span className="text-sm font-medium">No Category</span>
+                        <span className="text-sm font-medium">Aucune catégorie</span>
                         {formData.category_id === '' && (
                           <svg className="w-4 h-4 ml-auto text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -652,7 +652,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                         ))
                       ) : (
                         <div className="px-3 py-6 text-center text-slate-500 text-sm">
-                          No categories found
+                          Aucune catégorie trouvée
                         </div>
                       )}
                     </div>
@@ -664,31 +664,31 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
             {/* Origin Info (inherited from category) */}
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                Origin <span className="text-emerald-400 text-[10px] font-normal">(Inherited from category)</span>
+                Origine <span className="text-emerald-400 text-[10px] font-normal">(Hérité de la catégorie)</span>
               </label>
               <div className="w-full px-3 py-2.5 bg-slate-800/30 border border-slate-700/30 rounded-lg text-sm">
                 {formData.category_id ? (
                   <span className="text-cyan-400 font-medium">
-                    {categories.find(c => c.id === formData.category_id)?.origin || 'Not set in category'}
+                    {categories.find(c => c.id === formData.category_id)?.origin || "Non définie dans la catégorie"}
                   </span>
                 ) : (
-                  <span className="text-slate-500 italic">Select a category first</span>
+                  <span className="text-slate-500 italic">Sélectionnez d'abord une catégorie</span>
                 )}
               </div>
-              <p className="text-[10px] text-slate-500 mt-1">Products inherit origin from their category</p>
+              <p className="text-[10px] text-slate-500 mt-1">Les produits héritent de l'origine de leur catégorie</p>
             </div>
 
             {/* SKU */}
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                SKU <span className="text-slate-500 text-[10px]">(Optional - leave blank)</span>
+                SKU <span className="text-slate-500 text-[10px]">(Optionnel)</span>
               </label>
               <input
                 type="text"
                 value={formData.sku}
                 onChange={(e) => setFormData({ ...formData, sku: e.target.value })}
                 className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-sm text-slate-200 font-mono focus:outline-none focus:border-emerald-500/50"
-                placeholder="PROD-001 (optional)"
+                placeholder="PROD-001 (optionnel)"
               />
             </div>
 
@@ -703,14 +703,14 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 rows={3}
                 className="w-full px-3 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-500/50 resize-none"
-                placeholder="Product description"
+                placeholder="Description du produit"
               />
             </div>
 
             {/* Benefits */}
             <div className="md:col-span-2">
               <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                Key Benefits
+                Avantages clés
               </label>
               <div className="space-y-2">
                 <div className="flex gap-2">
@@ -728,7 +728,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                       }
                     }}
                     className="flex-1 px-3 py-2 bg-slate-800/50 border border-slate-700/50 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-500/50"
-                    placeholder="Add a benefit and press Enter"
+                    placeholder="Ajoutez un avantage puis appuyez sur Entrée"
                   />
                   <button
                     type="button"
@@ -740,7 +740,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                     }}
                     className="px-4 py-2 bg-emerald-500 text-white rounded-lg text-sm font-medium hover:bg-emerald-600 transition-colors"
                   >
-                    Add
+                    Ajouter
                   </button>
                 </div>
                 {formData.benefits && formData.benefits.length > 0 && (
@@ -769,7 +769,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
 
           {/* Stock Status Radio Buttons */}
           <div className="space-y-2">
-            <label className="block text-xs font-medium text-slate-300 mb-2">Stock Status *</label>
+            <label className="block text-xs font-medium text-slate-300 mb-2">Statut du stock *</label>
             <div className="grid grid-cols-2 gap-3">
               <label className={`group relative flex items-center gap-3 p-3 border-2 rounded-xl cursor-pointer transition-all duration-200 ${
                 formData.in_stock 
@@ -797,8 +797,8 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                 <div className="flex-1">
                   <span className={`text-sm font-medium transition-colors ${
                     formData.in_stock ? 'text-emerald-400' : 'text-slate-400'
-                  }`}>In Stock</span>
-                  <p className="text-xs text-slate-500">Available for sale</p>
+                  }`}>En stock</span>
+                  <p className="text-xs text-slate-500">Disponible à la vente</p>
                 </div>
               </label>
 
@@ -828,8 +828,8 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                 <div className="flex-1">
                   <span className={`text-sm font-medium transition-colors ${
                     !formData.in_stock ? 'text-red-400' : 'text-slate-400'
-                  }`}>Out of Stock</span>
-                  <p className="text-xs text-slate-500">Not available</p>
+                  }`}>Rupture de stock</span>
+                  <p className="text-xs text-slate-500">Indisponible</p>
                 </div>
               </label>
             </div>
@@ -853,8 +853,8 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                 </div>
               </div>
               <div className="flex-1">
-                <span className="text-sm font-medium text-slate-200 group-hover:text-white transition-colors">Featured</span>
-                <p className="text-xs text-slate-500">Highlight on homepage</p>
+                <span className="text-sm font-medium text-slate-200 group-hover:text-white transition-colors">Mettre en avant</span>
+                <p className="text-xs text-slate-500">Mettre en avant sur la page d'accueil</p>
               </div>
             </label>
 
@@ -868,8 +868,8 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
                 </div>
               </div>
               <div className="flex-1">
-                <span className="text-sm font-medium text-slate-200">New Arrival (Auto)</span>
-                <p className="text-xs text-slate-500">Automatically marked for 3 days</p>
+                <span className="text-sm font-medium text-slate-200">Nouvelle arrivée (auto)</span>
+                <p className="text-xs text-slate-500">Marquage automatique pendant 3 jours</p>
               </div>
             </div>
           </div>
@@ -877,7 +877,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
           {/* Multiple Image Upload */}
           <div>
             <label className="block text-xs font-medium text-slate-300 mb-1.5">
-              Product Images * (Max 5)
+              Images du produit * (max 5)
             </label>
             
             {/* Image Grid */}

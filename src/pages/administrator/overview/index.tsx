@@ -78,16 +78,16 @@ export default function OverviewPage() {
               </div>
               <div className="min-w-0">
                 <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent truncate">
-                  Analytics Dashboard
+                  Tableau de Bord Analytique
                 </h1>
-                <p className="text-slate-400 text-[10px] md:text-xs mt-0.5 truncate">Real-time performance metrics</p>
+                <p className="text-slate-400 text-[10px] md:text-xs mt-0.5 truncate">Métriques de performance en temps réel</p>
               </div>
             </div>
             
             <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
               <div className="flex items-center gap-1.5 md:gap-2">
                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-[10px] md:text-xs text-slate-400 hidden sm:inline">Live</span>
+                <span className="text-[10px] md:text-xs text-slate-400 hidden sm:inline">En direct</span>
               </div>
               {animations.dashboard && (
                 <div className="w-12 h-12 md:w-20 md:h-20 opacity-80 hidden sm:block">
@@ -102,33 +102,33 @@ export default function OverviewPage() {
         <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4 mt-4 md:mt-6">
           <StatCard
             iconSrc="/icons/dashboard/category_folder_organization.svg"
-            title="Categories"
+            title="Catégories"
             value={stats.totalCategories}
-            subtitle="Total items"
+            subtitle="Total d'articles"
             color="emerald"
             animationData={animations.success}
           />
           <StatCard
             iconSrc="/icons/dashboard/dashboard_analytics_chart_graph.svg"
-            title="Active"
+            title="Actives"
             value={stats.activeCategories}
-            subtitle="Published"
+            subtitle="Publiées"
             color="teal"
             animationData={animations.success}
           />
           <StatCard
             iconSrc="/icons/dashboard/shopping_cart_products.svg"
-            title="Products"
+            title="Produits"
             value={stats.totalProducts}
-            subtitle="Total items"
+            subtitle="Total d'articles"
             color="cyan"
             animationData={animations.success}
           />
           <StatCard
             iconSrc="/icons/dashboard/trending_up_growth_arrow.svg"
-            title="In Stock"
+            title="En Stock"
             value={stats.activeProducts}
-            subtitle="Available"
+            subtitle="Disponibles"
             color="sky"
             animationData={animations.success}
           />
@@ -146,12 +146,12 @@ export default function OverviewPage() {
                   </svg>
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-white font-semibold text-sm md:text-base truncate">Categories Breakdown</h3>
-                  <p className="text-slate-400 text-[10px] md:text-xs truncate">Total categories available</p>
+                  <h3 className="text-white font-semibold text-sm md:text-base truncate">Répartition des Catégories</h3>
+                  <p className="text-slate-400 text-[10px] md:text-xs truncate">Total des catégories disponibles</p>
                 </div>
               </div>
               <div className="px-2.5 md:px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-[10px] md:text-xs text-purple-300 font-medium self-start sm:self-center whitespace-nowrap">
-                Every category live
+                Chaque catégorie en direct
               </div>
             </div>
             
@@ -180,7 +180,7 @@ export default function OverviewPage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <p className="text-2xl sm:text-3xl font-bold text-white">{stats.totalCategories}</p>
-                    <p className="text-[10px] md:text-xs text-slate-400 mt-0.5">Categories</p>
+                    <p className="text-[10px] md:text-xs text-slate-400 mt-0.5">Catégories</p>
                   </div>
                 </div>
               </div>
@@ -195,11 +195,11 @@ export default function OverviewPage() {
                       </svg>
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[10px] md:text-xs text-slate-400 truncate">Total Collections</p>
+                      <p className="text-[10px] md:text-xs text-slate-400 truncate">Collections Totales</p>
                       <p className="text-xs md:text-sm font-semibold text-white">{stats.totalCategories}</p>
                     </div>
                   </div>
-                  <span className="text-[10px] md:text-xs text-slate-500 hidden sm:inline">Updated live</span>
+                  <span className="text-[10px] md:text-xs text-slate-500 hidden sm:inline">Mis à jour en direct</span>
                 </div>
                 <div className="flex items-center justify-between bg-slate-800/20 border border-slate-700/30 rounded-lg md:rounded-xl p-2.5 md:p-3">
                   <div className="flex items-center gap-2">
@@ -209,8 +209,8 @@ export default function OverviewPage() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-[10px] md:text-xs text-slate-400">Status</p>
-                      <p className="text-xs md:text-sm font-semibold text-emerald-400">All Active</p>
+                      <p className="text-[10px] md:text-xs text-slate-400">Statut</p>
+                      <p className="text-xs md:text-sm font-semibold text-emerald-400">Toutes Actives</p>
                     </div>
                   </div>
                 </div>
@@ -228,12 +228,12 @@ export default function OverviewPage() {
                   </svg>
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-white font-semibold text-sm md:text-base truncate">Product Stock Status</h3>
-                  <p className="text-slate-400 text-[10px] md:text-xs truncate">Inventory breakdown</p>
+                  <h3 className="text-white font-semibold text-sm md:text-base truncate">Statut du Stock de Produits</h3>
+                  <p className="text-slate-400 text-[10px] md:text-xs truncate">Répartition de l'inventaire</p>
                 </div>
               </div>
               <div className="px-2.5 md:px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[10px] md:text-xs text-cyan-300 font-medium self-start sm:self-center whitespace-nowrap">
-                {stockPercent}% In Stock
+                {stockPercent}% En Stock
               </div>
             </div>
             
@@ -270,7 +270,7 @@ export default function OverviewPage() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <p className="text-2xl sm:text-3xl font-bold text-white">{stats.totalProducts}</p>
-                    <p className="text-[10px] md:text-xs text-slate-400 mt-0.5">Products</p>
+                    <p className="text-[10px] md:text-xs text-slate-400 mt-0.5">Produits</p>
                   </div>
                 </div>
               </div>
@@ -285,8 +285,8 @@ export default function OverviewPage() {
                       </svg>
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[10px] md:text-xs text-slate-400 truncate">In Stock</p>
-                      <p className="text-xs md:text-sm font-semibold text-white truncate">{stats.activeProducts} items</p>
+                      <p className="text-[10px] md:text-xs text-slate-400 truncate">En Stock</p>
+                      <p className="text-xs md:text-sm font-semibold text-white truncate">{stats.activeProducts} articles</p>
                     </div>
                   </div>
                   <span className="text-[10px] md:text-xs text-cyan-300 font-medium">{stockPercent}%</span>
@@ -299,8 +299,8 @@ export default function OverviewPage() {
                       </svg>
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[10px] md:text-xs text-slate-400 truncate">Out of Stock</p>
-                      <p className="text-xs md:text-sm font-semibold text-slate-300 truncate">{stats.totalProducts - stats.activeProducts} items</p>
+                      <p className="text-[10px] md:text-xs text-slate-400 truncate">Rupture de Stock</p>
+                      <p className="text-xs md:text-sm font-semibold text-slate-300 truncate">{stats.totalProducts - stats.activeProducts} articles</p>
                     </div>
                   </div>
                 </div>
@@ -323,28 +323,28 @@ export default function OverviewPage() {
                   )}
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-white font-semibold text-sm md:text-base truncate">System Heartbeat</h3>
-                  <p className="text-slate-400 text-[10px] md:text-xs truncate">Project health monitor</p>
+                  <h3 className="text-white font-semibold text-sm md:text-base truncate">Battement de Coeur du Système</h3>
+                  <p className="text-slate-400 text-[10px] md:text-xs truncate">Surveillance de santé du projet</p>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 md:gap-2 self-start sm:self-center">
                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-green-500 animate-pulse shadow-lg shadow-green-500/50" />
-                <span className="text-[10px] md:text-xs text-green-400 font-medium">ACTIVE</span>
+                <span className="text-[10px] md:text-xs text-green-400 font-medium">ACTIF</span>
               </div>
             </div>
             
             {heartbeat && (
               <div className="grid grid-cols-3 gap-2 md:gap-3">
                 <div className="bg-slate-800/30 rounded-lg p-2 md:p-3 border border-slate-700/30">
-                  <p className="text-slate-400 text-[9px] md:text-[10px] mb-1 truncate">Last Activity</p>
-                  <p className="text-white font-bold text-xs md:text-sm truncate">{daysSinceLastActivity(heartbeat.last_activity) === 0 ? 'Today' : `${daysSinceLastActivity(heartbeat.last_activity)}d ago`}</p>
+                  <p className="text-slate-400 text-[9px] md:text-[10px] mb-1 truncate">Dernière Activité</p>
+                  <p className="text-white font-bold text-xs md:text-sm truncate">{daysSinceLastActivity(heartbeat.last_activity) === 0 ? 'Aujourd\'hui' : `Il y a ${daysSinceLastActivity(heartbeat.last_activity)}j`}</p>
                 </div>
                 <div className="bg-slate-800/30 rounded-lg p-2 md:p-3 border border-slate-700/30">
                   <p className="text-slate-400 text-[9px] md:text-[10px] mb-1 truncate">Date</p>
                   <p className="text-white font-bold text-xs md:text-sm truncate">{formatHeartbeatDate(heartbeat.activity_date).split(' ')[0]}</p>
                 </div>
                 <div className="bg-slate-800/30 rounded-lg p-2 md:p-3 border border-slate-700/30">
-                  <p className="text-slate-400 text-[9px] md:text-[10px] mb-1 truncate">Updates</p>
+                  <p className="text-slate-400 text-[9px] md:text-[10px] mb-1 truncate">Mises à jour</p>
                   <p className="text-white font-bold text-xs md:text-sm truncate">{heartbeat.activity_count}</p>
                 </div>
               </div>
@@ -355,26 +355,26 @@ export default function OverviewPage() {
           <div className="bg-slate-900/50 border border-slate-800/50 rounded-xl p-4 md:p-5 backdrop-blur-xl">
             <div className="flex items-center gap-2 mb-3 md:mb-4">
               <img src="/icons/dashboard/lightning_bolt_speed.svg" alt="Quick Actions" className="w-3.5 h-3.5 md:w-4 md:h-4" />
-              <h3 className="text-white font-semibold text-sm md:text-base">Quick Actions</h3>
+              <h3 className="text-white font-semibold text-sm md:text-base">Actions Rapides</h3>
             </div>
             <div className="space-y-2">
               <QuickAction 
-                text="Manage Categories" 
+                text="Gérer les Catégories" 
                 href="/administrator/categories"
                 iconSrc="/icons/admin-nav/folder_categories_organize.svg"
               />
               <QuickAction 
-                text="Manage Products" 
+                text="Gérer les Produits" 
                 href="/administrator/products"
                 iconSrc="/icons/admin-nav/box_package_products.svg"
               />
               <QuickAction 
-                text="Newsletter Subscribers" 
+                text="Abonnés à la Newsletter" 
                 href="/administrator/newsletter"
                 iconSrc="/icons/admin-nav/envelope_newsletter_email.svg"
               />
               <QuickAction 
-                text="View Store" 
+                text="Voir la Boutique" 
                 href="/products"
                 iconSrc="/icons/dashboard/shopping_cart_products.svg"
               />

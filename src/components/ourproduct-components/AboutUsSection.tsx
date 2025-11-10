@@ -2,36 +2,36 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const ABOUT_CONTENT = {
-  subtitle: "ABOUT US",
-  title: "The elite of oriental products at your fingertips.",
-  description: "We distribute the highest quality ingredients across Canada. Our vision focuses on research to develop products that stand out in both quality and accessibility.",
+  subtitle: "À PROPOS DE NOUS",
+  title: "L'élite des produits orientaux à portée de main.",
+  description: "Nous distribuons les ingrédients de la plus haute qualité à travers le Canada. Notre vision se concentre sur la recherche pour développer des produits qui se distinguent par leur qualité et leur accessibilité.",
   imageSrc: "/about/products-wooden-table.png",
-  imageAlt: "Oriental products on wooden table with countryside background"
+  imageAlt: "Produits orientaux sur table en bois avec fond de campagne"
 };
 
 const FEATURE_BOXES = [
   {
     id: 1,
     icon: "📦",
-    title: "Vast Selection",
-    description: "Authentic products from Morocco, Algeria, and Tunisia."
+    title: "Vaste Sélection",
+    description: "Produits authentiques du Maroc, d'Algérie et de Tunisie."
   },
   {
     id: 2,
     icon: "🚛",
-    title: "Efficient Distribution",
-    description: "We ensure reliable and fast logistics across Canada."
+    title: "Distribution Efficace",
+    description: "Nous assurons une logistique fiable et rapide à travers le Canada."
   }
 ];
 
 const MARQUEE_ITEMS = [
-  "MOROCCAN PRODUCTS",
-  "ALGERIAN SPECIALTIES",
-  "TUNISIAN DELIGHTS",
-  "ORIENTAL SPICES",
-  "AUTHENTIC PRESERVES",
-  "TRADITIONAL PASTRIES",
-  "TEAS & INFUSIONS"
+  "PRODUITS MAROCAINS",
+  "SPÉCIALITÉS ALGÉRIENNES",
+  "DÉLICES TUNISIENS",
+  "ÉPICES ORIENTALES",
+  "CONSERVES AUTHENTIQUES",
+  "PÂTISSERIES TRADITIONNELLES",
+  "THÉS & INFUSIONS"
 ];
 
 const AboutUsSection: React.FC = () => {

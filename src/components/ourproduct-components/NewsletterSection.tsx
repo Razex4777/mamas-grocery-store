@@ -56,12 +56,12 @@ export default function NewsletterSection() {
             {/* Left Content */}
             <div className="space-y-4 md:space-y-6">
               <h2 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold text-white leading-tight">
-                Don't Miss Out on<br />
-                Grocery Deals
+                Ne Manquez Pas<br />
+                les Offres d'Épicerie
               </h2>
               
               <p className="text-base md:text-xl lg:text-2xl font-heading font-semibold text-white/90 tracking-wide uppercase">
-                Sign Up For The Update Newsletter
+                Inscrivez-vous à la Newsletter
               </p>
 
               <form onSubmit={handleSubmit} className="relative mt-4 md:mt-8">
@@ -70,7 +70,7 @@ export default function NewsletterSection() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address..."
+                    placeholder="Votre adresse email..."
                     disabled={isSubscribing}
                     required
                     className="w-full py-3 md:py-5 px-4 md:px-6 pr-28 md:pr-40 rounded-full text-sm md:text-base text-gray-800 font-sans placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
@@ -80,13 +80,13 @@ export default function NewsletterSection() {
                     disabled={isSubscribing}
                     className="absolute right-2 top-1/2 -translate-y-1/2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-heading font-semibold px-4 md:px-8 py-2 md:py-3 text-sm md:text-base rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    {isSubscribing ? 'Subscribing...' : 'Subscribe'}
+                    {isSubscribing ? 'Inscription...' : 'S\'abonner'}
                   </button>
                 </div>
               </form>
 
               <p className="text-white/60 text-sm font-sans">
-                🔒 Your email is safe with us. We respect your privacy.
+                🔒 Votre email est en sécurité avec nous. Nous respectons votre vie privée.
               </p>
             </div>
 
