@@ -8,7 +8,7 @@ export interface CompanyInfo {
 
 export const COMPANY_INFO: CompanyInfo = {
   phone: "+1 (506) 544-5692",
-  email: "notremarchecaroline@gmail.com",
+  email: "mamasgroceryandbbq@gmail.com",
   address: "New Brunswick · Maritimes, Canada",
   hours: {
     weekdays: "8am – 6pm",

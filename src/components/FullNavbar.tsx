@@ -84,9 +84,9 @@ const FullNavbar = () => {
           }`}
         ></div>
 
-        {/* LAYER 2: Green Background - Responsive */}
+        {/* LAYER 2: Yellow Background - Responsive */}
         <div
-          className="absolute top-0 left-0 right-0 bg-green-600 z-10 transition-all duration-500"
+          className="absolute top-0 left-0 right-0 bg-yellow-500 z-10 transition-all duration-500"
           style={{ height: redHeight, opacity: 1 - scrollProgress }}
         ></div>
 
@@ -138,7 +138,7 @@ const FullNavbar = () => {
             <div className="absolute top-0 h-full flex items-center" style={{ left: `${timeLeft}px` }}>
               <div className="hidden md:flex items-center gap-6 text-xs lg:text-sm">
                 <div className="flex items-center gap-2 opacity-90 hover:opacity-100 transition"><MapPin size={14} /><span className="whitespace-nowrap">New Brunswick · Maritimes, Canada</span></div>
-                <div className="flex items-center gap-2 opacity-90 hover:opacity-100 transition"><Mail size={14} /><span className="whitespace-nowrap">notremarchecaroline@gmail.com</span></div>
+                <div className="flex items-center gap-2 opacity-90 hover:opacity-100 transition"><Mail size={14} /><span className="whitespace-nowrap">mamasgroceryandbbq@gmail.com</span></div>
                 <div className="flex items-center gap-2 opacity-90 hover:opacity-100 transition"><Phone size={14} /><span className="whitespace-nowrap">+1 (506) 544-5692</span></div>
               </div>
               {/* Mobile: show just phone */}

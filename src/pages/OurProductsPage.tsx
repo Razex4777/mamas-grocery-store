@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import FeatureTabs from '../components/ourproduct-components/FeatureTabs';
 import AnimatedMarqueeHero from '../components/ourproduct-components/AnimatedMarqueeHero';
 import NewsletterSection from '../components/ourproduct-components/NewsletterSection';
 import AboutUsSection from '../components/ourproduct-components/AboutUsSection';
@@ -30,9 +29,6 @@ export default function OurProductsPage() {
 
   return (
     <>
-      {/* Feature Tabs */}
-      <FeatureTabs />
-
       {/* Animated Marquee Hero Banner */}
       <AnimatedMarqueeHero />
 
