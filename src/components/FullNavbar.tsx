@@ -92,7 +92,7 @@ const FullNavbar = () => {
 
         {/* LAYER 3: White Logo Block - Responsive with Shine Animation */}
         <div
-          className="bg-white flex items-center px-3 sm:px-6 lg:px-10 absolute z-30 cursor-pointer group hover:shadow-lg transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden"
+          className="bg-yellow-400 flex items-center px-3 sm:px-6 lg:px-10 absolute z-30 cursor-pointer group hover:shadow-lg transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden"
           style={{
             clipPath: `polygon(0 0, calc(100% - ${notch}px) 0, 100% 100%, 0 100%)`,
             width: `${logoWidth}px`,
@@ -104,9 +104,9 @@ const FullNavbar = () => {
         >
           {/* Shine Animation Overlay */}
           <div 
-            className="absolute inset-0 opacity-30"
+            className="absolute inset-0 opacity-25"
             style={{
-              background: 'linear-gradient(-40deg, transparent 0%, transparent 40%, rgba(255,255,255,0.8) 50%, transparent 60%, transparent 100%)',
+              background: 'linear-gradient(-40deg, transparent 0%, transparent 40%, rgba(255,230,100,0.7) 50%, transparent 60%, transparent 100%)',
               backgroundSize: '200px 100%',
               animation: 'shine 5s infinite',
               backgroundPosition: '-200px 0'
@@ -123,7 +123,7 @@ const FullNavbar = () => {
         </div>
 
         {/* LAYER 4: Content */}
-        <div className="absolute inset-0 z-20 text-white">
+        <div className="absolute inset-0 z-20 text-black">
 
           {/* Top Bar Content Container */}
           <div
@@ -213,7 +213,7 @@ const FullNavbar = () => {
                 <button
                   aria-label="Open menu"
                   onClick={() => setIsMobileMenuOpen(true)}
-                  className={`p-2 rounded-md active:scale-95 transition ${scrollProgress > 0.3 ? 'text-white hover:bg-white/10' : 'text-white hover:bg-black/10'}`}
+                  className={`p-2 rounded-md active:scale-95 transition ${scrollProgress > 0.3 ? 'text-black hover:bg-black/10' : 'text-black hover:bg-black/10'}`}
                 >
                   <Menu size={24} />
                 </button>
