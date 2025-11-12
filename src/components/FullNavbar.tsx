@@ -117,7 +117,7 @@ const FullNavbar = () => {
               src="/logos/mamas-grocery-2.png" 
               alt="Company Logo" 
               className="w-auto object-contain transform transition-transform duration-500 group-hover:scale-105"
-              style={{ height: `${Math.round(lerp(isMobile ? 70 : 140, isMobile ? 55 : 90, scrollProgress))}px` }}
+              style={{ height: `${Math.round(lerp(isMobile ? 50 : 140, isMobile ? 40 : 90, scrollProgress))}px` }}
             />
           </div>
         </div>
@@ -213,9 +213,9 @@ const FullNavbar = () => {
                 <button
                   aria-label="Open menu"
                   onClick={() => setIsMobileMenuOpen(true)}
-                  className={`p-2 rounded-md active:scale-95 transition ${scrollProgress > 0.3 ? 'text-black hover:bg-black/10' : 'text-black hover:bg-black/10'}`}
+                  className="p-2 rounded-md active:scale-95 transition text-white hover:bg-white/10"
                 >
-                  <Menu size={24} />
+                  <Menu size={24} strokeWidth={2.5} />
                 </button>
               </div>
             </div>
