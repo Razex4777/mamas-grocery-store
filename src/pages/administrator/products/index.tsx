@@ -489,9 +489,17 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
         toast.success('Produit créé avec succès!');
         onSave();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Save failed:', error);
-      toast.error("Échec de l'enregistrement du produit");
+      const msg = typeof error?.message === 'string' ? error.message : '';
+      const code = error?.code ?? '';
+      if (code === '23505' || msg.includes('products_sku_key')) {
+        toast.error('SKU existe déjà ou est vide. Utilisez un SKU unique ou supprimez-le.');
+      } else if (code === '23505' || msg.includes('products_slug_key')) {
+        toast.error('Slug déjà utilisé. Choisissez un slug unique.');
+      } else {
+        toast.error("Échec de l'enregistrement du produit");
+      }
     }
 
     setSaving(false);
@@ -1019,6 +1027,5 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
     </div>
   );
 }
-
 
 

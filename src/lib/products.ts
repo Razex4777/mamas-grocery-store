@@ -123,9 +123,14 @@ export const fetchBestSellers = async (): Promise<Product[]> => {
 
 // Create new product
 export const createProduct = async (product: ProductInsert): Promise<Product | null> => {
+  const normalized = {
+    ...product,
+    sku: product.sku && product.sku.trim() !== '' ? product.sku.trim() : null,
+  } as ProductInsert;
+
   const { data, error } = await supabase
     .from('products')
-    .insert(product)
+    .insert(normalized)
     .select()
     .single() as { data: Product | null; error: any };
 
@@ -142,9 +147,18 @@ export const updateProduct = async (
   id: string,
   updates: ProductUpdate
 ): Promise<Product | null> => {
+  const normalized = {
+    ...updates,
+    sku: updates.sku !== undefined && updates.sku !== null && updates.sku.trim() !== ''
+      ? updates.sku.trim()
+      : updates.sku === ''
+        ? null
+        : updates.sku,
+  } as ProductUpdate;
+
   const { data, error } = await supabase
     .from('products')
-    .update(updates)
+    .update(normalized)
     .eq('id', id)
     .select()
     .single() as { data: Product | null; error: any };
