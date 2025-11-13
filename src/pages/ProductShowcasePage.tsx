@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import { Eye, Package, Sparkles, Zap, ArrowRight, X, Search, Filter, Check, ShoppingCart, MessageCircle, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Eye, Package, Sparkles, Zap, ArrowRight, X, Search, Filter, Check, ShoppingCart, MessageCircle, Heart, ChevronLeft, ChevronRight, SlidersHorizontal } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { motion } from 'framer-motion';
@@ -57,6 +57,7 @@ export default function ProductShowcasePage() {
   const [selectedOrigin, setSelectedOrigin] = useState('All');
   const [sortBy, setSortBy] = useState('default');
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [stockFilter, setStockFilter] = useState<'All' | 'In Stock' | 'Out of Stock'>('All');
   const [highlightFeatured, setHighlightFeatured] = useState(false);
@@ -228,6 +229,137 @@ export default function ProductShowcasePage() {
     }
   };
 
+  const renderFilterSections = () => (
+    <>
+      <div className="flex items-center justify-between">
+        <h3 className="text-xl font-extrabold text-gray-900 flex items-center gap-2">
+          <Filter className="w-5 h-5 text-green-600" /> Filtres
+        </h3>
+        {(selectedCategories.length > 0 || selectedOrigin !== 'All' || searchTerm || stockFilter !== 'All' || highlightFeatured || highlightNewArrival || showFavoritesOnly) && (
+          <button
+            onClick={resetFilters}
+            className="text-xs text-gray-600 hover:text-green-700 underline"
+          >
+            Tout réinitialiser
+          </button>
+        )}
+      </div>
+
+      <div>
+        <button
+          onClick={handleOpenModal}
+          className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
+        >
+          <Package className="w-5 h-5" />
+          {selectedCategories.length > 0
+            ? selectedCategories.length === 1
+              ? categories.find(c => c.id === selectedCategories[0])?.name || 'Parcourir les catégories'
+              : `${selectedCategories.length} catégories sélectionnées`
+            : 'Parcourir les catégories'}
+          {selectedCategories.length > 0 && (
+            <span className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse" />
+          )}
+        </button>
+        {selectedCategories.length > 0 && (
+          <p className="text-xs text-gray-600 mt-2 text-center">
+            {selectedCategories.length === 1 ? 'Filtré par catégorie' : `Filtrage par ${selectedCategories.length} catégories`} • <button onClick={() => { setSelectedCategories([]); setTempSelectedCategories([]); }} className="text-green-700 hover:underline">Effacer</button>
+          </p>
+        )}
+      </div>
+
+      <div>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Origine</h3>
+        <div className="space-y-2">
+          {ORIGINS.map(origin => {
+            const iconPath = getOriginIcon(origin);
+            return (
+              <button 
+                key={origin} 
+                onClick={() => setSelectedOrigin(origin)} 
+                className={`w-full px-4 py-3 text-sm font-medium rounded-lg transition-all flex items-center gap-3 ${selectedOrigin === origin ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 border hover:bg-gray-100 hover:border-green-500'}`}
+              >
+                {iconPath && (
+                  <img src={iconPath} alt={`${origin} flag`} className="w-5 h-5 object-contain" />
+                )}
+                <span className="flex-1 text-left">{getOriginLabel(origin)}</span>
+                {selectedOrigin === origin && (
+                  <span className="w-2 h-2 bg-white rounded-full" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="pt-6 border-t border-gray-200">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Disponibilité</h3>
+        <div className="grid grid-cols-3 gap-2">
+          {(['All', 'In Stock', 'Out of Stock'] as const).map(option => (
+            <button
+              key={option}
+              onClick={() => setStockFilter(option)}
+              className={`px-3 py-2 text-xs font-semibold rounded-lg transition-all border ${
+                stockFilter === option
+                  ? 'bg-green-600 text-white border-green-600 shadow-md'
+                  : 'bg-white text-gray-700 border-gray-200 hover:border-green-500 hover:bg-gray-50'
+              }`}
+            >
+              {AVAILABILITY_LABELS[option]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="pt-6 border-t border-gray-200">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Mises en avant</h3>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => setHighlightFeatured(prev => !prev)}
+            className={`inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-full border transition-all ${
+              highlightFeatured ? 'bg-yellow-100 text-yellow-800 border-yellow-300' : 'bg-white text-gray-700 border-gray-200 hover:border-yellow-300 hover:bg-yellow-50'
+            }`}
+          >
+            {highlightFeatured && <Check className="w-4 h-4" />}
+            En vedette
+          </button>
+          <button
+            onClick={() => setHighlightNewArrival(prev => !prev)}
+            className={`inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-full border transition-all ${
+              highlightNewArrival ? 'bg-blue-100 text-blue-800 border-blue-300' : 'bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:bg-blue-50'
+            }`}
+          >
+            {highlightNewArrival && <Check className="w-4 h-4" />}
+            Nouvelle arrivée
+          </button>
+          <button
+            onClick={() => setShowFavoritesOnly(prev => !prev)}
+            className={`inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-full border transition-all ${
+              showFavoritesOnly ? 'bg-red-100 text-red-800 border-red-300' : 'bg-white text-gray-700 border-gray-200 hover:border-red-300 hover:bg-red-50'
+            }`}
+          >
+            <Heart className={`w-4 h-4 ${showFavoritesOnly ? 'fill-red-800' : ''}`} />
+            Favoris {favorites.length > 0 && `(${favorites.length})`}
+          </button>
+        </div>
+      </div>
+
+      <div className="pt-6 border-t border-gray-200">
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Tri</h3>
+        <div className="space-y-2">
+          {SORT_OPTIONS.map(option => (
+            <button
+              key={option.value}
+              onClick={() => setSortBy(option.value)}
+              className={`w-full px-4 py-3 text-sm font-medium rounded-lg transition-all text-left ${sortBy === option.value ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 border hover:bg-gray-100 hover:border-green-500'}`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <>
       <div 
@@ -266,7 +398,7 @@ export default function ProductShowcasePage() {
               </span>
 
               {/* Main Heading */}
-              <h1 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white">
+              <h1 className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white">
                 Produits Frais
               </h1>
 
@@ -303,24 +435,24 @@ export default function ProductShowcasePage() {
             {/* Hero Stats */}
             <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 max-w-5xl">
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
-                <div className="text-2xl font-semibold tracking-tight">{categories.length}</div>
-                <div className="text-sm text-white/90">Catégories dynamiques</div>
+                <div className="text-xl sm:text-2xl font-semibold tracking-tight">{categories.length}</div>
+                <div className="text-xs sm:text-sm text-white/90">Catégories dynamiques</div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
-                <div className="text-2xl font-semibold tracking-tight">{products.length}</div>
-                <div className="text-sm text-white/90">Produits premium</div>
+                <div className="text-xl sm:text-2xl font-semibold tracking-tight">{products.length}</div>
+                <div className="text-xs sm:text-sm text-white/90">Produits premium</div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
-                <div className="text-2xl font-semibold tracking-tight">24h</div>
-                <div className="text-sm text-white/90">Temps de réponse</div>
+                <div className="text-xl sm:text-2xl font-semibold tracking-tight">24h</div>
+                <div className="text-xs sm:text-sm text-white/90">Temps de réponse</div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
-                <div className="text-2xl font-semibold tracking-tight">A+</div>
-                <div className="text-sm text-white/90">Qualité des produits</div>
+                <div className="text-xl sm:text-2xl font-semibold tracking-tight">A+</div>
+                <div className="text-xs sm:text-sm text-white/90">Qualité des produits</div>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-white ring-1 ring-white/15 backdrop-blur-sm hover:bg-white/15 transition-all">
-                <div className="text-2xl font-semibold tracking-tight">{products.filter(p => p.new_arrival).length}</div>
-                <div className="text-sm text-white/90">Nouvelles arrivées</div>
+                <div className="text-xl sm:text-2xl font-semibold tracking-tight">{products.filter(p => p.new_arrival).length}</div>
+                <div className="text-xs sm:text-sm text-white/90">Nouvelles arrivées</div>
               </div>
             </div>
           </div>
@@ -335,7 +467,7 @@ export default function ProductShowcasePage() {
             {/* Header Section */}
             <div className="text-center md:text-left md:flex md:items-center md:justify-between mb-8">
               <div>
-                <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+                <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">
                   Produits Frais
                 </h1>
                 <p className="text-base text-gray-600 max-w-2xl mx-auto md:mx-0">
@@ -349,7 +481,7 @@ export default function ProductShowcasePage() {
             </div>
 
             {/* Ambient Stats */}
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-500 mb-10">
+            <div className="flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500 mb-10">
               <span className="flex items-center gap-2"><Package size={16} /> {categories.length} catégories dynamiques</span>
               <span className="flex items-center gap-2"><Sparkles size={16} /> {products.length} produits premium</span>
               <span className="flex items-center gap-2"><Zap size={16} /> Expérience de showroom numérique</span>
@@ -360,164 +492,46 @@ export default function ProductShowcasePage() {
               {/* Sidebar Filters */}
               <aside className="lg:col-span-1 hidden lg:block">
                 <div className="bg-gray-50 rounded-2xl p-6 sticky top-24 space-y-6" data-aos="fade-right">
-                  {/* Quick Filters Heading */}
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-extrabold text-gray-900 flex items-center gap-2">
-                      <Filter className="w-5 h-5 text-green-600" /> Filtres
-                    </h3>
-                    {(selectedCategories.length > 0 || selectedOrigin !== 'All' || searchTerm || stockFilter !== 'All' || highlightFeatured || highlightNewArrival || showFavoritesOnly) && (
-                      <button
-                        onClick={resetFilters}
-                        className="text-xs text-gray-600 hover:text-green-700 underline"
-                      >
-                        Tout réinitialiser
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Category Filter Button */}
-                  <div>
-                    <button
-                      onClick={handleOpenModal}
-                      className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-2"
-                    >
-                      <Package className="w-5 h-5" />
-                      {selectedCategories.length > 0
-                        ? selectedCategories.length === 1
-                          ? categories.find(c => c.id === selectedCategories[0])?.name || 'Parcourir les catégories'
-                          : `${selectedCategories.length} catégories sélectionnées`
-                        : 'Parcourir les catégories'}
-                      {selectedCategories.length > 0 && (
-                        <span className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                      )}
-                    </button>
-                    {selectedCategories.length > 0 && (
-                      <p className="text-xs text-gray-600 mt-2 text-center">
-                        {selectedCategories.length === 1 ? 'Filtré par catégorie' : `Filtrage par ${selectedCategories.length} catégories`} • <button onClick={() => { setSelectedCategories([]); setTempSelectedCategories([]); }} className="text-green-700 hover:underline">Effacer</button>
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Origin Filter */}
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Origine</h3>
-                    <div className="space-y-2">
-                      {ORIGINS.map(origin => {
-                        const iconPath = getOriginIcon(origin);
-                        return (
-                          <button 
-                            key={origin} 
-                            onClick={() => setSelectedOrigin(origin)} 
-                            className={`w-full px-4 py-3 text-sm font-medium rounded-lg transition-all flex items-center gap-3 ${selectedOrigin === origin ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 border hover:bg-gray-100 hover:border-green-500'}`}
-                          >
-                            {iconPath && (
-                              <img src={iconPath} alt={`${origin} flag`} className="w-5 h-5 object-contain" />
-                            )}
-                            <span className="flex-1 text-left">{getOriginLabel(origin)}</span>
-                            {selectedOrigin === origin && (
-                              <span className="w-2 h-2 bg-white rounded-full" />
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Availability Filter */}
-                  <div className="pt-6 border-t border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Disponibilité</h3>
-                    <div className="grid grid-cols-3 gap-2">
-                      {(['All', 'In Stock', 'Out of Stock'] as const).map(option => (
-                        <button
-                          key={option}
-                          onClick={() => setStockFilter(option)}
-                          className={`px-3 py-2 text-xs font-semibold rounded-lg transition-all border ${
-                            stockFilter === option
-                              ? 'bg-green-600 text-white border-green-600 shadow-md'
-                              : 'bg-white text-gray-700 border-gray-200 hover:border-green-500 hover:bg-gray-50'
-                          }`}
-                        >
-                          {AVAILABILITY_LABELS[option]}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Highlights Filter */}
-                  <div className="pt-6 border-t border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Mises en avant</h3>
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => setHighlightFeatured(prev => !prev)}
-                        className={`inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-full border transition-all ${
-                          highlightFeatured ? 'bg-yellow-100 text-yellow-800 border-yellow-300' : 'bg-white text-gray-700 border-gray-200 hover:border-yellow-300 hover:bg-yellow-50'
-                        }`}
-                      >
-                        {highlightFeatured && <Check className="w-4 h-4" />}
-                        En vedette
-                      </button>
-                      <button
-                        onClick={() => setHighlightNewArrival(prev => !prev)}
-                        className={`inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-full border transition-all ${
-                          highlightNewArrival ? 'bg-blue-100 text-blue-800 border-blue-300' : 'bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:bg-blue-50'
-                        }`}
-                      >
-                        {highlightNewArrival && <Check className="w-4 h-4" />}
-                        Nouvelle arrivée
-                      </button>
-                      <button
-                        onClick={() => setShowFavoritesOnly(prev => !prev)}
-                        className={`inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-full border transition-all ${
-                          showFavoritesOnly ? 'bg-red-100 text-red-800 border-red-300' : 'bg-white text-gray-700 border-gray-200 hover:border-red-300 hover:bg-red-50'
-                        }`}
-                      >
-                        <Heart className={`w-4 h-4 ${showFavoritesOnly ? 'fill-red-800' : ''}`} />
-                        Favoris {favorites.length > 0 && `(${favorites.length})`}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Sorting Filter */}
-                  <div className="pt-6 border-t border-gray-200">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">Tri</h3>
-                    <div className="space-y-2">
-                      {SORT_OPTIONS.map(option => (
-                        <button
-                          key={option.value}
-                          onClick={() => setSortBy(option.value)}
-                          className={`w-full px-4 py-3 text-sm font-medium rounded-lg transition-all text-left ${sortBy === option.value ? 'bg-green-600 text-white shadow-md' : 'bg-white text-gray-700 border hover:bg-gray-100 hover:border-green-500'}`}
-                        >
-                          {option.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  {renderFilterSections()}
                 </div>
               </aside>
 
               {/* Products List */}
               <div className="lg:col-span-3">
                 {/* Search and Active Filters */}
-                <div className="space-y-3 mb-6" data-aos="fade-up">
-                  {/* Elegant Search Bar */}
-                  <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-                    <input
-                      type="text"
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="Recherchez des produits par nom ou description..."
-                      className="w-full pl-12 pr-12 py-3 rounded-xl border border-gray-200 bg-white/80 backdrop-blur placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"
-                    />
-                    {searchTerm && (
-                      <button
-                        onClick={() => setSearchTerm('')}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
-                        aria-label="Effacer la recherche"
-                      >
-                        <X className="w-4 h-4 text-gray-500" />
-                      </button>
-                    )}
+                <div className="space-y-4 mb-6" data-aos="fade-up">
+                  {/* Search + Mobile Filters */}
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <div className="relative flex-1">
+                      <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        placeholder="Recherchez des produits par nom ou description..."
+                        className="w-full pl-12 pr-12 py-3 rounded-xl border border-gray-200 bg-white/80 backdrop-blur placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent shadow-sm"
+                      />
+                      {searchTerm && (
+                        <button
+                          onClick={() => setSearchTerm('')}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100"
+                          aria-label="Effacer la recherche"
+                        >
+                          <X className="w-4 h-4 text-gray-500" />
+                        </button>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setShowMobileFilters(true)}
+                      className="sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-gray-300 text-gray-700 font-semibold hover:border-green-600 hover:text-green-700 hover:bg-green-50 transition-all lg:hidden"
+                      aria-label="Ouvrir les filtres"
+                    >
+                      <SlidersHorizontal className="w-5 h-5" />
+                      Filtres
+                      {(selectedCategories.length > 0 || selectedOrigin !== 'All' || stockFilter !== 'All' || highlightFeatured || highlightNewArrival || showFavoritesOnly) && (
+                        <span className="text-xs font-bold text-emerald-700">•</span>
+                      )}
+                    </button>
                   </div>
 
                   {/* Active Filter Chips */}
@@ -602,7 +616,7 @@ export default function ProductShowcasePage() {
                         transition={{ duration: 0.5, delay: index * 0.05 }}
                         className="group relative overflow-hidden rounded-2xl bg-white/80 backdrop-blur-lg border border-white/20 ring-1 ring-gray-200/50 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col"
                       >
-                        <div className="relative flex items-center justify-center p-6 h-56 bg-gradient-to-br from-gray-50/50 to-white/30">
+                        <div className="relative flex items-center justify-center p-4 sm:p-6 h-48 sm:h-56 bg-gradient-to-br from-gray-50/50 to-white/30">
                           {/* Badges with glass effect - no overlap */}
                           <div className="absolute top-3 left-3 z-10 flex flex-col gap-2">
                             {product.new_arrival && (
@@ -637,20 +651,20 @@ export default function ProductShowcasePage() {
                           
                           <img src={product.image_url} alt={product.title} className="object-contain h-full w-full group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                         </div>
-                        <div className="p-5 flex flex-col flex-grow bg-white/60 backdrop-blur-sm">
-                          <div className="flex items-center justify-between text-xs mb-2">
+                        <div className="p-4 sm:p-5 flex flex-col flex-grow bg-white/60 backdrop-blur-sm">
+                          <div className="flex items-center justify-between text-[11px] sm:text-xs mb-2">
                             <span className="text-gray-600">{categories.find(c => c.id === product.category_id)?.origin || 'N/A'}</span>
-                            <span className={product.in_stock ? 'inline-flex items-center gap-1 text-emerald-700 font-semibold bg-emerald-100/80 px-2 py-0.5 rounded-full text-[10px] ring-1 ring-emerald-600/20' : 'inline-flex items-center gap-1 text-red-700 font-semibold bg-red-100/80 px-2 py-0.5 rounded-full text-[10px] ring-1 ring-red-600/20'}>
+                            <span className={product.in_stock ? 'inline-flex items-center gap-1 text-emerald-700 font-semibold bg-emerald-100/80 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] ring-1 ring-emerald-600/20' : 'inline-flex items-center gap-1 text-red-700 font-semibold bg-red-100/80 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] ring-1 ring-red-600/20'}>
                               {product.in_stock ? 'En stock' : 'Rupture de stock'}
                             </span>
                           </div>
-                          <h3 className="font-bold text-gray-900 mb-3 text-lg leading-tight flex-grow group-hover:text-emerald-600 transition-colors line-clamp-2">
+                          <h3 className="font-bold text-gray-900 mb-2 text-base md:text-lg leading-snug flex-grow group-hover:text-emerald-600 transition-colors line-clamp-2">
                             {product.title}
                           </h3>
-                          <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                          <p className="text-xs sm:text-sm text-gray-600 mb-4 line-clamp-2">
                             {product.description}
                           </p>
-                          <button onClick={() => navigate(`/product/${product.id}`)} className="w-full mt-auto bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white text-sm font-bold py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl ring-1 ring-emerald-600/20">
+                          <button onClick={() => navigate(`/product/${product.id}`)} className="w-full mt-auto bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white text-sm font-bold py-2 sm:py-2.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl ring-1 ring-emerald-600/20">
                             <Eye size={16} />
                             Voir les détails
                           </button>
@@ -730,6 +744,33 @@ export default function ProductShowcasePage() {
 
         {/* Newsletter Section */}
         <NewsletterSection />
+
+        {/* Mobile Filters Drawer */}
+        {showMobileFilters && (
+          <>
+            <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" onClick={() => setShowMobileFilters(false)} />
+            <div className="fixed inset-x-0 bottom-0 z-50 rounded-t-3xl bg-white shadow-2xl p-6 space-y-6 animate-in slide-in-from-bottom-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">Filtres intelligents</h3>
+                  <p className="text-sm text-gray-500">Affinez votre recherche en quelques taps</p>
+                </div>
+                <button onClick={() => setShowMobileFilters(false)} className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="max-h-[60vh] overflow-y-auto space-y-6 pr-1">
+                {renderFilterSections()}
+              </div>
+              <button
+                onClick={() => setShowMobileFilters(false)}
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
+              >
+                Appliquer les filtres
+              </button>
+            </div>
+          </>
+        )}
 
         {/* Professional Category Modal */}
         {showCategoryModal && (
