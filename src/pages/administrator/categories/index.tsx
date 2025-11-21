@@ -402,6 +402,7 @@ function CategoryModal({ category, onClose, onSuccess }: {
           slug: formData.slug,
           description: formData.description,
           image_url: '', // Empty initially
+          origin: formData.origin,
           is_active: true,
         });
 

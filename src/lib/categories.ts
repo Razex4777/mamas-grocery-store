@@ -32,14 +32,15 @@ export const fetchCategories = async (): Promise<Category[]> => {
   return data || [];
 };
 
-// Fetch single category by slug
+// Fetch single category by slug (returns the first one found if duplicates exist)
 export const fetchCategoryBySlug = async (slug: string): Promise<Category | null> => {
   const { data, error } = await supabase
     .from('categories')
     .select('*')
     .eq('slug', slug)
     .eq('is_active', true)
-    .single() as { data: Category | null; error: any };
+    .limit(1)
+    .maybeSingle() as { data: Category | null; error: any };
 
   if (error) {
     console.error('Error fetching category:', error);
@@ -47,6 +48,22 @@ export const fetchCategoryBySlug = async (slug: string): Promise<Category | null
   }
 
   return data;
+};
+
+// Fetch all categories by slug (useful when multiple categories share the same slug but different origins)
+export const fetchCategoriesBySlug = async (slug: string): Promise<Category[]> => {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_active', true) as { data: Category[] | null; error: any };
+
+  if (error) {
+    console.error('Error fetching categories by slug:', error);
+    return [];
+  }
+
+  return data || [];
 };
 
 // Create new category

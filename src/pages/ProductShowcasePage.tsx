@@ -895,11 +895,16 @@ export default function ProductShowcasePage() {
 
                         {/* Text */}
                         <div className="text-center">
-                          <p className={`text-sm font-semibold line-clamp-2 min-h-[2.5rem] flex items-center justify-center ${
+                          <div className={`text-sm font-semibold line-clamp-2 min-h-[2.5rem] flex flex-col items-center justify-center ${
                             isSelected ? 'text-green-700' : 'text-gray-900 group-hover:text-green-700'
                           }`}>
-                            {category.name}
-                          </p>
+                            <span>{category.name}</span>
+                            {category.origin && (
+                              <span className="text-[10px] font-normal opacity-75">
+                                ({getOriginLabel(category.origin)})
+                              </span>
+                            )}
+                          </div>
                           <p className="text-xs text-gray-500 mt-0.5">
                             {getProductCount(category.id)} articles
                           </p>
