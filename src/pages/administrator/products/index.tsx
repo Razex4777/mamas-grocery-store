@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import AdminLayout from '../../../components/admin/AdminLayout';
 import { useToast } from '../../../components/Toast';
-import { Plus, Edit2, Trash2, Image as ImageIcon, Search, Package, Eye, EyeOff } from 'lucide-react';
+import { Plus, Edit2, Trash2, Image as ImageIcon, Search, Package, Eye, EyeOff, Check, ChevronDown, MapPin } from 'lucide-react';
 import {
   fetchAllProducts,
   createProduct,
@@ -158,8 +158,8 @@ export default function ProductsPage() {
                 </div>
 
                 <div className="flex items-center gap-2 text-xs text-slate-400">
-                  <Package size={12} />
-                  <span>{categories.find(c => c.id === product.category_id)?.origin || 'Aucune catégorie'}</span>
+                  <MapPin size={12} />
+                  <span>{product.origin || 'Aucune origine'}</span>
                   {product.in_stock ? (
                     <span className="ml-auto text-emerald-400">En stock</span>
                   ) : (
@@ -267,6 +267,7 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
     slug: product?.slug || '',
     description: product?.description || '',
     category_id: product?.category_id || '',
+    origin: product?.origin || '',
     in_stock: product?.in_stock ?? true,
     sku: product?.sku || '',
     image_url: product?.image_url || '',
@@ -274,6 +275,16 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
     benefits: product?.benefits || [],
     featured: product?.featured ?? false,
   });
+
+  // Origin options with flags
+  const ORIGIN_OPTIONS = [
+    { value: 'Morocco', label: 'Maroc', icon: '/flags/morocco_flag_icon.svg' },
+    { value: 'Algeria', label: 'Algérie', icon: '/flags/algeria_flag_icon.svg' },
+    { value: 'Tunisia', label: 'Tunisie', icon: '/flags/tunisia_flag_icon.svg' },
+    { value: 'Orient', label: 'Orient (Moyen-Orient)', icon: '/flags/orient_middle_east_flag_icon.svg' },
+    { value: 'Africa', label: 'Afrique', icon: '/flags/africa_icon.svg' },
+    { value: 'Europe', label: 'Europe', icon: '/flags/europe_flag_icon.svg' },
+  ];
 
   const [tempImageFiles, setTempImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>(
@@ -285,15 +296,20 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
   const [isDragging, setIsDragging] = useState(false);
   const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
   const [categorySearchQuery, setCategorySearchQuery] = useState('');
+  const [isOriginDropdownOpen, setIsOriginDropdownOpen] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const categorySearchRef = useRef<HTMLInputElement>(null);
+  const originDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
         setIsCategoryDropdownOpen(false);
         setCategorySearchQuery('');
+      }
+      if (originDropdownRef.current && !originDropdownRef.current.contains(event.target as Node)) {
+        setIsOriginDropdownOpen(false);
       }
     };
 
@@ -669,21 +685,84 @@ function ProductModal({ product, categories, onClose, onSave }: ProductModalProp
               </div>
             </div>
 
-            {/* Origin Info (inherited from category) */}
+            {/* Origin Selector */}
             <div>
               <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                Origine <span className="text-emerald-400 text-[10px] font-normal">(Hérité de la catégorie)</span>
+                Origine / Région
               </label>
-              <div className="w-full px-3 py-2.5 bg-slate-800/30 border border-slate-700/30 rounded-lg text-sm">
-                {formData.category_id ? (
-                  <span className="text-cyan-400 font-medium">
-                    {categories.find(c => c.id === formData.category_id)?.origin || "Non définie dans la catégorie"}
-                  </span>
-                ) : (
-                  <span className="text-slate-500 italic">Sélectionnez d'abord une catégorie</span>
+              <div className="relative" ref={originDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setIsOriginDropdownOpen(!isOriginDropdownOpen)}
+                  className="w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-lg text-sm text-slate-200 focus:outline-none focus:border-emerald-500/50 hover:bg-slate-800/80 transition-all duration-200 flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    {formData.origin ? (
+                      <>
+                        <img
+                          src={ORIGIN_OPTIONS.find(opt => opt.value === formData.origin)?.icon}
+                          alt={formData.origin}
+                          className="w-5 h-5 object-contain"
+                        />
+                        <span>{ORIGIN_OPTIONS.find(opt => opt.value === formData.origin)?.label}</span>
+                      </>
+                    ) : (
+                      <span className="text-slate-500">Sélectionnez une origine...</span>
+                    )}
+                  </div>
+                  <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOriginDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Origin Dropdown Menu */}
+                {isOriginDropdownOpen && (
+                  <div className="absolute z-50 w-full mt-2 bg-slate-800 border border-slate-700/50 rounded-lg shadow-2xl overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200">
+                    <div className="py-1 max-h-60 overflow-y-auto">
+                      {/* Clear Option */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFormData({ ...formData, origin: '' });
+                          setIsOriginDropdownOpen(false);
+                        }}
+                        className={`w-full px-3 py-2.5 flex items-center gap-3 hover:bg-slate-700/50 transition-colors text-left ${
+                          formData.origin === '' ? 'bg-emerald-500/10 text-emerald-400' : 'text-slate-200'
+                        }`}
+                      >
+                        <div className="w-6 h-6 rounded bg-slate-700/50 flex items-center justify-center text-slate-400 text-xs">
+                          —
+                        </div>
+                        <span className="text-sm font-medium">Aucune origine</span>
+                        {formData.origin === '' && (
+                          <Check className="w-4 h-4 ml-auto text-emerald-400" />
+                        )}
+                      </button>
+                      {ORIGIN_OPTIONS.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => {
+                            setFormData({ ...formData, origin: option.value });
+                            setIsOriginDropdownOpen(false);
+                          }}
+                          className={`w-full px-3 py-2.5 flex items-center gap-3 hover:bg-slate-700/50 transition-colors text-left ${
+                            formData.origin === option.value ? 'bg-emerald-500/10 text-emerald-400' : 'text-slate-200'
+                          }`}
+                        >
+                          <img
+                            src={option.icon}
+                            alt={option.label}
+                            className="w-6 h-6 object-contain"
+                          />
+                          <span className="text-sm font-medium">{option.label}</span>
+                          {formData.origin === option.value && (
+                            <Check className="w-4 h-4 ml-auto text-emerald-400" />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
-              <p className="text-[10px] text-slate-500 mt-1">Les produits héritent de l'origine de leur catégorie</p>
             </div>
 
             {/* SKU */}

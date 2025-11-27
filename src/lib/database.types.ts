@@ -56,7 +56,6 @@ export interface Category {
   slug: string;
   description: string | null;
   image_url: string | null;
-  origin: string | null;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -67,7 +66,6 @@ export interface CategoryInsert {
   slug: string;
   description?: string | null;
   image_url?: string | null;
-  origin?: string | null;
   is_active?: boolean;
 }
 
@@ -76,7 +74,6 @@ export interface CategoryUpdate {
   slug?: string;
   description?: string | null;
   image_url?: string | null;
-  origin?: string | null;
   is_active?: boolean;
 }
 
@@ -87,6 +84,7 @@ export interface Product {
   slug: string;
   description: string;
   category_id: string | null;
+  origin: string | null;
   in_stock: boolean;
   sku: string | null;
   image_url: string;
@@ -109,6 +107,7 @@ export interface ProductInsert {
   slug: string;
   description: string;
   category_id?: string | null;
+  origin?: string | null;
   in_stock?: boolean;
   sku?: string | null;
   image_url: string;
@@ -129,6 +128,7 @@ export interface ProductUpdate {
   slug?: string;
   description?: string;
   category_id?: string | null;
+  origin?: string | null;
   in_stock?: boolean;
   sku?: string | null;
   image_url?: string;
