@@ -8,7 +8,8 @@ export const REGIONAL_PRODUCTS: RegionalProduct[] = [
     backgroundColor: "bg-red-600",
     imageSrc: "/regions/basket-moroccan.png",
     backgroundImageSrc: "/regions/flag-moroccan.png",
-    imageAlt: "Panier de produits marocains"
+    imageAlt: "Panier de produits marocains",
+    origin: "Morocco"
   },
   {
     id: 2,
@@ -17,7 +18,8 @@ export const REGIONAL_PRODUCTS: RegionalProduct[] = [
     backgroundColor: "bg-gray-900",
     imageSrc: "/regions/basket-algerian.png",
     backgroundImageSrc: "/regions/flag-algerian.png",
-    imageAlt: "Panier de produits algériens"
+    imageAlt: "Panier de produits algériens",
+    origin: "Algeria"
   },
   {
     id: 3,
@@ -26,7 +28,8 @@ export const REGIONAL_PRODUCTS: RegionalProduct[] = [
     backgroundColor: "bg-orange-600",
     imageSrc: "/regions/basket-tunisian.png",
     backgroundImageSrc: "/regions/flag-tunisian.png",
-    imageAlt: "Panier de produits tunisiens"
+    imageAlt: "Panier de produits tunisiens",
+    origin: "Tunisia"
   },
   {
     id: 4,
@@ -35,7 +38,8 @@ export const REGIONAL_PRODUCTS: RegionalProduct[] = [
     backgroundColor: "bg-blue-600",
     imageSrc: "/regions/basket-oriental.png",
     backgroundImageSrc: "/regions/orient-map.png",
-    imageAlt: "Panier de produits orientaux"
+    imageAlt: "Panier de produits orientaux",
+    origin: "Orient"
   },
   {
     id: 5,
@@ -44,7 +48,8 @@ export const REGIONAL_PRODUCTS: RegionalProduct[] = [
     backgroundColor: "bg-green-600",
     imageSrc: "/regions/basket-african.png",
     backgroundImageSrc: "/regions/africa-map.png",
-    imageAlt: "Panier de produits africains"
+    imageAlt: "Panier de produits africains",
+    origin: "Africa"
   },
   {
     id: 6,
@@ -53,6 +58,7 @@ export const REGIONAL_PRODUCTS: RegionalProduct[] = [
     backgroundColor: "bg-indigo-600",
     imageSrc: "/regions/basket-europe.png",
     backgroundImageSrc: "/regions/flag-europe.png",
-    imageAlt: "Panier de produits européens"
+    imageAlt: "Panier de produits européens",
+    origin: "Europe"
   }
 ];

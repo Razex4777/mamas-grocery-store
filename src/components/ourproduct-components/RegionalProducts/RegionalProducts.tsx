@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import type { RegionalProductsProps, RegionalProduct } from './types';
 import { REGIONAL_PRODUCTS } from './constants';
@@ -166,8 +167,14 @@ const MobileCard: React.FC<{ product: RegionalProduct; index: number }> = ({ pro
 );
 
 const RegionalProducts: React.FC<RegionalProductsProps> = ({ className = '' }) => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Handle click on regional product card - navigate to products page with origin filter
+  const handleCardClick = (origin: string) => {
+    navigate(`/products?origin=${origin}`);
+  };
 
   // Check if device is mobile
   useEffect(() => {
@@ -263,6 +270,7 @@ const RegionalProducts: React.FC<RegionalProductsProps> = ({ className = '' }) =
                       }
                     }}
                     viewport={{ once: true }}
+                    onClick={() => handleCardClick(product.origin)}
                   >
                     {/* Mobile card content */}
                     <MobileCard product={product} index={index} />
@@ -304,6 +312,7 @@ const RegionalProducts: React.FC<RegionalProductsProps> = ({ className = '' }) =
                     }
                   }}
                   viewport={{ once: true }}
+                  onClick={() => handleCardClick(product.origin)}
                 >
                   <DesktopCard product={product} index={index} />
                 </motion.div>

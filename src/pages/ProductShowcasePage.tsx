@@ -89,12 +89,16 @@ export default function ProductShowcasePage() {
     return () => { channel.unsubscribe(); };
   }, []);
 
-  // Handle URL parameters for category filtering (e.g., from footer links)
+  // Handle URL parameters for category and origin filtering (e.g., from footer links or regional products)
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const categoryParam = params.get('category');
+    const originParam = params.get('origin');
     if (categoryParam) {
       setSelectedCategories([categoryParam]);
+    }
+    if (originParam && ORIGINS.includes(originParam)) {
+      setSelectedOrigin(originParam);
     }
   }, [location.search]);
 

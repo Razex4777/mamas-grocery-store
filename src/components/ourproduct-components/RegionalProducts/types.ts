@@ -6,6 +6,7 @@ export interface RegionalProduct {
   imageSrc: string;
   backgroundImageSrc: string;
   imageAlt: string;
+  origin: string; // Origin key for filtering (e.g., 'Morocco', 'Algeria', etc.)
 }
 
 export interface RegionalProductsProps {
