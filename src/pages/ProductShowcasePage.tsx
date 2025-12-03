@@ -94,11 +94,16 @@ export default function ProductShowcasePage() {
     const params = new URLSearchParams(location.search);
     const categoryParam = params.get('category');
     const originParam = params.get('origin');
+    const showCategoriesParam = params.get('showCategories');
     if (categoryParam) {
       setSelectedCategories([categoryParam]);
     }
     if (originParam && ORIGINS.includes(originParam)) {
       setSelectedOrigin(originParam);
+    }
+    // Auto-open category modal if requested (e.g., from regional products click)
+    if (showCategoriesParam === 'true') {
+      setShowCategoryModal(true);
     }
   }, [location.search]);
 

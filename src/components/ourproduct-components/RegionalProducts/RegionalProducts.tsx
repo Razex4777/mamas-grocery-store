@@ -171,9 +171,9 @@ const RegionalProducts: React.FC<RegionalProductsProps> = ({ className = '' }) =
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Handle click on regional product card - navigate to products page with origin filter
+  // Handle click on regional product card - navigate to products page with origin filter and open categories modal
   const handleCardClick = (origin: string) => {
-    navigate(`/products?origin=${origin}`);
+    navigate(`/products?origin=${origin}&showCategories=true`);
   };
 
   // Check if device is mobile
