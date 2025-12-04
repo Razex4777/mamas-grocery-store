@@ -57,6 +57,7 @@ export default function ProductShowcasePage() {
   const [selectedOrigin, setSelectedOrigin] = useState('All');
   const [sortBy, setSortBy] = useState('default');
   const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [isQuickSelectMode, setIsQuickSelectMode] = useState(false); // Auto-apply category on click (from origin navigation)
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [stockFilter, setStockFilter] = useState<'All' | 'In Stock' | 'Out of Stock'>('All');
@@ -104,6 +105,7 @@ export default function ProductShowcasePage() {
     // Auto-open category modal if requested (e.g., from regional products click)
     if (showCategoriesParam === 'true') {
       setShowCategoryModal(true);
+      setIsQuickSelectMode(true); // Enable quick select mode for auto-apply on category click
     }
   }, [location.search]);
 
@@ -118,6 +120,7 @@ export default function ProductShowcasePage() {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setShowCategoryModal(false);
+        setIsQuickSelectMode(false);
       }
     };
 
@@ -161,6 +164,19 @@ export default function ProductShowcasePage() {
 
   // Toggle category selection in modal
   const toggleCategorySelection = (categoryId: string | null) => {
+    // In quick select mode, immediately apply and close modal
+    if (isQuickSelectMode) {
+      if (categoryId === null) {
+        setSelectedCategories([]);
+      } else {
+        setSelectedCategories([categoryId]);
+      }
+      setShowCategoryModal(false);
+      setIsQuickSelectMode(false);
+      return;
+    }
+    
+    // Normal mode - toggle selection
     if (categoryId === null) {
       setTempSelectedCategories([]);
     } else {
@@ -786,7 +802,7 @@ export default function ProductShowcasePage() {
             {/* Backdrop with animation */}
             <div 
               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 animate-in fade-in-0 duration-300"
-              onClick={() => setShowCategoryModal(false)}
+              onClick={() => { setShowCategoryModal(false); setIsQuickSelectMode(false); }}
             />
             
             {/* Modal Panel with slide-up animation */}
@@ -799,7 +815,7 @@ export default function ProductShowcasePage() {
                     <p className="text-gray-300 text-xs md:text-sm mt-1">Sélectionnez une catégorie pour filtrer les produits</p>
                   </div>
                   <button
-                    onClick={() => setShowCategoryModal(false)}
+                    onClick={() => { setShowCategoryModal(false); setIsQuickSelectMode(false); }}
                     className="w-9 h-9 md:w-10 md:h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors group"
                   >
                     <X className="w-5 h-5 text-white" />
@@ -953,31 +969,33 @@ export default function ProductShowcasePage() {
                 </div>
               </div>
 
-              {/* Action Buttons Footer - Fixed at Bottom */}
-              <div className="border-t border-gray-200 px-4 md:px-6 py-4 bg-gray-50 flex items-center justify-between gap-3 flex-shrink-0">
-                <div className="text-sm text-gray-600">
-                  {tempSelectedCategories.length > 0 ? (
-                    <span className="font-semibold text-green-700">{tempSelectedCategories.length} selected</span>
-                  ) : (
-                    <span>Select categories to filter</span>
-                  )}
+              {/* Action Buttons Footer - Fixed at Bottom (hidden in quick select mode) */}
+              {!isQuickSelectMode && (
+                <div className="border-t border-gray-200 px-4 md:px-6 py-4 bg-gray-50 flex items-center justify-between gap-3 flex-shrink-0">
+                  <div className="text-sm text-gray-600">
+                    {tempSelectedCategories.length > 0 ? (
+                      <span className="font-semibold text-green-700">{tempSelectedCategories.length} selected</span>
+                    ) : (
+                      <span>Select categories to filter</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={handleClearCategoryFilter}
+                      className="px-4 md:px-5 py-2 md:py-2.5 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 hover:border-gray-400 transition-colors text-sm"
+                    >
+                      Effacer
+                    </button>
+                    <button
+                      onClick={handleApplyCategoryFilter}
+                      className="px-4 md:px-6 py-2 md:py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-colors shadow-md hover:shadow-lg text-sm flex items-center gap-2"
+                    >
+                      <Check className="w-4 h-4" />
+                      Appliquer le filtre
+                    </button>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={handleClearCategoryFilter}
-                    className="px-4 md:px-5 py-2 md:py-2.5 rounded-lg border-2 border-gray-300 text-gray-700 font-semibold hover:bg-gray-100 hover:border-gray-400 transition-colors text-sm"
-                  >
-                    Effacer
-                  </button>
-                  <button
-                    onClick={handleApplyCategoryFilter}
-                    className="px-4 md:px-6 py-2 md:py-2.5 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-colors shadow-md hover:shadow-lg text-sm flex items-center gap-2"
-                  >
-                    <Check className="w-4 h-4" />
-                    Appliquer le filtre
-                  </button>
-                </div>
-              </div>
+              )}
             </div>
           </>
         )}
